@@ -8,6 +8,7 @@ DEPENDPATH += . genetic simulation simulation/element
 INCLUDEPATH += . simulation simulation/element genetic
 
 INCLUDEPATH += /usr/include/qt4/QtOpenGL
+INCLUDEPATH += /usr/local/include/Box2D
 LIBS += -L/usr/local/lib/ -lBox2D
 
 QMAKE_CXXFLAGS +=  -std=c++11
