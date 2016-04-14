@@ -1,0 +1,22 @@
+Install Qt ver. 4.8
+Install Box2D: https://github.com/erincatto/Box2D
+Open terminal and type:
+make build/
+
+If dont work:
+1. Set include path and libs in build/Makefile
+"INCPATH       = -I/usr/share/qt4/mkspecs/linux-g++ -I../src -I/usr/include/qt4/QtCore
+ -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I../src -I../src/simulation 
+-I../src/simulation/element -I../src/genetic -I/usr/include/qt4/QtOpenGL -I. -I."
+"LIBS          = $(SUBLIBS)  -L/usr/lib/i386-linux-gnu -lBox2D -lQtGui -lQtCore -lpthread"
+2. Open terminal and type:
+make build/
+
+OR
+
+1. Add inclue path and libs in src/CarSimulation.pro
+"INCLUDEPATH += /usr/include/qt4/QtOpenGL
+LIBS += -lBox2D"
+2. Open terminal and type:
+qmake src/CarSimulation.pro
+make build/
