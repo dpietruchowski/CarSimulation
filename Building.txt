@@ -1,14 +1,19 @@
 Install Qt ver. 4.8
 Install Box2D: https://github.com/erincatto/Box2D
+  cd $BOX2DPATH/Build/Box2D
+  cmake -DBOX2D_INSTALL=ON -DBOX2D_BUILD_SHARED=ON ..
+  make
+  make install
+
 Open terminal and type:
-make -C build/
+  make -C build/
 
 If doesnt work:
 
 1. Add include path to QtOpenGL and libBox2D.so in src/CarSimulation.pro
-"INCLUDEPATH += /usr/include/qt4/QtOpenGL
-LIBS += -lBox2D"
+  "INCLUDEPATH += /usr/include/qt4/QtOpenGL
+  LIBS += -lBox2D"
 2. Open terminal and type:
-cd build
-qmake ../src/CarSimulation.pro
-make
+  cd build
+  qmake ../src/CarSimulation.pro
+  make
