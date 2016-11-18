@@ -12,11 +12,20 @@ class Object
 public:
     Object();
 
+    void update();
     /// Draw all elements using painter
     void draw(QPainter& painter) const;
     /// Initialize all elements, attach element's bodies
     /// to world, createJoints
     void create(b2World& world);
+    void destroy(b2World& world);
+
+    float32 getX() const;
+    float32 getY() const;
+    float32 getSpeedX() const;
+    float32 getSpeedY() const;
+    float32 getSpeed() const;
+    bool isMoving() const;
 
 private:
     /// Create elements. After this elements is ready
@@ -26,6 +35,7 @@ private:
                               b2World& world)= 0;
 protected:
     std::vector<ElementPtr> elements_;
+    float32 recentSpeed_;
 };
 
 #endif // OBJECT_H

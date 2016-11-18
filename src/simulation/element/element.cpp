@@ -34,6 +34,11 @@ void Element::create(b2World &world)
     }
 }
 
+void Element::destroy(b2World &world)
+{
+    world.DestroyBody(body_);
+}
+
 void Element::addFixture(const b2FixtureDef& fixtureDef)
 {
     fixtureDefs_.push_back(fixtureDef);
@@ -62,3 +67,18 @@ b2Body* Element::getBody()
 {
     return body_;
 }
+
+Element::Parameters Element::Parameters::createRandom()
+{
+    float32 density = std::rand() % Element::Parameters::MAX_DENSITY;
+    int maxFriction = Element::Parameters::MAX_FRICTION * 100;
+    float32 friction = static_cast<float32>(1 + std::rand() % maxFriction) / maxFriction;
+    int maxRestitution = Element::Parameters::MAX_RESTITUTION * 100;
+    float32 restitution = static_cast<float32>(std::rand() % maxRestitution) / maxRestitution;
+
+    return Parameters(density, friction, restitution);
+}
+
+const int Element::Parameters::MAX_DENSITY = 100;
+const double Element::Parameters::MAX_FRICTION = 1;
+const double Element::Parameters::MAX_RESTITUTION = 1;

@@ -13,6 +13,7 @@ class Car: public Object
 public:
     Car(b2Vec2 position);
     void run(float32 torque);
+
 private:
     void initialize(std::vector<ElementPtr>& elements);
     void createJoints(std::vector<ElementPtr>& elements,

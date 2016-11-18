@@ -13,6 +13,8 @@
 class BodyGene
 {
 public:
+    static const int MAX_LENGTH = 5;
+public:
     BodyGene(float32 angle, float32 length,
              const Element::Parameters& parameters);
 

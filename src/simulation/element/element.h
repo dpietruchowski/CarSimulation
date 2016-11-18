@@ -12,9 +12,17 @@ class Element
 public:
     struct Parameters
     {
+        static const int MAX_DENSITY;
+        static const double MAX_FRICTION;
+        static const double MAX_RESTITUTION;
         float32 density;
         float32 friction;
         float32 restitution;
+
+        Parameters(float32 d, float32 f, float32 r):
+            density(d), friction(f), restitution(r) {}
+        Parameters(const Parameters&) = default;
+        static Parameters createRandom();
     };
 
 public:
@@ -27,6 +35,7 @@ public:
     /// Create body and fixture and attach to the world
     /// First you need to add fixtures definitions
     void create(b2World& world);
+    void destroy(b2World& world);
     /// Get body position, set color, thickness and call drawElement method
     void draw(QPainter& painter) const;
     /// Add fixture definition

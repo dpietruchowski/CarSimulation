@@ -10,15 +10,17 @@
 #include <vector>
 
 #include "object.h"
+#include "ground.h"
 
 class World : public QWidget
 {
     Q_OBJECT
 public:
-    explicit World(b2Vec2 gravity, QWidget *parent = 0);
+    explicit World(b2Vec2 gravity, b2Vec2 size, QWidget *parent = 0);
 
     void paintEvent(QPaintEvent *event);
     void start();
+    void myUpdate();
     void timerEvent(QTimerEvent *event);
     void mousePressEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
@@ -30,12 +32,16 @@ public slots:
 
 
 private:
+    typedef std::vector<Object*> Objects_;
     bool mousePressed_;
     QPointF oldPosition_;
     b2World world_;
     int timerId_;
+    int secTimerId_;
     QTransform transform_;
-    std::vector<Object*> objects_;
+    Objects_ objects_;
+    Ground *ground_;
+    b2Vec2 size_;
 };
 
 #endif // WORLD_H

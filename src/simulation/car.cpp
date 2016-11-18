@@ -1,31 +1,49 @@
 #include "car.h"
+#include "element/element.h"
 #include "element/wheel.h"
 #include "element/polygon.h"
 #include "utilfunctions.h"
 
 #include <iostream>
 
+using namespace std;
+
 Car::Car(b2Vec2 position)
 {
     color_ = Qt::GlobalColor::red;
-    initLength_ = 6;
+    initLength_ = 20;
     startPosition_ = position;
 
     // Car project -- for test
-    Element::Parameters param({10,1,0.1});
-    body_.push_back(BodyGene(20 , 8, param));
-    body_.push_back(BodyGene(10 , 6, param));
-    param.density = 1;
-    body_.push_back(BodyGene(170 , 6, param));
-    body_.push_back(BodyGene(30 , 3, param));
-    body_.push_back(BodyGene(10 , 6, param));
-    body_.push_back(BodyGene(360 - 240, initLength_, param));
+    int restAngle = 360;
+    while(restAngle >= 1)
+    {
+        int scale = 2;
+        int minAngle = 20;
+        if(restAngle < 90)
+            scale = 1;
+        if(minAngle >= restAngle)
+            minAngle = 0;
+        int angle = minAngle + std::rand() % (restAngle/scale - minAngle);
+        if(restAngle < 20) angle = restAngle;
+        restAngle -= angle;
+        int maxLength = (BodyGene::MAX_LENGTH - 1) * 100;
+        float32 length = static_cast<float>(1 + std::rand() % maxLength) / maxLength;
+        length *= (BodyGene::MAX_LENGTH - 1);
+        length += 1;
+        cout << length << " ";
+        cout << angle << endl;
+        Element::Parameters param = Element::Parameters::createRandom();
+        body_.push_back(BodyGene(angle, length, param));
+    }
 
-    param.density = 20;
-    param.friction = 0.5;
-    param.restitution = 0.1;
-    wheels_.push_back(WheelGene(4, body_.size()-1, param));
-    wheels_.push_back(WheelGene(3, body_.size()-2, param));
+    for(int i = 1; i <= 2; ++i)
+    {
+        Element::Parameters param = Element::Parameters::createRandom();
+        int radius = 1 + std::rand() % (WheelGene::MAX_RADIUS - 1);
+        int vertexNumber = std::rand() % body_.size();
+        wheels_.push_back(WheelGene(radius, vertexNumber, param));
+    }
 }
 
 void Car::initialize(std::vector<ElementPtr>& elements)
@@ -72,8 +90,8 @@ void Car::createJoints(std::vector<ElementPtr> &elements,
     mass+= elements[1]->getBody()->GetMass();
     mass+= elements[2]->getBody()->GetMass();
 
-    jointDef.maxMotorTorque = 8*mass * 80/4;
-    jointDef.motorSpeed = elements[1]->getBody()->GetMass() * 2000;
+    jointDef.maxMotorTorque = 4*mass * 80/4;
+    jointDef.motorSpeed = elements[1]->getBody()->GetMass() * 200;
     jointDef.enableMotor = true;
 
     world.CreateJoint(&jointDef);
@@ -93,9 +111,4 @@ void Car::run(float32 torque)
 {
     elements_[1]->getBody()->ApplyTorque(torque, false);
     elements_[2]->getBody()->ApplyTorque(torque, false);
-}
-
-float32 Car::rand(float32 min, float32 max)
-{
-    return min + static_cast<float32>(std::rand() % static_cast<int>(max - min));
 }

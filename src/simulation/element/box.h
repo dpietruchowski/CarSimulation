@@ -12,25 +12,37 @@
 class Box: public Polygon
 {
 public:
+    enum Corner
+    {
+        LEFT_UP = 0,
+        LEFT_DOWN = 1,
+        RIGHT_UP = 2,
+        RIGHT_DOWN = 3
+    };
+
+public:
     Box(float32 angle = 0, float32 width = 10,
         float32 height = 0.2);
     Box(const Box& box, float32 angle,
         float32 width = 10);
+    Box(const Box& box) = default;
+
+    b2Vec2 getPosition() const;
+    b2Vec2 getVertex(Corner corner) const;
 
 private:
     ///
-    /// \brief calcPoint Calc point, which creates section with startPoint
-    /// and is inclined at angle to line y = startPoint.y;
-    /// \param startPoint Creates section with calculated point.
-    /// \param angle Angle between line y = startPoint.y and
-    /// section between startPoint and calculated point.
-    /// \param width Section width between startPoint and calculated point.
-    /// \return Calculated point.
-    ///
-    b2Vec2 calcPoint(b2Vec2 startPoint,
-                     float32 angle,
-                     float32 width) const;
-
+        /// \brief calcPoint Calc point, which creates section with startPoint
+        /// and is inclined at angle to line y = startPoint.y;
+        /// \param startPoint Creates section with calculated point.
+        /// \param angle Angle between line y = startPoint.y and
+        /// section between startPoint and calculated point.
+        /// \param width Section width between startPoint and calculated point.
+        /// \return Calculated point.
+        ///
+        b2Vec2 calcPoint(b2Vec2 startPoint,
+                         float32 angle,
+                         float32 width) const;
     ///
     /// \brief calcVertices Calc four vertices, two is shared with previous box
     /// \param box Previous box.
@@ -47,7 +59,10 @@ private:
                             float32 width,
                             float32 height);
 private:
-    std::array<b2Vec2,4> vertices_;
     b2Vec2 position_;
+    std::array<b2Vec2,4> vertices_;
 };
+
+typedef Box::Corner Corner;
+
 #endif // BOX_H
