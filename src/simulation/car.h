@@ -8,8 +8,12 @@
 
 #include <vector>
 
+class Car;
+typedef std::unique_ptr<Car> CarPtr;
+
 class Car: public Object
 {
+
 public:
     Car(b2Vec2 position);
     void run(float32 torque);

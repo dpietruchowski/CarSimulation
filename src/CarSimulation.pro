@@ -28,7 +28,8 @@ HEADERS += utilfunctions.h \
            simulation/element/box.h \
            simulation/element/element.h \
            simulation/element/polygon.h \
-           simulation/element/wheel.h
+           simulation/element/wheel.h \
+    genetic/geneticalgorithm.h
 SOURCES += main.cpp \
            utilfunctions.cpp \
            genetic/bodygene.cpp \
@@ -41,4 +42,5 @@ SOURCES += main.cpp \
            simulation/element/box.cpp \
            simulation/element/element.cpp \
            simulation/element/polygon.cpp \
-           simulation/element/wheel.cpp
+           simulation/element/wheel.cpp \
+    genetic/geneticalgorithm.cpp

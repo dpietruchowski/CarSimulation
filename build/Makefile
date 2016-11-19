@@ -60,7 +60,8 @@ SOURCES       = ../src/main.cpp \
 		../src/simulation/element/box.cpp \
 		../src/simulation/element/element.cpp \
 		../src/simulation/element/polygon.cpp \
-		../src/simulation/element/wheel.cpp moc_world.cpp
+		../src/simulation/element/wheel.cpp \
+		../src/genetic/geneticalgorithm.cpp moc_world.cpp
 OBJECTS       = main.o \
 		utilfunctions.o \
 		bodygene.o \
@@ -74,6 +75,7 @@ OBJECTS       = main.o \
 		element.o \
 		polygon.o \
 		wheel.o \
+		geneticalgorithm.o \
 		moc_world.o
 DIST          = ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/common/unix.conf \
@@ -235,7 +237,8 @@ DIST          = ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pr
 		../src/simulation/element/box.h \
 		../src/simulation/element/element.h \
 		../src/simulation/element/polygon.h \
-		../src/simulation/element/wheel.h ../src/main.cpp \
+		../src/simulation/element/wheel.h \
+		../src/genetic/geneticalgorithm.h ../src/main.cpp \
 		../src/utilfunctions.cpp \
 		../src/genetic/bodygene.cpp \
 		../src/genetic/gene.cpp \
@@ -247,7 +250,8 @@ DIST          = ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pr
 		../src/simulation/element/box.cpp \
 		../src/simulation/element/element.cpp \
 		../src/simulation/element/polygon.cpp \
-		../src/simulation/element/wheel.cpp
+		../src/simulation/element/wheel.cpp \
+		../src/genetic/geneticalgorithm.cpp
 QMAKE_TARGET  = CarSimulation
 DESTDIR       = 
 TARGET        = CarSimulation
@@ -582,8 +586,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/utilfunctions.h ../src/genetic/bodygene.h ../src/genetic/gene.h ../src/genetic/wheelgene.h ../src/simulation/car.h ../src/simulation/ground.h ../src/simulation/object.h ../src/simulation/world.h ../src/simulation/element/box.h ../src/simulation/element/element.h ../src/simulation/element/polygon.h ../src/simulation/element/wheel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/main.cpp ../src/utilfunctions.cpp ../src/genetic/bodygene.cpp ../src/genetic/gene.cpp ../src/genetic/wheelgene.cpp ../src/simulation/car.cpp ../src/simulation/ground.cpp ../src/simulation/object.cpp ../src/simulation/world.cpp ../src/simulation/element/box.cpp ../src/simulation/element/element.cpp ../src/simulation/element/polygon.cpp ../src/simulation/element/wheel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/utilfunctions.h ../src/genetic/bodygene.h ../src/genetic/gene.h ../src/genetic/wheelgene.h ../src/simulation/car.h ../src/simulation/ground.h ../src/simulation/object.h ../src/simulation/world.h ../src/simulation/element/box.h ../src/simulation/element/element.h ../src/simulation/element/polygon.h ../src/simulation/element/wheel.h ../src/genetic/geneticalgorithm.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/main.cpp ../src/utilfunctions.cpp ../src/genetic/bodygene.cpp ../src/genetic/gene.cpp ../src/genetic/wheelgene.cpp ../src/simulation/car.cpp ../src/simulation/ground.cpp ../src/simulation/object.cpp ../src/simulation/world.cpp ../src/simulation/element/box.cpp ../src/simulation/element/element.cpp ../src/simulation/element/polygon.cpp ../src/simulation/element/wheel.cpp ../src/genetic/geneticalgorithm.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1067,6 +1071,10 @@ moc_world.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QtGui \
 		../src/simulation/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
+		../src/simulation/car.h \
+		../src/genetic/bodygene.h \
+		../src/genetic/gene.h \
+		../src/genetic/wheelgene.h \
 		../src/simulation/ground.h \
 		../src/simulation/world.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/bin/moc
@@ -1543,6 +1551,10 @@ main.o: ../src/main.cpp ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidget
 		../src/simulation/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
+		../src/simulation/car.h \
+		../src/genetic/bodygene.h \
+		../src/genetic/gene.h \
+		../src/genetic/wheelgene.h \
 		../src/simulation/ground.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
 
@@ -2653,11 +2665,11 @@ world.o: ../src/simulation/world.cpp ../src/simulation/world.h \
 		../src/simulation/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
-		../src/simulation/ground.h \
 		../src/simulation/car.h \
 		../src/genetic/bodygene.h \
 		../src/genetic/gene.h \
-		../src/genetic/wheelgene.h
+		../src/genetic/wheelgene.h \
+		../src/simulation/ground.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o world.o ../src/simulation/world.cpp
 
 box.o: ../src/simulation/element/box.cpp ../src/simulation/element/box.h \
@@ -3088,6 +3100,116 @@ wheel.o: ../src/simulation/element/wheel.cpp ../src/simulation/element/wheel.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QTransform \
 		../src/utilfunctions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wheel.o ../src/simulation/element/wheel.cpp
+
+geneticalgorithm.o: ../src/genetic/geneticalgorithm.cpp ../src/genetic/geneticalgorithm.h \
+		../src/simulation/car.h \
+		../src/simulation/object.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qnamespace.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qglobal.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qconfig.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfeatures.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtypetraits.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qisenum.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsysinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlogging.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qflags.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmutex.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qnumeric.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qversiontagging.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qrect.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmargins.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsize.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qpoint.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpixmap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qcolor.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qrgb.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringlist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qalgorithms.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qiterator.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qrefcount.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qarraydata.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qchar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qpair.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbytearray.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstring.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qregexp.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qrgba64.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qshareddata.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qhash.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobject.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreevent.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmetatype.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobject_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qimage.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpixelformat.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtransform.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qmatrix.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpolygon.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvector.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qregion.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdatastream.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qiodevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qline.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainterpath.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qbrush.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfont.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../src/simulation/element/element.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpalette.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qcursor.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qkeysequence.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qevent.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdebug.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtextstream.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qurl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qurlquery.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfile.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfiledevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvector2d.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
+		../src/genetic/bodygene.h \
+		../src/genetic/gene.h \
+		../src/genetic/wheelgene.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o geneticalgorithm.o ../src/genetic/geneticalgorithm.cpp
 
 moc_world.o: moc_world.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_world.o moc_world.cpp

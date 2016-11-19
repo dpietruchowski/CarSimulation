@@ -30,7 +30,7 @@ public:
     /// It does not create a body, fixture definitions and fixtures
     Element(const b2Vec2& position, const b2BodyType& bodyType,
             const Qt::GlobalColor& color);
-    virtual ~Element() {}
+    virtual ~Element() = default;
 
     /// Create body and fixture and attach to the world
     /// First you need to add fixtures definitions

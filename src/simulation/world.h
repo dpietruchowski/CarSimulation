@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "object.h"
+#include "car.h"
 #include "ground.h"
 
 class World : public QWidget
@@ -18,7 +19,7 @@ class World : public QWidget
 public:
     static const float32 CLICKED_DISTANCE;
     explicit World(b2Vec2 gravity, b2Vec2 size, QWidget *parent = 0);
-    ~World();
+    ~World() = default;
 
     void paintEvent(QPaintEvent *event);
     void start();
@@ -37,7 +38,7 @@ private:
 
 
 private:
-    typedef std::vector<Object*> Objects_;
+    typedef std::vector<CarPtr> Objects_;
     bool mousePressed_;
     b2Vec2 clickedPosition_;
     QPointF oldPosition_;
@@ -46,7 +47,7 @@ private:
     int secTimerId_;
     QTransform transform_;
     Objects_ objects_;
-    Ground *ground_;
+    Ground ground_;
     b2Vec2 size_;
 };
 

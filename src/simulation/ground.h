@@ -13,8 +13,8 @@ private:
     /// Create 100 box with random angle and width
     void initialize(std::vector<ElementPtr>& genes);
     /// Not implemented yet
-    virtual void createJoints(std::vector<ElementPtr>& elements,
-                              b2World& world) {}
+    virtual void createJoints(std::vector<ElementPtr>&,
+                              b2World&) {}
     b2Vec2 size_;
 };
 

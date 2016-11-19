@@ -8,28 +8,18 @@ using namespace std;
 const float32 World::CLICKED_DISTANCE = 10;
 
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
-    QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0), size_(size)
+    QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0),
+    ground_(size), size_(size)
 {
     transform_.scale(5.0f, -5.0f);
     transform_.translate(10.0f, -40.0f);
     mousePressed_ = false;
     oldPosition_ = QPoint(0,0);
 
-    ground_ = new Ground(size_);
-    ground_->create(world_);
-    objects_.push_back(new Car(b2Vec2(10,200)));
-//    o = objects_[1];
-    Object* o = objects_[0];
+    ground_.create(world_);
+    objects_.push_back(CarPtr(new Car(b2Vec2(10,200))));
+    Car* o = objects_[0].get();
     o->create(world_);
-}
-
-World::~World()
-{
-    delete ground_;
-    for(auto &o: objects_)
-    {
-        delete o;
-    }
 }
 
 void World::start()
@@ -51,7 +41,7 @@ void World::myUpdate()
     int i = 0;
     for (Objects_::iterator it = objects_.begin(); it != objects_.end();)
     {
-        Object *o = *it;
+        Car *o = it->get();
         o->update();
 
         float32 x = o->getPosition().x;
@@ -96,19 +86,19 @@ void World::timerEvent(QTimerEvent *event)
     {
         if(objects_.size() < 30)
         {
-            Object* o = new Car(b2Vec2(10,200));
+            CarPtr o(new Car(b2Vec2(10,200)));
             o->create(world_);
-            objects_.push_back(o);
+            objects_.push_back(std::move(o));
         }
     }
 }
 
-void World::paintEvent(QPaintEvent *event)
+void World::paintEvent(QPaintEvent*)
 {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
     p.setTransform(transform_);
-    ground_->draw(p);
+    ground_.draw(p);
     for(auto& o : objects_)
     {
         o->draw(p);
@@ -128,7 +118,7 @@ void World::mousePressEvent(QMouseEvent* event)
     updateClickedPosition();
 }
 
-void World::mouseReleaseEvent(QMouseEvent* event)
+void World::mouseReleaseEvent(QMouseEvent*)
 {
     mousePressed_ = false;
 }
