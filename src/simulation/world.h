@@ -16,7 +16,9 @@ class World : public QWidget
 {
     Q_OBJECT
 public:
+    static const float32 CLICKED_DISTANCE;
     explicit World(b2Vec2 gravity, b2Vec2 size, QWidget *parent = 0);
+    ~World();
 
     void paintEvent(QPaintEvent *event);
     void start();
@@ -30,10 +32,14 @@ signals:
 
 public slots:
 
+private:
+    void updateClickedPosition();
+
 
 private:
     typedef std::vector<Object*> Objects_;
     bool mousePressed_;
+    b2Vec2 clickedPosition_;
     QPointF oldPosition_;
     b2World world_;
     int timerId_;

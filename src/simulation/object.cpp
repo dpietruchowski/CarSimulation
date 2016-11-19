@@ -29,14 +29,9 @@ void Object::destroy(b2World &world)
     }
 }
 
-float32 Object::getX() const
+const b2Vec2 &Object::getPosition() const
 {
-    return elements_[0]->getBody()->GetPosition().x;
-}
-
-float32 Object::getY() const
-{
-    return elements_[0]->getBody()->GetPosition().y;
+    return elements_[0]->getBody()->GetPosition();
 }
 
 float32 Object::getSpeedX() const
@@ -61,10 +56,6 @@ bool Object::isMoving() const
 
 void Object::draw(QPainter &painter) const
 {
-    painter.setPen(QPen(Qt::GlobalColor::green));
-    painter.drawPoint(0,0);
-    painter.drawPoint(20,40);
-    painter.drawPoint(20,20);
     for(const auto& g : elements_)
     {
         g->draw(painter);

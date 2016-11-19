@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const float32 World::CLICKED_DISTANCE = 10;
+
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0), size_(size)
 {
@@ -21,6 +23,15 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     o->create(world_);
 }
 
+World::~World()
+{
+    delete ground_;
+    for(auto &o: objects_)
+    {
+        delete o;
+    }
+}
+
 void World::start()
 {
     if(!timerId_)
@@ -35,26 +46,41 @@ void World::start()
 
 void World::myUpdate()
 {
+    float32 minDistance = size_.Length();
+    Objects_::iterator nearestIt;
     int i = 0;
-    for (Objects_::iterator it = objects_.begin(); it != objects_.end(); ++it)
+    for (Objects_::iterator it = objects_.begin(); it != objects_.end();)
     {
         Object *o = *it;
-        cout << "x: " << o->getX() << endl;
-        cout << "y: " << o->getY() << endl;
-        cout << "predkosc: " << o->getSpeed() << endl;
-        string moving = o->isMoving() ? "jedzie" : "stoi";
-        cout << moving << endl;
         o->update();
 
-        if ( (!o->isMoving()) || (o->getX() > size_.x) || (o->getX() < 0) )
+        float32 x = o->getPosition().x;
+        if ( (!o->isMoving()) || (x > size_.x) || (x < 0) )
         {
-            cout << i << endl;
             o->destroy(world_);
             objects_.erase(it);
-            --it;
+            continue;
         }
+
+        b2Vec2 diffPosition = clickedPosition_ - o->getPosition();
+        float32 distance = diffPosition.Length();
+        if(distance < minDistance)
+        {
+            minDistance = distance;
+            nearestIt = it;
+        }
+
         ++i;
+        ++it;
     }
+
+    cout << clickedPosition_.x << " " << clickedPosition_.y << endl;
+    if( (minDistance < CLICKED_DISTANCE) && mousePressed_ )
+    {
+        (*nearestIt)->destroy(world_);
+        objects_.erase(nearestIt);
+    }
+
 }
 
 
@@ -82,7 +108,6 @@ void World::paintEvent(QPaintEvent *event)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
     p.setTransform(transform_);
-    //p.drawEllipse(20,20,10,10);
     ground_->draw(p);
     for(auto& o : objects_)
     {
@@ -100,6 +125,7 @@ void World::mousePressEvent(QMouseEvent* event)
 {
     mousePressed_ = true;
     oldPosition_ = event->pos();
+    updateClickedPosition();
 }
 
 void World::mouseReleaseEvent(QMouseEvent* event)
@@ -114,5 +140,16 @@ void World::mouseMoveEvent(QMouseEvent* event)
         const QPointF delta = event->pos() - oldPosition_;
         transform_.translate(delta.x()/3, -delta.y()/3);
         oldPosition_ = event->pos();
+        updateClickedPosition();
     }
+}
+
+void World::updateClickedPosition()
+{
+    qreal dx = transform_.dx();
+    qreal dy = transform_.dy();
+    qreal sx = transform_.m11();
+    qreal sy = transform_.m22();
+    clickedPosition_.x = static_cast<float32> (oldPosition_.x() - dx) / sx;
+    clickedPosition_.y = static_cast<float32> (oldPosition_.y() - dy) / sy;
 }

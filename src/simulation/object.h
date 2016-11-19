@@ -11,6 +11,7 @@ class Object
 {
 public:
     Object();
+    virtual ~Object() = default;
 
     void update();
     /// Draw all elements using painter
@@ -20,8 +21,7 @@ public:
     void create(b2World& world);
     void destroy(b2World& world);
 
-    float32 getX() const;
-    float32 getY() const;
+    const b2Vec2& getPosition() const;
     float32 getSpeedX() const;
     float32 getSpeedY() const;
     float32 getSpeed() const;

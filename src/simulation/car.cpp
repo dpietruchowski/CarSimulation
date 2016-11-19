@@ -11,7 +11,11 @@ using namespace std;
 Car::Car(b2Vec2 position)
 {
     color_ = Qt::GlobalColor::red;
-    initLength_ = 20;
+    int maxLength = (BodyGene::MAX_LENGTH - 1) * 100;
+    initLength_ = static_cast<float>(1 + std::rand() % maxLength) / maxLength;
+    initLength_ *= (BodyGene::MAX_LENGTH - 1);
+    initLength_ += 1;
+
     startPosition_ = position;
 
     // Car project -- for test
@@ -27,12 +31,9 @@ Car::Car(b2Vec2 position)
         int angle = minAngle + std::rand() % (restAngle/scale - minAngle);
         if(restAngle < 20) angle = restAngle;
         restAngle -= angle;
-        int maxLength = (BodyGene::MAX_LENGTH - 1) * 100;
         float32 length = static_cast<float>(1 + std::rand() % maxLength) / maxLength;
         length *= (BodyGene::MAX_LENGTH - 1);
         length += 1;
-        cout << length << " ";
-        cout << angle << endl;
         Element::Parameters param = Element::Parameters::createRandom();
         body_.push_back(BodyGene(angle, length, param));
     }
