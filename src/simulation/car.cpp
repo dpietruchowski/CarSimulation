@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Car::Car(b2Vec2 position)
+Car::Car(b2Vec2 position): score_(0)
 {
     color_ = Qt::GlobalColor::red;
     int maxLength = (BodyGene::MAX_LENGTH - 1) * 100;
@@ -29,6 +29,8 @@ Car::Car(b2Vec2 position)
         if(minAngle >= restAngle)
             minAngle = 0;
         int angle = minAngle + std::rand() % (restAngle/scale - minAngle);
+        if(angle < 2)
+            angle = restAngle;
         if(restAngle < 20) angle = restAngle;
         restAngle -= angle;
         float32 length = static_cast<float>(1 + std::rand() % maxLength) / maxLength;

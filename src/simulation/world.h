@@ -12,6 +12,7 @@
 #include "object.h"
 #include "car.h"
 #include "ground.h"
+#include "genetic/geneticalgorithm.h"
 
 class World : public QWidget
 {
@@ -49,6 +50,7 @@ private:
     Objects_ objects_;
     Ground ground_;
     b2Vec2 size_;
+    GeneticAlgorithm genetic_;
 };
 
 #endif // WORLD_H

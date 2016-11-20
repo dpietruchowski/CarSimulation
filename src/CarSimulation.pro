@@ -18,29 +18,38 @@ LIBS += -lBox2D
 
 # Input
 HEADERS += utilfunctions.h \
-          genetic/bodygene.h \
-          genetic/gene.h \
-           genetic/wheelgene.h \
-           simulation/car.h \
-           simulation/ground.h \
-           simulation/object.h \
-           simulation/world.h \
-           simulation/element/box.h \
-           simulation/element/element.h \
-           simulation/element/polygon.h \
-           simulation/element/wheel.h \
-    genetic/geneticalgorithm.h
+            simulation/car.h \
+            simulation/ground.h \
+            simulation/object.h \
+            simulation/world.h \
+            simulation/element/box.h \
+            simulation/element/element.h \
+            simulation/element/polygon.h \
+            simulation/element/wheel.h \
+            genetic/geneticalgorithm.h \
+            genetic/selection/rouletteselection.h \
+            genetic/selection/selection_h.h \
+            genetic/selection/selection.h \
+            genetic/selection/selectiontypes.h \
+            genetic/selection/tournamentselection.h \
+            genetic/gene/bodygene.h \
+            genetic/gene/gene.h \
+genetic/gene/wheelgene.h
 SOURCES += main.cpp \
-           utilfunctions.cpp \
-           genetic/bodygene.cpp \
-           genetic/gene.cpp \
-           genetic/wheelgene.cpp \
-           simulation/car.cpp \
-           simulation/ground.cpp \
-           simulation/object.cpp \
-           simulation/world.cpp \
-           simulation/element/box.cpp \
-           simulation/element/element.cpp \
-           simulation/element/polygon.cpp \
-           simulation/element/wheel.cpp \
-    genetic/geneticalgorithm.cpp
+            utilfunctions.cpp \
+            simulation/car.cpp \
+            simulation/ground.cpp \
+            simulation/object.cpp \
+            simulation/world.cpp \
+            simulation/element/box.cpp \
+            simulation/element/element.cpp \
+            simulation/element/polygon.cpp \
+            simulation/element/wheel.cpp \
+            genetic/geneticalgorithm.cpp \
+            genetic/selection/rouletteselection.cpp \
+            genetic/selection/selection.cpp \
+            genetic/selection/selectiontypes.cpp \
+            genetic/selection/tournamentselection.cpp \
+            genetic/gene/bodygene.cpp \
+            genetic/gene/gene.cpp \
+            genetic/gene/wheelgene.cpp
