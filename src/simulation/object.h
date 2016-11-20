@@ -33,6 +33,7 @@ private:
     virtual void initialize(std::vector<ElementPtr>& elements)= 0;
     virtual void createJoints(std::vector<ElementPtr>& elements,
                               b2World& world)= 0;
+    virtual void updateObject() {}
 protected:
     std::vector<ElementPtr> elements_;
     float32 recentSpeed_;

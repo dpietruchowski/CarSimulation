@@ -24,7 +24,6 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     for(int i = 0; i < 10; ++i)
     {
         CarPtr c(new Car(b2Vec2(10,200)));
-        c->setScore(i*13);
         genetic_.insert(std::move(c));
     }
 }
@@ -54,7 +53,9 @@ void World::myUpdate()
         float32 x = o->getPosition().x;
         if ( (!o->isMoving()) || (x > size_.x) || (x < 0) )
         {
+            o->calcScore();
             o->destroy(world_);
+            genetic_.insert(std::move(*it));
             objects_.erase(it);
             continue;
         }
@@ -73,7 +74,9 @@ void World::myUpdate()
 
     if( (minDistance < CLICKED_DISTANCE) && mousePressed_ )
     {
+        (*nearestIt)->calcScore();
         (*nearestIt)->destroy(world_);
+        genetic_.insert(std::move(*nearestIt));
         objects_.erase(nearestIt);
     }
     genetic_.create();

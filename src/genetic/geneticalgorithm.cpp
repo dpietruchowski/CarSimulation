@@ -9,18 +9,18 @@ GeneticAlgorithm::GeneticAlgorithm(unsigned int populationSize,
     populationSize_(populationSize), selectionType_(selectionType),
     tournamentSize_(populationSize/3)
 {
-    for(int i = 0; i < populationSize_; ++i)
-    {
-        stats.push_back(0);
-    }
+
 }
 
 void GeneticAlgorithm::insert(CarPtr individual)
 {
     if(population_.size() == populationSize_)
-        population_.erase(population_.begin());
+        population_.erase(population_.end());
+    else stats.push_back(0);
     population_.push_back(move(individual));
-    std::sort(population_.begin(), population_.end(), std::greater<CarPtr>());
+    std::sort(population_.begin(), population_.end(),
+              [](const CarPtr &lhs, const CarPtr &rhs)
+                { return *lhs > *rhs; });
 }
 
 CarPtr GeneticAlgorithm::create()

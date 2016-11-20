@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Car::Car(b2Vec2 position): score_(0)
+Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
 {
     color_ = Qt::GlobalColor::red;
     int maxLength = (BodyGene::MAX_LENGTH - 1) * 100;
@@ -114,4 +114,18 @@ void Car::run(float32 torque)
 {
     elements_[1]->getBody()->ApplyTorque(torque, false);
     elements_[2]->getBody()->ApplyTorque(torque, false);
+}
+
+void Car::updateObject()
+{
+    timeAlive_ += 1.0f/60;
+}
+
+void Car::calcScore()
+{
+    b2Body *body = elements_[0]->getBody();
+    float32 distance = body->GetPosition().x - startPosition_.x;
+
+    score_ = distance - 2 * timeAlive_;
+    if(score_ < 0) score_ = 0;
 }

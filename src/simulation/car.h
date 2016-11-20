@@ -29,16 +29,18 @@ public:
     inline bool operator>=(const Car& rhs)
         { return score_ >= rhs.score_; }
     void run(float32 torque);
-    double getScore() { return score_; }
-    void setScore(double score) { score_ = score; }
+    double getScore() const { return score_; }
+    void calcScore();
 
 private:
     void initialize(std::vector<ElementPtr>& elements);
     void createJoints(std::vector<ElementPtr>& elements,
                       b2World& world);
+    void updateObject();
     float32 rand(float32 min, float32 max);
 private:
     double score_;
+    double timeAlive_;
     b2Vec2 startPosition_;
     float32 initLength_;
     Qt::GlobalColor color_;
