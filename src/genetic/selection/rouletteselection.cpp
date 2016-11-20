@@ -38,7 +38,7 @@ void RouletteSelection::calcScores(Scores& scores, double worstScore)
     double sumOfScores = 0;
     for(auto& score : scores)
     {
-        score.value = (worstScore - score.value + 1);
+        score.value = abs(worstScore - score.value + 1);
         sumOfScores += score.value;
     }
 
