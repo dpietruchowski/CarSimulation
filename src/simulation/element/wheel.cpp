@@ -8,8 +8,7 @@ Wheel::Wheel(const b2Vec2& position, float32 r, const Qt::GlobalColor& color,
              const Element::Parameters& parameters):
     Element(position, b2_dynamicBody, color)
 {
-    addFixture(ShapeCreation::getCircleShape(r),
-               parameters);
+    addFixture(ShapeCreation()(r), parameters);
 }
 
 void Wheel::drawElement(QPainter& painter,

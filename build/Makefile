@@ -1089,7 +1089,13 @@ moc_world.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QtGui \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
 		../src/simulation/car.h \
+		../src/genetic/gene/bodygene.h \
+		../src/genetic/gene/gene.h \
+		../src/genetic/gene/wheelgene.h \
 		../src/simulation/ground.h \
+		../src/genetic/geneticalgorithm.h \
+		../src/genetic/selection/selection.h \
+		../src/genetic/selection/selectiontypes.h \
 		../src/simulation/world.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/bin/moc
 	/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/damian/workspace/CarSim/src -I/usr/local/include/Box2D -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/simulation/world.h -o moc_world.cpp
@@ -1566,7 +1572,13 @@ main.o: ../src/main.cpp ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidget
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
 		../src/simulation/car.h \
-		../src/simulation/ground.h
+		../src/genetic/gene/bodygene.h \
+		../src/genetic/gene/gene.h \
+		../src/genetic/gene/wheelgene.h \
+		../src/simulation/ground.h \
+		../src/genetic/geneticalgorithm.h \
+		../src/genetic/selection/selection.h \
+		../src/genetic/selection/selectiontypes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
 
 utilfunctions.o: ../src/utilfunctions.cpp ../src/utilfunctions.h
@@ -1676,6 +1688,9 @@ car.o: ../src/simulation/car.cpp ../src/simulation/car.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfiledevice.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvector2d.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
+		../src/genetic/gene/bodygene.h \
+		../src/genetic/gene/gene.h \
+		../src/genetic/gene/wheelgene.h \
 		../src/simulation/element/wheel.h \
 		../src/simulation/element/polygon.h \
 		../src/utilfunctions.h
@@ -2351,7 +2366,13 @@ world.o: ../src/simulation/world.cpp ../src/simulation/world.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
 		../src/simulation/car.h \
-		../src/simulation/ground.h
+		../src/genetic/gene/bodygene.h \
+		../src/genetic/gene/gene.h \
+		../src/genetic/gene/wheelgene.h \
+		../src/simulation/ground.h \
+		../src/genetic/geneticalgorithm.h \
+		../src/genetic/selection/selection.h \
+		../src/genetic/selection/selectiontypes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o world.o ../src/simulation/world.cpp
 
 box.o: ../src/simulation/element/box.cpp ../src/simulation/element/box.h \
@@ -2887,7 +2908,15 @@ geneticalgorithm.o: ../src/genetic/geneticalgorithm.cpp ../src/genetic/genetical
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfile.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfiledevice.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvector2d.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
+		../src/genetic/gene/bodygene.h \
+		../src/genetic/gene/gene.h \
+		../src/genetic/gene/wheelgene.h \
+		../src/genetic/selection/selection.h \
+		../src/genetic/selection/selectiontypes.h \
+		../src/genetic/selection/selection_h.h \
+		../src/genetic/selection/rouletteselection.h \
+		../src/genetic/selection/tournamentselection.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o geneticalgorithm.o ../src/genetic/geneticalgorithm.cpp
 
 rouletteselection.o: ../src/genetic/selection/rouletteselection.cpp ../src/genetic/selection/rouletteselection.h \

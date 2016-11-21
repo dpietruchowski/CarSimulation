@@ -19,6 +19,8 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
     startPosition_ = position;
 
     // Car project -- for test
+    b2Vec2 prevVertex(0, 0);
+    prevVertex += b2Vec2(initLength_, 0);
     int restAngle = 360;
     while(restAngle >= 1)
     {
@@ -36,8 +38,11 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
         float32 length = static_cast<float>(1 + std::rand() % maxLength) / maxLength;
         length *= (BodyGene::MAX_LENGTH - 1);
         length += 1;
+
         Element::Parameters param = Element::Parameters::createRandom();
-        body_.push_back(BodyGene(angle, length, param));
+        b2Vec2 vertex = VertexCalculation()(prevVertex, angle, length);
+        prevVertex = vertex;
+        body_.push_back(BodyGene(param, vertex));
     }
 
     for(int i = 1; i <= 2; ++i)

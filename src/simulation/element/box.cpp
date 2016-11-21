@@ -8,7 +8,7 @@ Box::Box(float32 angle, float32 width, float32 height):
             Qt::GlobalColor::black),
     position_(0.f, 0.f)
 {
-    b2Shape* shape = ShapeCreation::getPolygonShape(ShapeCreation::Vertices({initializeFirst(angle, width, height), 4}));
+    b2Shape* shape = ShapeCreation()(initializeFirst(angle, width, height), 4);
     addFixture(shape, Element::Parameters({10, 0.5, 0.1}));
     position_ = b2Vec2(0.f, 0.f);
 }
@@ -19,7 +19,7 @@ Box::Box(const Box& box, float32 angle, float32 width):
             Qt::GlobalColor::black),
     position_(box.vertices_[Corner::RIGHT_UP] + box.position_)
 {
-    b2Shape* shape = ShapeCreation::getPolygonShape(ShapeCreation::Vertices({calcVertices(box, angle, width), 4}));
+    b2Shape* shape = ShapeCreation()(calcVertices(box, angle, width), 4);
     addFixture(shape, Element::Parameters({10, 0.5, 0.1}));
 }
 
