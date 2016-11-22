@@ -16,6 +16,11 @@ class Car: public Object
 
 public:
     Car(b2Vec2 position);
+    Car(const Car &other);
+    Car(const Car &other, const WheelGene &gene, size_t geneIndex);
+    Car(const Car &other, const BodyGene &gene, size_t geneIndex);
+    Car(const Car &first, const Car &second,
+        const std::vector<float32> &angles);
     inline bool operator==(const Car& rhs)
         { return score_ == rhs.score_; }
     inline bool operator!=(const Car& rhs)

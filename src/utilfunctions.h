@@ -25,7 +25,7 @@ struct VertexCalculation
 {
     ~VertexCalculation() = default;
     VertexCalculation() = default;
-    VertexCalculation(const ShapeCreation &other) = delete;
+    VertexCalculation(const VertexCalculation &other) = delete;
     b2Vec2 operator()(const b2Vec2& vertex,
                       float32 angle, float32 length) const;
 private:
@@ -87,4 +87,13 @@ private:
     b2Vec2 calcPointInLine(const b2Vec2& line,
                            const b2Vec2& point,
                            float32 length, bool onRight) const;
+};
+
+struct AngleCalculation
+{
+    ~AngleCalculation() = default;
+    AngleCalculation() = default;
+    AngleCalculation(const AngleCalculation &other) = delete;
+    float32 operator()(const b2Vec2 &point1, const b2Vec2 &point2);
+    float32 operator()(const b2Vec2 &point);
 };

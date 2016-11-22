@@ -10,6 +10,7 @@ public:
 public:
     WheelGene(float32 radius, int vertexNumber,
               const Element::Parameters& parameters);
+    WheelGene(const WheelGene &other) = default;
 
     /// Create wheel element using to simulation
     ElementPtr create(const b2Vec2& position,

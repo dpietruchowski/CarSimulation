@@ -1,4 +1,5 @@
 #include "utilfunctions.h"
+#include <cmath>
 
 b2Shape *ShapeCreation::operator()(const b2Vec2 *vertices, int32 size) const
 {
@@ -95,9 +96,9 @@ b2Vec2 VertexCalculation::calcLine(const b2Vec2& point1, const b2Vec2& point2) c
 }
 
 b2Vec2 VertexCalculation::calcPointInLine(const b2Vec2& line,
-                                 const b2Vec2& point,
-                                 float32 length,
-                                 bool onRight) const
+                                          const b2Vec2& point,
+                                          float32 length,
+                                          bool onRight) const
 {
     b2Vec2 rPoint;
 
@@ -110,4 +111,16 @@ b2Vec2 VertexCalculation::calcPointInLine(const b2Vec2& line,
     rPoint.y = line.x * rPoint.x + line.y;
 
     return rPoint;
+}
+
+float32 AngleCalculation::operator()(const b2Vec2 &point1, const b2Vec2 &point2)
+{
+    return (*this)(point2) - (*this)(point1);
+}
+
+float32 AngleCalculation::operator()(const b2Vec2 &point)
+{
+    if(point.y < 0)
+        return 360 + atan2(point.y, point.x)*(180/M_PI);
+    return atan2(point.y, point.x)*(180/M_PI);
 }

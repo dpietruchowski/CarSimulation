@@ -17,6 +17,7 @@ public:
 public:
     BodyGene(const Element::Parameters& parameters, const b2Vec2 &vertex):
         parameters_(parameters), vertex_(vertex) {}
+    BodyGene(const BodyGene &other) = default;
 
     /// Create polygon shape as triangle with vertices:
     /// First vertex is center of car's body and this is position of car
