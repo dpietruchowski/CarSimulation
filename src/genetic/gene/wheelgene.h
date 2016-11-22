@@ -20,6 +20,7 @@ public:
     /// with whom wheel creates joint
     int getVertexNumber() const;
     const Element::Parameters& getParameters() const;
+    std::string toString() const;
 
 private:
     float32 radius_;

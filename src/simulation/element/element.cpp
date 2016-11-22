@@ -79,6 +79,16 @@ Element::Parameters Element::Parameters::createRandom()
     return Parameters(density, friction, restitution);
 }
 
+std::__cxx11::string Element::Parameters::toString() const
+{
+    std::string sParameters;
+    sParameters += std::to_string(density) + " ";
+    sParameters += std::to_string(friction) + " ";
+    sParameters += std::to_string(restitution);
+
+    return sParameters;
+}
+
 const int Element::Parameters::MAX_DENSITY = 100;
 const double Element::Parameters::MAX_FRICTION = 1;
 const double Element::Parameters::MAX_RESTITUTION = 1;

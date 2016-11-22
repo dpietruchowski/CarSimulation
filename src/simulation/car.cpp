@@ -18,6 +18,7 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
 
     startPosition_ = position;
 
+    //TODO Move this to private function;
     // Car project -- for test
     b2Vec2 prevVertex(0, 0);
     prevVertex += b2Vec2(initLength_, 0);
@@ -58,52 +59,53 @@ Car::Car(const Car &other):
     score_(0), timeAlive_(0), startPosition_(other.startPosition_),
     initLength_(other.initLength_), color_(other.color_)
 {
-
+    for(const auto & b: other.body_)
+    {
+        body_.push_back(b);
+    }
+    for(const auto & wheel: other.wheels_)
+    {
+        wheels_.push_back(wheel);
+    }
 }
 
 Car::Car(const Car &other, const WheelGene &gene, size_t geneIndex):
-    score_(0), timeAlive_(0), startPosition_(other.startPosition_),
-    initLength_(other.initLength_), color_(other.color_)
+    Car(other)
 {
     if(geneIndex >= other.body_.size())
         throw "Out of body";
 
-    for(const auto & b: other.body_)
-    {
-        body_.push_back(b);
-    }
-    size_t i = 0;
-    for(const auto & wheel: other.wheels_)
-    {
-        if(geneIndex == i)
-        {
-            wheels_.push_back(gene);
-            continue;
-        }
-
-        wheels_.push_back(wheel);
-        ++i;
-    }
+    WheelGene wheel(gene);
+    std::swap(wheels_[geneIndex], wheel);
 }
 
-Car::Car(const Car &other, const BodyGene &gene, size_t geneIndex):
-    score_(0), timeAlive_(0), startPosition_(other.startPosition_),
-    initLength_(other.initLength_), color_(other.color_)
+Car::Car(const Car &other, const BodyGene &gene):
+    Car(other)
 {
-    if(geneIndex >= other.body_.size())
-        throw "Out of body";
-
-    size_t i = 0;
-    for(const auto & b: other.body_)
+    //TODO Move this to private function;
+    float32 geneAngle = AngleCalculation()(gene.getVertex());
+    if(AngleCalculation()(body_[0].getVertex()) < geneAngle)
     {
-        if(geneIndex == i)
-        {
-            body_.push_back(gene);
-            continue;
-        }
-        body_.push_back(b);
-        ++i;
+        BodyGene bodyPart(gene);
+        std::swap(body_[0], bodyPart);
     }
+    else
+    {
+        Body::iterator prevIt = body_.begin();
+        for(Body::const_iterator it = other.body_.begin() + 1;
+            it != other.body_.end(); ++it)
+        {
+            float32 angle = AngleCalculation()(it->getVertex());
+            if(angle > geneAngle)
+            {
+                BodyGene bodyPart(gene);
+                std::swap(*prevIt, bodyPart);
+                break;
+            }
+            ++prevIt;
+        }
+    }
+
     for(const auto & wheel: other.wheels_)
     {
         wheels_.push_back(wheel);
@@ -111,8 +113,11 @@ Car::Car(const Car &other, const BodyGene &gene, size_t geneIndex):
 }
 
 Car::Car(const Car &first, const Car &second,
-         const std::vector<float32> &angles)
+         const std::vector<float32> &angles):
+    score_(0), timeAlive_(0), startPosition_(first.startPosition_),
+    initLength_(first.initLength_), color_(first.color_)
 {
+    //TODO Move this to private function;
     if(angles.back() != 360) throw "Last element must be equal 360";
 
     size_t firstJ = 0;
@@ -125,23 +130,23 @@ Car::Car(const Car &first, const Car &second,
         size_t &notParentJ = i % 2 ? secondJ : firstJ;
         float32 angle = angles[i];
 
-        float32 vertexAngle;
-        while(vertexAngle <= angle)
+        float32 vertexAngle = 0;
+        while( (vertexAngle < angle) && (parentJ < parent.body_.size()) )
         {
-            body_.push_back(parent.body_[parentJ]);
+            body_.push_back(BodyGene(parent.body_[parentJ]));
             vertexAngle = AngleCalculation()(parent.body_[parentJ].getVertex());
             parentJ++;
         }
-        if( angle == 360 )
-            continue;
+
+        if( (angle == 360) || (parentJ < parent.body_.size()) )
+            break;
 
         //Find first bodyGene, which vertex angle from x-axis is greater then
         //last pushed
-        angle = vertexAngle + 5; // 5 - next angle must be min greater than vertexAngle
+        angle = vertexAngle + 0.5; // 5 - next angle must be min greater than vertexAngle
         vertexAngle = 0;
         while(vertexAngle < angle)
         {
-            body_.push_back(notParent.body_[notParentJ]);
             vertexAngle = AngleCalculation()(notParent.body_[notParentJ].getVertex());
             notParentJ++;
         }
@@ -236,4 +241,25 @@ void Car::calcScore()
 
     score_ = distance - 2 * timeAlive_;
     if(score_ < 0) score_ = 0;
+}
+
+string Car::toString() const
+{
+    string sCar;
+
+    sCar += to_string(score_) + " ";
+    sCar += to_string(timeAlive_) + " ";
+    sCar += to_string(startPosition_.x) + " ";
+    sCar += to_string(startPosition_.y) + " ";
+    sCar += to_string(initLength_) + "\n";
+    for(const auto & b: body_)
+    {
+        sCar += "BG: " + b.toString() + "\n";
+    }
+    for(const auto & wheel: wheels_)
+    {
+        sCar += "WG: " + wheel.toString() + "\n";
+    }
+
+    return sCar;
 }

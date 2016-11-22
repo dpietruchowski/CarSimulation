@@ -26,6 +26,19 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
         CarPtr c(new Car(b2Vec2(10,200)));
         genetic_.insert(std::move(c));
     }
+//    int i = 10;
+//    while(i--) {
+//    CarPtr c1(new Car(b2Vec2(10,200)));
+//    CarPtr c2(new Car(b2Vec2(10,200)));
+//    vector<float32> angles;
+//    angles.push_back(90);
+//    angles.push_back(180);
+//    angles.push_back(270);
+//    angles.push_back(360);
+//    CarPtr c3(new Car(*c1, *c2, angles));
+//    cout << c1->toString() << endl << endl;
+//    cout << c2->toString() << endl << endl;
+//    cout << c3->toString() << endl << endl;}
 }
 
 void World::start()

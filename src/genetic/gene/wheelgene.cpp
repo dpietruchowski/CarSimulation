@@ -25,3 +25,13 @@ const Element::Parameters& WheelGene::getParameters() const
 {
     return parameters_;
 }
+
+std::__cxx11::string WheelGene::toString() const
+{
+    std::string sGene;
+    sGene += std::to_string(radius_) + " ";
+    sGene += std::to_string(vertexNumber_) + " ";
+    sGene += parameters_.toString();
+
+    return sGene;
+}

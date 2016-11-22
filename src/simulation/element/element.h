@@ -23,6 +23,7 @@ public:
             density(d), friction(f), restitution(r) {}
         Parameters(const Parameters&) = default;
         static Parameters createRandom();
+        std::string toString() const;
     };
 
 public:

@@ -13,3 +13,13 @@ b2Shape* BodyGene::create(const b2Vec2& vertex)
     vertices[2] = vertex_;
     return ShapeCreation()(&vertices[0], 3);
 }
+
+std::__cxx11::string BodyGene::toString() const
+{
+    std::string sGene;
+    sGene += std::to_string(vertex_.x) + " ";
+    sGene += std::to_string(vertex_.y) + " ";
+    sGene += parameters_.toString();
+
+    return sGene;
+}

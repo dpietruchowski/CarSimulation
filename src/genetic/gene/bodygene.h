@@ -28,6 +28,8 @@ public:
     const Element::Parameters& getParameters() const { return parameters_; }
     const b2Vec2& getVertex() const { return vertex_; }
 
+    std::string toString() const;
+
 private:
     Element::Parameters parameters_;
     b2Vec2 vertex_;
