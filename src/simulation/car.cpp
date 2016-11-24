@@ -106,6 +106,8 @@ Car::Car(const Car &other, const BodyGene &gene):
         }
     }
 
+    //TODO This wheels could have indexNumber which is now longer avaiable
+    //(body_.size is smaller thank before)
     for(const auto & wheel: other.wheels_)
     {
         wheels_.push_back(wheel);
@@ -229,9 +231,9 @@ void Car::run(float32 torque)
     elements_[2]->getBody()->ApplyTorque(torque, false);
 }
 
-void Car::updateObject()
+void Car::updateObject(double interval)
 {
-    timeAlive_ += 1.0f/60;
+    timeAlive_ += interval/1000;
 }
 
 void Car::calcScore()

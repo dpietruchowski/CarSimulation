@@ -5,10 +5,10 @@ Object::Object(): recentSpeed_(10)
 
 }
 
-void Object::update()
+void Object::update(double interval)
 {
     recentSpeed_ = 0.1 * getSpeed() + 0.9 * recentSpeed_;
-    updateObject();
+    updateObject(interval);
 }
 
 void Object::create(b2World &world)

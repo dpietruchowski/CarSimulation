@@ -9,7 +9,8 @@ const float32 World::CLICKED_DISTANCE = 10;
 
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0),
-    ground_(size), size_(size), genetic_(10, SelectionType::FITNESS_ROULETTESELECTION)
+    ground_(size), size_(size), genetic_(10, SelectionType::FITNESS_ROULETTESELECTION),
+    interval_(1000/60)
 {
     transform_.scale(5.0f, -5.0f);
     transform_.translate(10.0f, -40.0f);
@@ -45,7 +46,7 @@ void World::start()
 {
     if(!timerId_)
     {
-        timerId_ = startTimer(1000/60); // 60fps
+        timerId_ = startTimer(interval_); // 60fps
     }
     if(!secTimerId_)
     {
@@ -61,7 +62,7 @@ void World::myUpdate()
     for (Objects_::iterator it = objects_.begin(); it != objects_.end();)
     {
         Car *o = it->get();
-        o->update();
+        o->update(interval_);
 
         float32 x = o->getPosition().x;
         if ( (!o->isMoving()) || (x > size_.x) || (x < 0) )

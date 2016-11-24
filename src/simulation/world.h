@@ -51,6 +51,7 @@ private:
     Ground ground_;
     b2Vec2 size_;
     GeneticAlgorithm genetic_;
+    double interval_;
 };
 
 #endif // WORLD_H

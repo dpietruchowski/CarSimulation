@@ -13,7 +13,7 @@ public:
     Object();
     virtual ~Object() = default;
 
-    void update();
+    void update(double interval);
     /// Draw all elements using painter
     void draw(QPainter& painter) const;
     /// Initialize all elements, attach element's bodies
@@ -33,7 +33,7 @@ private:
     virtual void initialize(std::vector<ElementPtr>& elements)= 0;
     virtual void createJoints(std::vector<ElementPtr>& elements,
                               b2World& world)= 0;
-    virtual void updateObject() {}
+    virtual void updateObject(double /* unused */) {}
 protected:
     std::vector<ElementPtr> elements_;
     float32 recentSpeed_;

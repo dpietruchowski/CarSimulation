@@ -42,7 +42,7 @@ private:
     void initialize(std::vector<ElementPtr>& elements);
     void createJoints(std::vector<ElementPtr>& elements,
                       b2World& world);
-    void updateObject();
+    void updateObject(double interval);
     float32 rand(float32 min, float32 max);
 private:
     typedef std::vector<BodyGene> Body;
