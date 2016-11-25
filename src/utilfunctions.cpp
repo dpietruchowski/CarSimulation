@@ -50,9 +50,8 @@ b2Vec2 VertexCalculation::calcVertex(const b2Vec2& centerVertex,
     rotatePoint.y += centerVertex.y;
     b2Vec2 line = calcLine(centerVertex, rotatePoint);
 
-    return calcPointInLine(line, centerVertex, length,
-                                  isOnRight(centerVertex,
-                                            rotatePoint));
+    return calcPointInLine(line, centerVertex, length, isOnRight(centerVertex,
+                                                                 rotatePoint));
 }
 
 
@@ -72,8 +71,8 @@ b2Vec2 VertexCalculation::calcPoint(const b2Vec2& point, float32 angle) const
 }
 
 b2Vec2 VertexCalculation::calcPoint(const b2Vec2& centerPoint,
-                           const b2Vec2& rotatePoint,
-                           float32 angle) const
+                                    const b2Vec2& rotatePoint,
+                                    float32 angle) const
 {
     b2Vec2 point;
     point.x = rotatePoint.x - centerPoint.x;

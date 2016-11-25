@@ -2,6 +2,7 @@
 #include "car.h"
 #include "ground.h"
 #include <iostream>
+#include "utilfunctions.h"
 
 using namespace std;
 
@@ -21,25 +22,7 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     objects_.push_back(CarPtr(new Car(b2Vec2(10,200))));
     Car* o = objects_[0].get();
     o->create(world_);
-
-    for(int i = 0; i < 10; ++i)
-    {
-        CarPtr c(new Car(b2Vec2(10,200)));
-        genetic_.insert(std::move(c));
-    }
-//    int i = 10;
-//    while(i--) {
-//    CarPtr c1(new Car(b2Vec2(10,200)));
-//    CarPtr c2(new Car(b2Vec2(10,200)));
-//    vector<float32> angles;
-//    angles.push_back(90);
-//    angles.push_back(180);
-//    angles.push_back(270);
-//    angles.push_back(360);
-//    CarPtr c3(new Car(*c1, *c2, angles));
-//    cout << c1->toString() << endl << endl;
-//    cout << c2->toString() << endl << endl;
-//    cout << c3->toString() << endl << endl;}
+    genetic_.insert(CarPtr(new Car(*o)));
 }
 
 void World::start()

@@ -2,11 +2,19 @@
 #include "utilfunctions.h"
 #include "simulation/element/wheel.h"
 
-WheelGene::WheelGene(float32 radius, int vertexNumber,
+WheelGene::WheelGene(float32 radius, size_t vertexNumber,
                      const Element::Parameters& parameters):
     radius_(radius), vertexNumber_(vertexNumber), parameters_(parameters)
 {
 
+}
+
+WheelGene::WheelGene(const WheelGene &other, size_t maxVertexNumber):
+    radius_(other.radius_), vertexNumber_(other.vertexNumber_),
+    parameters_(other.parameters_)
+{
+    vertexNumber_ = vertexNumber_ < maxVertexNumber ?
+                vertexNumber_ : maxVertexNumber - 1;
 }
 
 ElementPtr WheelGene::create(const b2Vec2 &position,
@@ -16,7 +24,7 @@ ElementPtr WheelGene::create(const b2Vec2 &position,
                                 parameters_));
 }
 
-int WheelGene::getVertexNumber() const
+size_t WheelGene::getVertexNumber() const
 {
     return vertexNumber_;
 }

@@ -49,7 +49,10 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
     for(int i = 1; i <= 2; ++i)
     {
         Element::Parameters param = Element::Parameters::createRandom();
-        int radius = 1 + std::rand() % (WheelGene::MAX_RADIUS - 1);
+        int maxRadius = (WheelGene::MAX_RADIUS - 1) * 100;
+        float32 radius = static_cast<float>(1 + std::rand() % maxRadius) / maxRadius;
+        radius *= (WheelGene::MAX_RADIUS - 1);
+        radius += 0.5;
         int vertexNumber = std::rand() % body_.size();
         wheels_.push_back(WheelGene(radius, vertexNumber, param));
     }
@@ -82,35 +85,22 @@ Car::Car(const Car &other, const WheelGene &gene, size_t geneIndex):
 Car::Car(const Car &other, const BodyGene &gene):
     Car(other)
 {
+    if( !isVertexSettable(gene.getVertex()) )
+        throw "wrong gene";
     //TODO Move this to private function;
     float32 geneAngle = AngleCalculation()(gene.getVertex());
-    if(AngleCalculation()(body_[0].getVertex()) < geneAngle)
+    Body::iterator prevIt = body_.begin();
+    for(Body::const_iterator it = other.body_.begin() + 1;
+        it != other.body_.end(); ++it)
     {
-        BodyGene bodyPart(gene);
-        std::swap(body_[0], bodyPart);
-    }
-    else
-    {
-        Body::iterator prevIt = body_.begin();
-        for(Body::const_iterator it = other.body_.begin() + 1;
-            it != other.body_.end(); ++it)
+        float32 angle = AngleCalculation()(it->getVertex());
+        if(angle > geneAngle)
         {
-            float32 angle = AngleCalculation()(it->getVertex());
-            if(angle > geneAngle)
-            {
-                BodyGene bodyPart(gene);
-                std::swap(*prevIt, bodyPart);
-                break;
-            }
-            ++prevIt;
+            BodyGene bodyPart(gene);
+            std::swap(*prevIt, bodyPart);
+            break;
         }
-    }
-
-    //TODO This wheels could have indexNumber which is now longer avaiable
-    //(body_.size is smaller thank before)
-    for(const auto & wheel: other.wheels_)
-    {
-        wheels_.push_back(wheel);
+        ++prevIt;
     }
 }
 
@@ -140,26 +130,25 @@ Car::Car(const Car &first, const Car &second,
             parentJ++;
         }
 
-        if( (angle == 360) || (parentJ < parent.body_.size()) )
+        if( (angle == 360) || (parentJ >= parent.body_.size()) )
             break;
 
         //Find first bodyGene, which vertex angle from x-axis is greater then
         //last pushed
         angle = vertexAngle + 0.5; // 5 - next angle must be min greater than vertexAngle
         vertexAngle = 0;
-        while(vertexAngle < angle)
+        while((vertexAngle < angle) && (notParentJ < notParent.body_.size()))
         {
             vertexAngle = AngleCalculation()(notParent.body_[notParentJ].getVertex());
             notParentJ++;
         }
-        if( (parentJ >= parent.body_.size())
-             || (notParentJ >= notParent.body_.size()) )
-            throw "Should never get here";
     }
 
+    //TODO This wheels could have indexNumber which is now longer avaiable
+    //(body_.size is smaller thank before)
     for(const auto & wheel: first.wheels_)
     {
-        wheels_.push_back(wheel);
+        wheels_.push_back(WheelGene(wheel, body_.size()));
     }
 
 }
@@ -264,4 +253,15 @@ string Car::toString() const
     }
 
     return sCar;
+}
+
+bool Car::isVertexSettable(const b2Vec2 &vertex)
+{
+    for(const auto& b: body_)
+    {
+        float32 angle = AngleCalculation()(b.getVertex(), vertex);
+        if( abs(angle) < 0.5 )
+            return false;
+    }
+    return true;
 }

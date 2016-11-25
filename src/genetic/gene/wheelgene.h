@@ -8,8 +8,9 @@ class WheelGene
 public:
     static const int MAX_RADIUS = 4;
 public:
-    WheelGene(float32 radius, int vertexNumber,
+    WheelGene(float32 radius, size_t vertexNumber,
               const Element::Parameters& parameters);
+    WheelGene(const WheelGene &other, size_t maxVertexNumber);
     WheelGene(const WheelGene &other) = default;
 
     /// Create wheel element using to simulation
@@ -18,14 +19,14 @@ public:
 
     /// Return vertice number in car body,
     /// with whom wheel creates joint
-    int getVertexNumber() const;
+    size_t getVertexNumber() const;
     const Element::Parameters& getParameters() const;
     std::string toString() const;
 
 private:
     float32 radius_;
     /// Vertex number in car body, with whom wheel creates joint
-    int vertexNumber_;
+    size_t vertexNumber_;
     Element::Parameters parameters_;
 
 };
