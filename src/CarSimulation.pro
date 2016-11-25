@@ -34,7 +34,10 @@ HEADERS += utilfunctions.h \
             genetic/selection/tournamentselection.h \
             genetic/gene/bodygene.h \
             genetic/gene/gene.h \
-genetic/gene/wheelgene.h
+genetic/gene/wheelgene.h \
+    genetic/operation/geneticoperation.h \
+    genetic/operation/mutation.h \
+    genetic/operation/crossover.h
 SOURCES += main.cpp \
             utilfunctions.cpp \
             simulation/car.cpp \
@@ -52,4 +55,7 @@ SOURCES += main.cpp \
             genetic/selection/tournamentselection.cpp \
             genetic/gene/bodygene.cpp \
             genetic/gene/gene.cpp \
-            genetic/gene/wheelgene.cpp
+            genetic/gene/wheelgene.cpp \
+    genetic/operation/geneticoperation.cpp \
+    genetic/operation/mutation.cpp \
+    genetic/operation/crossover.cpp

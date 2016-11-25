@@ -10,8 +10,8 @@ const float32 World::CLICKED_DISTANCE = 10;
 
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0),
-    ground_(size), size_(size), genetic_(10, SelectionType::FITNESS_ROULETTESELECTION),
-    interval_(1000/60)
+    ground_(size), size_(size), genetic_(50, SelectionType::RANK_ROULETTESELECTION),
+    interval_(1000/600)
 {
     transform_.scale(5.0f, -5.0f);
     transform_.translate(10.0f, -40.0f);
@@ -22,7 +22,8 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     objects_.push_back(CarPtr(new Car(b2Vec2(10,200))));
     Car* o = objects_[0].get();
     o->create(world_);
-    genetic_.insert(CarPtr(new Car(*o)));
+    for(int i = 0; i < 50; ++i)
+        genetic_.insert(CarPtr(new Car(*o)));
 }
 
 void World::start()
@@ -33,7 +34,7 @@ void World::start()
     }
     if(!secTimerId_)
     {
-        secTimerId_ = startTimer(2000); // 60fps
+        secTimerId_ = startTimer(400); // 60fps
     }
 }
 
@@ -76,7 +77,6 @@ void World::myUpdate()
         genetic_.insert(std::move(*nearestIt));
         objects_.erase(nearestIt);
     }
-    genetic_.create();
 }
 
 
@@ -92,7 +92,7 @@ void World::timerEvent(QTimerEvent *event)
     {
         if(objects_.size() < 30)
         {
-            CarPtr o(new Car(b2Vec2(10,200)));
+            CarPtr o = genetic_.create();
             o->create(world_);
             objects_.push_back(std::move(o));
         }

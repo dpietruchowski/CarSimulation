@@ -255,8 +255,11 @@ string Car::toString() const
     return sCar;
 }
 
-bool Car::isVertexSettable(const b2Vec2 &vertex)
+bool Car::isVertexSettable(const b2Vec2 &vertex) const
 {
+    if( (vertex.Length() < 0.1) || (vertex.Length() > BodyGene::MAX_LENGTH) )
+        return false;
+
     for(const auto& b: body_)
     {
         float32 angle = AngleCalculation()(b.getVertex(), vertex);

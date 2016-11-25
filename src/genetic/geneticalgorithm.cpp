@@ -1,5 +1,7 @@
 #include "geneticalgorithm.h"
 #include "selection/selection_h.h"
+#include "operation/crossover.h"
+#include "operation/mutation.h"
 #include <iostream>
 
 using namespace std;
@@ -25,7 +27,18 @@ void GeneticAlgorithm::insert(CarPtr individual)
 
 CarPtr GeneticAlgorithm::create()
 {
-    stats[select()]++;
+    std::vector<Car *> parents;
+    int chosen = select();
+    stats[chosen]++;
+    parents.push_back(population_[chosen].get());
+    chosen = select();
+    stats[chosen]++;
+    parents.push_back(population_[chosen].get());
+
+    CarPtr parent = Crossover()(parents);
+    parents.clear();
+    parents.push_back(parent.get());
+    CarPtr child = Mutation()(parents);
     cout << "////////" << endl;
     int i = 0;
     for (const auto & s: stats) {
@@ -33,7 +46,7 @@ CarPtr GeneticAlgorithm::create()
         ++i;
     }
 
-    return nullptr;
+    return std::move(child);
 }
 
 unsigned int GeneticAlgorithm::select()

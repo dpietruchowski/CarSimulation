@@ -7,12 +7,12 @@ class GeneticOperation
 {
 public:
     typedef std::vector<Car*> Parents;
-    GeneticOperation();
+    GeneticOperation() = default;
 
     CarPtr operator()(const Parents& parents);
 
 private:
-    CarPtr reproduce(const Parents &parents) = 0;
+    virtual CarPtr reproduce(const Parents &parents) = 0;
 };
 
 #endif // GENETICOPERATION_H

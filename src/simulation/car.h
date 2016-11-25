@@ -37,7 +37,7 @@ public:
     double getScore() const { return score_; }
     void calcScore();
     std::string toString() const;
-    bool isVertexSettable(const b2Vec2 &vertex);
+    bool isVertexSettable(const b2Vec2 &vertex) const;
 
 private:
     void initialize(std::vector<ElementPtr>& elements);

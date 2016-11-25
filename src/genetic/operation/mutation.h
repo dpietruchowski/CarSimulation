@@ -6,7 +6,7 @@
 class Mutation : public GeneticOperation
 {
 public:
-    Mutation();
+    Mutation() = default;
 private:
     CarPtr reproduce(const Parents &parents);
     CarPtr reproduce(const Car *parent);
