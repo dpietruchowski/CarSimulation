@@ -6,17 +6,17 @@
 
 using namespace std;
 
-GeneticAlgorithm::GeneticAlgorithm(unsigned int populationSize,
+GeneticAlgorithm::GeneticAlgorithm(size_t size,
                                    SelectionType selectionType):
-    populationSize_(populationSize), selectionType_(selectionType),
-    tournamentSize_(populationSize/3)
+    size_(size), selectionType_(selectionType),
+    tournamentSize_(size/3)
 {
 
 }
 
 void GeneticAlgorithm::insert(CarPtr individual)
 {
-    if(population_.size() == populationSize_)
+    if(population_.size() == size_)
         population_.erase(population_.end());
     else stats.push_back(0);
     population_.push_back(move(individual));
@@ -42,11 +42,21 @@ CarPtr GeneticAlgorithm::create()
     cout << "////////" << endl;
     int i = 0;
     for (const auto & s: stats) {
-        cout << "[" << population_[i]->getScore() << "]" << "[" << i << "]: " << s << endl;
+        cout << "[" << population_[i]->score() << "]" << "[" << i << "]: " << s << endl;
         ++i;
     }
 
     return std::move(child);
+}
+
+bool GeneticAlgorithm::full() const
+{
+    return population_.size() >= size_;
+}
+
+bool GeneticAlgorithm::empty() const
+{
+    return population_.empty();
 }
 
 unsigned int GeneticAlgorithm::select()
@@ -70,7 +80,7 @@ unsigned int GeneticAlgorithm::select()
     int i = 0;
     for(const auto& ind: population_)
     {
-        selection->add(i, ind->getScore());
+        selection->add(i, ind->score());
         ++i;
     }
     selection->calcScores();

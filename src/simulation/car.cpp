@@ -11,10 +11,7 @@ using namespace std;
 Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
 {
     color_ = Qt::GlobalColor::red;
-    int maxLength = (BodyGene::MAX_LENGTH - 1) * 100;
-    initLength_ = static_cast<float>(1 + std::rand() % maxLength) / maxLength;
-    initLength_ *= (BodyGene::MAX_LENGTH - 1);
-    initLength_ += 1;
+    initLength_ = randLength();
 
     startPosition_ = position;
 
@@ -36,9 +33,7 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
             angle = restAngle;
         if(restAngle < 20) angle = restAngle;
         restAngle -= angle;
-        float32 length = static_cast<float>(1 + std::rand() % maxLength) / maxLength;
-        length *= (BodyGene::MAX_LENGTH - 1);
-        length += 1;
+        float32 length = randLength();
 
         Element::Parameters param = Element::Parameters::createRandom();
         b2Vec2 vertex = VertexCalculation()(prevVertex, angle, length);
@@ -222,7 +217,18 @@ void Car::run(float32 torque)
 
 void Car::updateObject(double interval)
 {
-    timeAlive_ += interval/1000;
+    timeAlive_ += 1.0/60;
+}
+
+float32 Car::randLength() const
+{
+    int max = BodyGene::MAX_LENGTH;
+    int min = BodyGene::MIN_LENGTH;
+    float32 length = (double)std::rand() / RAND_MAX;;
+    length *= (max - min);
+    length += min;
+
+    return length;
 }
 
 void Car::calcScore()

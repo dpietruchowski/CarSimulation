@@ -6,7 +6,7 @@
 class WheelGene
 {
 public:
-    static const int MAX_RADIUS = 4;
+    static const int MAX_RADIUS = 3;
 public:
     WheelGene(float32 radius, size_t vertexNumber,
               const Element::Parameters& parameters);

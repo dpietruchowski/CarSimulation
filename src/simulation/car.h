@@ -34,7 +34,8 @@ public:
     inline bool operator>=(const Car& rhs)
         { return score_ >= rhs.score_; }
     void run(float32 torque);
-    double getScore() const { return score_; }
+    double score() const { return score_; }
+    double timeAlive() const { return timeAlive_; }
     void calcScore();
     std::string toString() const;
     bool isVertexSettable(const b2Vec2 &vertex) const;
@@ -45,6 +46,7 @@ private:
                       b2World& world);
     void updateObject(double interval);
     float32 rand(float32 min, float32 max);
+    float32 randLength() const;
 private:
     typedef std::vector<BodyGene> Body;
     typedef std::vector<WheelGene> Wheels;

@@ -10,8 +10,8 @@ const float32 World::CLICKED_DISTANCE = 10;
 
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0),
-    ground_(size), size_(size), genetic_(50, SelectionType::RANK_ROULETTESELECTION),
-    interval_(1000/600)
+    ground_(size), size_(size), genetic_(30, SelectionType::RANK_ROULETTESELECTION),
+    interval_(1000.0/600), buffer_(30)
 {
     transform_.scale(5.0f, -5.0f);
     transform_.translate(10.0f, -40.0f);
@@ -23,7 +23,7 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     Car* o = objects_[0].get();
     o->create(world_);
     for(int i = 0; i < 50; ++i)
-        genetic_.insert(CarPtr(new Car(*o)));
+        buffer_.push(CarPtr(new Car(b2Vec2(10,200))));
 }
 
 void World::start()
@@ -34,7 +34,7 @@ void World::start()
     }
     if(!secTimerId_)
     {
-        secTimerId_ = startTimer(400); // 60fps
+        secTimerId_ = startTimer(interval_ * 300); // 60fps
     }
 }
 
@@ -49,12 +49,12 @@ void World::myUpdate()
         o->update(interval_);
 
         float32 x = o->getPosition().x;
-        if ( (!o->isMoving()) || (x > size_.x) || (x < 0) )
+        if ( (!o->isMoving())
+             || (x > size_.x)
+             || (x < 0)
+             || (o->timeAlive() > (size_.x / 20)) )
         {
-            o->calcScore();
-            o->destroy(world_);
-            genetic_.insert(std::move(*it));
-            objects_.erase(it);
+            killObject(it);
             continue;
         }
 
@@ -72,10 +72,7 @@ void World::myUpdate()
 
     if( (minDistance < CLICKED_DISTANCE) && mousePressed_ )
     {
-        (*nearestIt)->calcScore();
-        (*nearestIt)->destroy(world_);
-        genetic_.insert(std::move(*nearestIt));
-        objects_.erase(nearestIt);
+        killObject(nearestIt);
     }
 }
 
@@ -90,12 +87,7 @@ void World::timerEvent(QTimerEvent *event)
     }
     if(event->timerId() == secTimerId_)
     {
-        if(objects_.size() < 30)
-        {
-            CarPtr o = genetic_.create();
-            o->create(world_);
-            objects_.push_back(std::move(o));
-        }
+        createObject();
     }
 }
 
@@ -148,4 +140,25 @@ void World::updateClickedPosition()
     qreal sy = transform_.m22();
     clickedPosition_.x = static_cast<float32> (oldPosition_.x() - dx) / sx;
     clickedPosition_.y = static_cast<float32> (oldPosition_.y() - dy) / sy;
+}
+
+void World::killObject(Objects_::iterator &it)
+{
+    (*it)->calcScore();
+    (*it)->destroy(world_);
+    genetic_.insert(std::move(*it));
+    objects_.erase(it);
+}
+
+void World::createObject()
+{
+    if(genetic_.full() && !buffer_.full())
+        buffer_.push(std::move(genetic_.create()));
+
+    if(!buffer_.empty() && (objects_.size() < 1) )
+    {
+        CarPtr o = buffer_.pop();
+        o->create(world_);
+        objects_.push_back(std::move(o));
+    }
 }

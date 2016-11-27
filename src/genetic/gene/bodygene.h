@@ -14,6 +14,7 @@ class BodyGene
 {
 public:
     static const int MAX_LENGTH = 8;
+    static const int MIN_LENGTH = 2;
 public:
     BodyGene(const Element::Parameters& parameters, const b2Vec2 &vertex):
         parameters_(parameters), vertex_(vertex) {}

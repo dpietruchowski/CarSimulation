@@ -8,10 +8,12 @@
 class GeneticAlgorithm
 {
 public:
-    GeneticAlgorithm(unsigned int populationSize, SelectionType selectionType);
+    GeneticAlgorithm(size_t size, SelectionType selectionType);
     
     void insert(CarPtr individual);
     CarPtr create();
+    bool full() const;
+    bool empty() const;
 
 private:
     unsigned int select();
@@ -19,7 +21,7 @@ private:
 private:
     typedef std::vector<CarPtr> Population_;
     Population_ population_;
-    unsigned int populationSize_;
+    size_t size_;
     SelectionType selectionType_;
     unsigned int tournamentSize_;
     std::vector<int> stats;

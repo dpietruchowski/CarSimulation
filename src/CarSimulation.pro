@@ -37,7 +37,8 @@ HEADERS += utilfunctions.h \
 genetic/gene/wheelgene.h \
     genetic/operation/geneticoperation.h \
     genetic/operation/mutation.h \
-    genetic/operation/crossover.h
+    genetic/operation/crossover.h \
+    simulation/buffer.h
 SOURCES += main.cpp \
             utilfunctions.cpp \
             simulation/car.cpp \
@@ -58,4 +59,5 @@ SOURCES += main.cpp \
             genetic/gene/wheelgene.cpp \
     genetic/operation/geneticoperation.cpp \
     genetic/operation/mutation.cpp \
-    genetic/operation/crossover.cpp
+    genetic/operation/crossover.cpp \
+    simulation/buffer.cpp
