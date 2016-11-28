@@ -18,7 +18,7 @@ public:
     void draw(QPainter& painter) const;
     /// Initialize all elements, attach element's bodies
     /// to world, createJoints
-    void create(b2World& world);
+    bool create(b2World& world);
     void destroy(b2World& world);
 
     const b2Vec2& getPosition() const;
@@ -34,6 +34,7 @@ private:
     virtual void createJoints(std::vector<ElementPtr>& elements,
                               b2World& world)= 0;
     virtual void updateObject(double /* unused */) {}
+    virtual bool canBeCreated() const { return true; }
 protected:
     std::vector<ElementPtr> elements_;
     float32 recentSpeed_;

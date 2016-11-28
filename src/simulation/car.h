@@ -49,6 +49,7 @@ private:
     void updateObject(double interval);
     float32 rand(float32 min, float32 max);
     float32 randLength() const;
+    bool canBeCreated() const;
 private:
     typedef std::vector<BodyGene> Body;
     typedef std::vector<WheelGene> Wheels;

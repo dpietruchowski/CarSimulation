@@ -11,7 +11,7 @@ const float32 World::CLICKED_DISTANCE = 10;
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0),
     ground_(size), size_(size), genetic_(30, SelectionType::RANK_ROULETTESELECTION),
-    interval_(1000.0/600), buffer_(30)
+    interval_(1000.0/6000), buffer_(30)
 {
     transform_.scale(5.0f, -5.0f);
     transform_.translate(10.0f, -40.0f);
@@ -82,7 +82,7 @@ void World::timerEvent(QTimerEvent *event)
     if(event->timerId() == timerId_)
     {
         world_.Step(1.0f/60.0f, 8, 3);
-        update();
+        //update();
         myUpdate();
     }
     if(event->timerId() == secTimerId_)
@@ -158,7 +158,9 @@ void World::createObject()
     if(!buffer_.empty() && (objects_.size() < 30) )
     {
         CarPtr o = buffer_.pop();
-        o->create(world_);
+        bool created = o->create(world_);
+        if(!created)
+            o = CarPtr(new Car(b2Vec2(10,200)));
         objects_.push_back(std::move(o));
     }
 }

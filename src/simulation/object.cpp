@@ -11,8 +11,11 @@ void Object::update(double interval)
     updateObject(interval);
 }
 
-void Object::create(b2World &world)
+bool Object::create(b2World &world)
 {
+    if(!canBeCreated())
+        return false;
+
     initialize(elements_);
 
     for(const auto& g : elements_)
@@ -20,6 +23,8 @@ void Object::create(b2World &world)
         g->create(world);
     }
     createJoints(elements_, world);
+
+    return true;
 }
 
 void Object::destroy(b2World &world)

@@ -16,26 +16,25 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
     startPosition_ = position;
 
     //TODO Move this to private function;
-    // Car project -- for test
     b2Vec2 prevVertex(0, 0);
     prevVertex += b2Vec2(initLength_, 0);
     int restAngle = 360;
     while(restAngle >= 1)
     {
-        int scale = 2;
-        int minAngle = 20;
-        if(restAngle < 90)
-            scale = 1;
-        if(minAngle >= restAngle)
-            minAngle = 0;
-        int angle = minAngle + std::rand() % (restAngle/scale - minAngle);
-        if(angle < 2)
-            angle = restAngle;
-        if(restAngle < 20) angle = restAngle;
-        restAngle -= angle;
+        int minAngle = 15;
+        int angle = minAngle + std::rand() % (180 - minAngle);
+
         float32 length = randLength();
 
         Element::Parameters param = Element::Parameters::createRandom();
+        if(angle >= restAngle)
+        {
+            body_.push_back(BodyGene(param, b2Vec2(initLength_, 0)));
+            break;
+        }
+
+        restAngle -= angle;
+
         b2Vec2 vertex = VertexCalculation()(prevVertex, angle, length);
         prevVertex = vertex;
         body_.push_back(BodyGene(param, vertex));
@@ -244,6 +243,24 @@ float32 Car::randLength() const
     length += min;
 
     return length;
+}
+
+bool Car::canBeCreated() const
+{
+    b2Vec2 initVertex(initLength_, 0);
+    const b2Vec2 *prevVertex = &initVertex;
+    for(const auto &b: body_)
+    {
+        b2Vec2 vertex = b.getVertex();
+        if(vertex.y == 0)
+            vertex.y -= 0.1;
+        float32 angle = AngleCalculation()(vertex, *prevVertex);
+        if( abs(angle) > 179 )
+            return false;
+        prevVertex = &(b.getVertex());
+    }
+
+    return true;
 }
 
 void Car::calcScore()
