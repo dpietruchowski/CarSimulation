@@ -21,6 +21,7 @@ public:
     Car(const Car &other, const BodyGene &gene);
     Car(const Car &first, const Car &second,
         const std::vector<float32> &angles);
+    Car(const Car &first, const Car &second);
     inline bool operator==(const Car& rhs)
         { return score_ == rhs.score_; }
     inline bool operator!=(const Car& rhs)
@@ -30,12 +31,13 @@ public:
     inline bool operator> (const Car& rhs)
         { return score_ > rhs.score_; }
     inline bool operator<=(const Car& rhs)
-        { return score_ <= rhs.score_; }
+        { return !operator> (rhs); }
     inline bool operator>=(const Car& rhs)
-        { return score_ >= rhs.score_; }
+        { return !operator< (rhs); }
     void run(float32 torque);
     double score() const { return score_; }
     double timeAlive() const { return timeAlive_; }
+    size_t bodySize() const { return body_.size(); }
     void calcScore();
     std::string toString() const;
     bool isVertexSettable(const b2Vec2 &vertex) const;

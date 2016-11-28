@@ -4,6 +4,7 @@
 #include <map>
 #include "simulation/car.h"
 #include "selection/selection.h"
+#include "operation/operation.h"
 
 class GeneticAlgorithm
 {
@@ -21,6 +22,8 @@ private:
 private:
     typedef std::vector<CarPtr> Population_;
     Population_ population_;
+    GeneticOperationGenerator crossoverGenerator_;
+    GeneticOperationGenerator mutationGenerator_;
     size_t size_;
     SelectionType selectionType_;
     unsigned int tournamentSize_;

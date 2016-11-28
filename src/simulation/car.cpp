@@ -41,14 +41,18 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
         body_.push_back(BodyGene(param, vertex));
     }
 
+    int prevIndex = -1;
     for(int i = 1; i <= 2; ++i)
     {
         Element::Parameters param = Element::Parameters::createRandom();
-        int maxRadius = (WheelGene::MAX_RADIUS - 1) * 100;
-        float32 radius = static_cast<float>(1 + std::rand() % maxRadius) / maxRadius;
-        radius *= (WheelGene::MAX_RADIUS - 1);
-        radius += 0.5;
+        int max = WheelGene::MAX_RADIUS;
+        int min = 1;
+        float32 radius = (double)std::rand() / RAND_MAX;;
+        radius *= (max - min);
+        radius += min;
         int vertexNumber = std::rand() % body_.size();
+        while(vertexNumber == prevIndex)
+            vertexNumber = std::rand() % body_.size();
         wheels_.push_back(WheelGene(radius, vertexNumber, param));
     }
 }
@@ -70,10 +74,10 @@ Car::Car(const Car &other):
 Car::Car(const Car &other, const WheelGene &gene, size_t geneIndex):
     Car(other)
 {
-    if(geneIndex >= other.body_.size())
+    if(geneIndex >= other.wheels_.size())
         throw "Out of body";
 
-    WheelGene wheel(gene);
+    WheelGene wheel(gene, body_.size());
     std::swap(wheels_[geneIndex], wheel);
 }
 
@@ -148,6 +152,18 @@ Car::Car(const Car &first, const Car &second,
 
 }
 
+Car::Car(const Car &first, const Car &second):
+    Car(first)
+{
+    int i = 0;
+    for(const auto &wheel: second.wheels_)
+    {
+        WheelGene gene(wheel, body_.size());
+        std::swap(wheels_[i], gene);
+        ++i;
+    }
+}
+
 void Car::initialize(std::vector<ElementPtr>& elements)
 {
     b2Vec2 vertex;
@@ -212,7 +228,6 @@ void Car::createJoints(std::vector<ElementPtr> &elements,
 void Car::run(float32 torque)
 {
     elements_[1]->getBody()->ApplyTorque(torque, false);
-    elements_[2]->getBody()->ApplyTorque(torque, false);
 }
 
 void Car::updateObject(double interval)

@@ -10,7 +10,7 @@ Score FitnessScore::add(unsigned int rank, double fitness) const
     return Score{rank, fitness, 0};
 }
 
-double FitnessScore::changeWorstScore(double worstScore) const
+double FitnessScore::changeWorstScore(double /* unused */) const
 {
     return 0;
 }

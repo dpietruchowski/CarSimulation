@@ -1,7 +1,5 @@
 #include "geneticalgorithm.h"
 #include "selection/selection_h.h"
-#include "operation/crossover.h"
-#include "operation/mutation.h"
 #include <iostream>
 
 using namespace std;
@@ -11,7 +9,12 @@ GeneticAlgorithm::GeneticAlgorithm(size_t size,
     size_(size), selectionType_(selectionType),
     tournamentSize_(size/3)
 {
+    crossoverGenerator_.registerObject(0.5, OnePointCrossover::create);
+    crossoverGenerator_.registerObject(0.3, TwoPointCrossover::create);
+    crossoverGenerator_.registerObject(0.2, WheelCrossover::create);
 
+    mutationGenerator_.registerObject(0.5, WheelMutation::create);
+    mutationGenerator_.registerObject(0.5, BodyMutation::create);
 }
 
 void GeneticAlgorithm::insert(CarPtr individual)
@@ -35,10 +38,15 @@ CarPtr GeneticAlgorithm::create()
     stats[chosen]++;
     parents.push_back(population_[chosen].get());
 
-    CarPtr parent = Crossover()(parents);
+    GeneticOperation *crossover = crossoverGenerator_.createRandomPtr();
+    GeneticOperation *mutation = mutationGenerator_.createRandomPtr();
+    CarPtr parent = (*crossover)(parents);
     parents.clear();
     parents.push_back(parent.get());
-    CarPtr child = Mutation()(parents);
+    CarPtr child = (*mutation)(parents);
+    delete crossover;
+    delete mutation;
+
     cout << "////////" << endl;
     int i = 0;
     for (const auto & s: stats) {

@@ -52,7 +52,7 @@ float32 Object::getSpeed() const
 
 bool Object::isMoving() const
 {
-    return recentSpeed_ > 2.5f;
+    return recentSpeed_ > 5.0f;
 }
 
 void Object::draw(QPainter &painter) const

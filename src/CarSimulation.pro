@@ -34,11 +34,19 @@ HEADERS += utilfunctions.h \
             genetic/selection/tournamentselection.h \
             genetic/gene/bodygene.h \
             genetic/gene/gene.h \
-genetic/gene/wheelgene.h \
-    genetic/operation/geneticoperation.h \
-    genetic/operation/mutation.h \
-    genetic/operation/crossover.h \
-    simulation/buffer.h
+            genetic/gene/wheelgene.h \
+            genetic/operation/geneticoperation.h \
+            genetic/operation/mutation.h \
+            genetic/operation/crossover.h \
+            simulation/buffer.h \
+            generator.h \
+            genetic/operation/geneticoperationgenerator.h \
+            genetic/operation/wheelmutation.h \
+            genetic/operation/bodymutation.h \
+            genetic/operation/twopointcrossover.h \
+            genetic/operation/onepointcrossover.h \
+            genetic/operation/wheelcrossover.h \
+            genetic/operation/operation.h
 SOURCES += main.cpp \
             utilfunctions.cpp \
             simulation/car.cpp \
@@ -57,7 +65,13 @@ SOURCES += main.cpp \
             genetic/gene/bodygene.cpp \
             genetic/gene/gene.cpp \
             genetic/gene/wheelgene.cpp \
-    genetic/operation/geneticoperation.cpp \
-    genetic/operation/mutation.cpp \
-    genetic/operation/crossover.cpp \
-    simulation/buffer.cpp
+            genetic/operation/geneticoperation.cpp \
+            genetic/operation/mutation.cpp \
+            genetic/operation/crossover.cpp \
+            simulation/buffer.cpp \
+            genetic/operation/geneticoperationgenerator.cpp \
+            genetic/operation/wheelmutation.cpp \
+            genetic/operation/bodymutation.cpp \
+            genetic/operation/twopointcrossover.cpp \
+            genetic/operation/onepointcrossover.cpp \
+            genetic/operation/wheelcrossover.cpp

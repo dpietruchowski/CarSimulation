@@ -13,6 +13,11 @@ public:
     WheelGene(const WheelGene &other, size_t maxVertexNumber);
     WheelGene(const WheelGene &other) = default;
 
+    bool operator==(const WheelGene &other)
+        { return vertexNumber_ == other.vertexNumber_; }
+    bool operator!=(const WheelGene &other)
+        { return !(*this == other); }
+
     /// Create wheel element using to simulation
     ElementPtr create(const b2Vec2& position,
                       const Qt::GlobalColor& color) const;
