@@ -47,8 +47,9 @@ private:
     b2Vec2 clickedPosition_;
     QPointF oldPosition_;
     b2World world_;
-    int timerId_;
-    int secTimerId_;
+    int worldTimerId_;
+    int createTimerId_;
+    int drawTimerId_;
     QTransform transform_;
     Objects_ objects_;
     Ground ground_;

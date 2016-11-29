@@ -9,8 +9,8 @@ using namespace std;
 const float32 World::CLICKED_DISTANCE = 10;
 
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
-    QWidget(parent), world_(gravity), timerId_(0), secTimerId_(0),
-    ground_(size), size_(size), genetic_(30, SelectionType::RANK_ROULETTESELECTION),
+    QWidget(parent), world_(gravity), ground_(size), size_(size),
+    genetic_(30, SelectionType::RANK_ROULETTESELECTION),
     interval_(1000.0/60), buffer_(30)
 {
     transform_.scale(5.0f, -5.0f);
@@ -28,13 +28,17 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
 
 void World::start()
 {
-    if(!timerId_)
+    if(!worldTimerId_)
     {
-        timerId_ = startTimer(interval_); // 60fps
+        worldTimerId_ = startTimer(interval_);
     }
-    if(!secTimerId_)
+    if(!drawTimerId_)
     {
-        secTimerId_ = startTimer(interval_ * 300); // 60fps
+        drawTimerId_ = startTimer(1000/60);
+    }
+    if(!createTimerId_)
+    {
+        createTimerId_ = startTimer(interval_ * 300);
     }
 }
 
@@ -79,13 +83,16 @@ void World::myUpdate()
 
 void World::timerEvent(QTimerEvent *event)
 {
-    if(event->timerId() == timerId_)
+    if(event->timerId() == drawTimerId_)
+    {
+        update();
+    }
+    if(event->timerId() == worldTimerId_)
     {
         world_.Step(1.0f/60.0f, 8, 3);
-        update();
         myUpdate();
     }
-    if(event->timerId() == secTimerId_)
+    if(event->timerId() == createTimerId_)
     {
         createObject();
     }
