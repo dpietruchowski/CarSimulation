@@ -5,6 +5,7 @@
 #include "utilfunctions.h"
 
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
@@ -189,6 +190,10 @@ void Car::initialize(std::vector<ElementPtr>& elements)
         elements.push_back(w.create(vertex, Qt::GlobalColor::blue));
     }
 
+    for(auto & e: elements)
+    {
+        e->collide(false);
+    }
 }
 
 void Car::createJoints(std::vector<ElementPtr> &elements,

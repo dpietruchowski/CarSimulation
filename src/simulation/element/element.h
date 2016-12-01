@@ -46,6 +46,7 @@ public:
     void addFixture(b2Shape* shape);
     /// Create fixture defintion with shape and parameters and add it.
     void addFixture(b2Shape* shape, const Parameters& parameters);
+    void collide(bool c);
 
     b2Body* getBody();
     const b2Shape *getShape();

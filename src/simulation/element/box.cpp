@@ -13,7 +13,6 @@ Box::Box(float32 angle, float32 width, float32 height):
     position_(0.f, 0.f)
 {
     b2Shape* shape = ShapeCreation()(initializeFirst(angle, width, height), 4);
-    cout << shape << endl;
     addFixture(shape, Element::Parameters({10, 0.5, 0.1}));
     position_ = b2Vec2(0.f, 0.f);
 }
@@ -25,8 +24,6 @@ Box::Box(const Box& box, float32 angle, float32 width):
     position_(box.vertices_[Corner::RIGHT_UP] + box.position_)
 {
     b2Shape* shape = ShapeCreation()(calcVertices(box, angle, width), 4);
-    cout << "///////" << endl;
-    cout << shape << endl;
     addFixture(shape, Element::Parameters({10, 0.5, 0.1}));
 }
 

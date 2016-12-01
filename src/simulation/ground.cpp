@@ -42,9 +42,7 @@ void Ground::initialize(std::vector<ElementPtr>& elements)
             length = nextBox.getPosition().x + nextBox.getVertex(Corner::RIGHT_UP).x;
         }
 
-        cout << "nextBox: " <<  nextBox.getShape() << endl;
         elements.push_back(ElementPtr(new Box(nextBox)));
-        cout << "element: " << elements[i]->getShape() << endl;
         ++i;
 
 //        Box& nextBox = dynamic_cast<Box&>(*elements[i-1]);

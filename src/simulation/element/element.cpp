@@ -24,16 +24,12 @@ Element::Element(const Element &other): body_(nullptr), bodyDef_(other.bodyDef_)
         b2BlockAllocator allocator;
         b2FixtureDef fixture;
         fixture.shape = ShapeCloning()(f.shape);
-
-        cout << fixture.shape << endl;
-        cout << f.shape << endl;
-        cout << (fixture.shape == f.shape) << endl;
-
         fixture.userData = f.userData;
         fixture.friction = f.friction;
         fixture.restitution = f.restitution;
         fixture.density = f.density;
         fixture.isSensor = f.isSensor;
+        fixture.filter = f.filter;
         addFixture(fixture);
     }
 }
@@ -87,6 +83,16 @@ void Element::addFixture(b2Shape *shape, const Parameters& parameters)
     fixtureDef.restitution = parameters.restitution;
 
     addFixture(fixtureDef);
+}
+
+void Element::collide(bool c)
+{
+    if(c == true)
+        for(auto &f: fixtureDefs_)
+            f.filter.groupIndex = -4;
+    else
+        for(auto &f: fixtureDefs_)
+            f.filter.groupIndex = 0;
 }
 
 void Element::addFixture(b2Shape *shape)
