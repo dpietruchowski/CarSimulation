@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QTimerEvent>
 #include <QPaintEvent>
+#include <QPushButton>
 #include <Box2D/Box2D.h>
 #include <vector>
 
@@ -34,6 +35,7 @@ public:
 signals:
 
 public slots:
+    void forward(bool);
 
 private:
     typedef std::vector<CarPtr> Objects_;
@@ -43,6 +45,7 @@ private:
 
 
 private:
+    QPushButton *forward_;
     bool mousePressed_;
     b2Vec2 clickedPosition_;
     QPointF oldPosition_;

@@ -13,6 +13,11 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     genetic_(30, SelectionType::RANK_ROULETTESELECTION),
     interval_(1000.0/60), buffer_(30)
 {
+    forward_ = new QPushButton("Forward", this);
+    forward_->move(350,400);
+    forward_->setCheckable(true);
+    QObject::connect(forward_, SIGNAL(toggled(bool)), this, SLOT(forward(bool)));
+
     transform_.scale(5.0f, -5.0f);
     transform_.translate(10.0f, -40.0f);
     mousePressed_ = false;
@@ -28,22 +33,27 @@ World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
 
 void World::start()
 {
+    killTimer(worldTimerId_);
+    worldTimerId_ = 0;
     if(!worldTimerId_)
     {
         worldTimerId_ = startTimer(interval_);
+    }
+    killTimer(createTimerId_);
+    createTimerId_ = 0;
+    if(!createTimerId_)
+    {
+        createTimerId_ = startTimer(interval_ * 1000);
     }
     if(!drawTimerId_)
     {
         drawTimerId_ = startTimer(1000/60);
     }
-    if(!createTimerId_)
-    {
-        createTimerId_ = startTimer(interval_ * 300);
-    }
 }
 
 void World::myUpdate()
 {
+    createObject();
     float32 minDistance = size_.Length();
     Objects_::iterator nearestIt;
     int i = 0;
@@ -94,7 +104,7 @@ void World::timerEvent(QTimerEvent *event)
     }
     if(event->timerId() == createTimerId_)
     {
-        createObject();
+      //  createObject();
     }
 }
 
@@ -137,6 +147,15 @@ void World::mouseMoveEvent(QMouseEvent* event)
         oldPosition_ = event->pos();
         updateClickedPosition();
     }
+}
+
+void World::forward(bool toggled)
+{
+    if(toggled)
+        interval_ = 1000.0/600;
+    else
+        interval_ = 1000.0/60;
+    start();
 }
 
 void World::updateClickedPosition()
