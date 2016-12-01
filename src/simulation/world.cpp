@@ -181,7 +181,7 @@ void World::createObject()
     if(genetic_.full() && !buffer_.full())
         buffer_.push(std::move(genetic_.create()));
 
-    if(!buffer_.empty() && (objects_.size() < 30) )
+    if(!buffer_.empty() && (objects_.size() < 5) )
     {
         CarPtr o = buffer_.pop();
         bool created = o->create(world_);

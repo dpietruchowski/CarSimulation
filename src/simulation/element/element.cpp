@@ -89,10 +89,10 @@ void Element::collide(bool c)
 {
     if(c == true)
         for(auto &f: fixtureDefs_)
-            f.filter.groupIndex = -4;
+            f.filter.groupIndex = 0;
     else
         for(auto &f: fixtureDefs_)
-            f.filter.groupIndex = 0;
+            f.filter.groupIndex = -4;
 }
 
 void Element::addFixture(b2Shape *shape)
