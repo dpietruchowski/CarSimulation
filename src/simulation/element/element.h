@@ -31,7 +31,8 @@ public:
     /// It does not create a body, fixture definitions and fixtures
     Element(const b2Vec2& position, const b2BodyType& bodyType,
             const Qt::GlobalColor& color);
-    virtual ~Element() = default;
+    Element(const Element &other);
+    virtual ~Element();
 
     /// Create body and fixture and attach to the world
     /// First you need to add fixtures definitions
@@ -47,7 +48,10 @@ public:
     void addFixture(b2Shape* shape, const Parameters& parameters);
 
     b2Body* getBody();
+    const b2Shape *getShape();
 
+protected:
+    void swap(Element &other);
 private:
     virtual void drawElement(QPainter& painter,
                              const b2Vec2& position,

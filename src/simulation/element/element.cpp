@@ -1,6 +1,10 @@
 #include "element.h"
 #include <iostream>
+#include <utility>
+#include "utilfunctions.h"
 #define DEGTORAD 0.0174532925199432957f
+
+using namespace std;
 
 Element::Element(const b2Vec2& position, const b2BodyType& bodyType,
                  const Qt::GlobalColor& color)
@@ -10,6 +14,36 @@ Element::Element(const b2Vec2& position, const b2BodyType& bodyType,
     bodyDef_.type = bodyType;
     bodyDef_.position = position;
     color_ = color;
+}
+
+Element::Element(const Element &other): body_(nullptr), bodyDef_(other.bodyDef_),
+    color_(other.color_)
+{
+    for(const auto &f: other.fixtureDefs_)
+    {
+        b2BlockAllocator allocator;
+        b2FixtureDef fixture;
+        fixture.shape = ShapeCloning()(f.shape);
+
+        cout << fixture.shape << endl;
+        cout << f.shape << endl;
+        cout << (fixture.shape == f.shape) << endl;
+
+        fixture.userData = f.userData;
+        fixture.friction = f.friction;
+        fixture.restitution = f.restitution;
+        fixture.density = f.density;
+        fixture.isSensor = f.isSensor;
+        addFixture(fixture);
+    }
+}
+
+Element::~Element()
+{
+    for(auto &f : fixtureDefs_)
+    {
+       delete f.shape;
+    }
 }
 
 void Element::draw(QPainter &painter) const
@@ -66,6 +100,19 @@ void Element::addFixture(b2Shape *shape)
 b2Body* Element::getBody()
 {
     return body_;
+}
+
+const b2Shape *Element::getShape()
+{
+    return fixtureDefs_[0].shape;
+}
+
+void Element::swap(Element &other)
+{
+    std::swap(body_, other.body_);
+    std::swap(bodyDef_, other.bodyDef_);
+    std::swap(color_, other.color_);
+    fixtureDefs_.swap(other.fixtureDefs_);
 }
 
 Element::Parameters Element::Parameters::createRandom()

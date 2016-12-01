@@ -97,3 +97,12 @@ struct AngleCalculation
     float32 operator()(const b2Vec2 &point1, const b2Vec2 &point2);
     float32 operator()(const b2Vec2 &point);
 };
+
+struct ShapeCloning
+{
+    ~ShapeCloning() = default;
+    ShapeCloning() = default;
+    ShapeCloning(const ShapeCloning &other) = delete;
+
+    b2Shape *operator()(const b2Shape *shape);
+};

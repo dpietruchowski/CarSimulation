@@ -1,6 +1,10 @@
 #include "box.h"
 #include <math.h>
+#include <iostream>
+#include <utility>
 #include "utilfunctions.h"
+
+using namespace std;
 
 Box::Box(float32 angle, float32 width, float32 height):
     Polygon(b2Vec2(0.f, 0.f),
@@ -9,6 +13,7 @@ Box::Box(float32 angle, float32 width, float32 height):
     position_(0.f, 0.f)
 {
     b2Shape* shape = ShapeCreation()(initializeFirst(angle, width, height), 4);
+    cout << shape << endl;
     addFixture(shape, Element::Parameters({10, 0.5, 0.1}));
     position_ = b2Vec2(0.f, 0.f);
 }
@@ -20,7 +25,20 @@ Box::Box(const Box& box, float32 angle, float32 width):
     position_(box.vertices_[Corner::RIGHT_UP] + box.position_)
 {
     b2Shape* shape = ShapeCreation()(calcVertices(box, angle, width), 4);
+    cout << "///////" << endl;
+    cout << shape << endl;
     addFixture(shape, Element::Parameters({10, 0.5, 0.1}));
+}
+
+Box &Box::operator=(const Box &other)
+{
+    if(&other == this)
+        return *this;
+
+    Box copy(other);
+    swap(copy);
+
+    return *this;
 }
 
 b2Vec2 Box::getPosition() const
@@ -31,6 +49,13 @@ b2Vec2 Box::getPosition() const
 b2Vec2 Box::getVertex(Box::Corner corner) const
 {
     return vertices_.at(corner);
+}
+
+void Box::swap(Box &other)
+{
+    Element::swap(other);
+    std::swap(position_, other.position_);
+    vertices_.swap(other.vertices_);
 }
 
 b2Vec2 Box::calcPoint(b2Vec2 startPoint,

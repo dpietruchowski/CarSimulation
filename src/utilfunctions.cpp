@@ -123,3 +123,22 @@ float32 AngleCalculation::operator()(const b2Vec2 &point)
         return 360 + atan2(point.y, point.x)*(180/M_PI);
     return atan2(point.y, point.x)*(180/M_PI);
 }
+
+b2Shape *ShapeCloning::operator()(const b2Shape *shape)
+{
+    b2Shape::Type type = shape->GetType();
+
+    if(dynamic_cast<const b2PolygonShape *>(shape) != nullptr)
+        return new b2PolygonShape(dynamic_cast<const b2PolygonShape &>(*shape));
+
+    if(dynamic_cast<const b2CircleShape *>(shape) != nullptr)
+        return new b2CircleShape(dynamic_cast<const b2CircleShape &>(*shape));
+
+    if(dynamic_cast<const b2EdgeShape *>(shape) != nullptr)
+        return new b2EdgeShape(dynamic_cast<const b2EdgeShape &>(*shape));
+
+    if(dynamic_cast<const b2ChainShape *>(shape) != nullptr)
+        return new b2ChainShape(dynamic_cast<const b2ChainShape &>(*shape));
+
+    return nullptr;
+}
