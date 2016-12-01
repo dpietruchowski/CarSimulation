@@ -57,7 +57,8 @@ private:
     double timeAlive_;
     b2Vec2 startPosition_;
     float32 initLength_;
-    Qt::GlobalColor color_;
+    Qt::GlobalColor wheelColor_;
+    Qt::GlobalColor bodyColor_;
     Body body_;
     Wheels wheels_;
 };

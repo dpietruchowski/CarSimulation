@@ -8,10 +8,12 @@
 #include <utility>
 
 using namespace std;
+using Color = Qt::GlobalColor;
 
 Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
 {
-    color_ = Qt::GlobalColor::red;
+    bodyColor_ = static_cast<Color>(std::rand() % Color::transparent);
+    wheelColor_ = static_cast<Color>(std::rand() % Color::transparent);
     initLength_ = randLength();
 
     startPosition_ = position;
@@ -59,7 +61,8 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
 
 Car::Car(const Car &other):
     score_(0), timeAlive_(0), startPosition_(other.startPosition_),
-    initLength_(other.initLength_), color_(other.color_)
+    initLength_(other.initLength_), wheelColor_(other.wheelColor_),
+    bodyColor_(other.bodyColor_)
 {
     for(const auto & b: other.body_)
     {
@@ -106,7 +109,8 @@ Car::Car(const Car &other, const BodyGene &gene):
 Car::Car(const Car &first, const Car &second,
          const std::vector<float32> &angles):
     score_(0), timeAlive_(0), startPosition_(first.startPosition_),
-    initLength_(first.initLength_), color_(first.color_)
+    initLength_(first.initLength_), wheelColor_(first.wheelColor_),
+    bodyColor_(first.bodyColor_)
 {
     //TODO Move this to private function;
     if(angles.back() != 360) throw "Last element must be equal 360";
@@ -172,7 +176,7 @@ void Car::initialize(std::vector<ElementPtr>& elements)
     // Create car's body
     elements.push_back(ElementPtr(new Polygon(startPosition_,
                                               b2_dynamicBody,
-                                              Qt::GlobalColor::red)));
+                                              bodyColor_)));
 
     // Add fixture definitions to body
     for(auto& b: body_)
@@ -187,7 +191,7 @@ void Car::initialize(std::vector<ElementPtr>& elements)
     {
         vertex = body_[w.getVertexNumber()].getVertex();
         vertex = vertex + startPosition_;
-        elements.push_back(w.create(vertex, Qt::GlobalColor::blue));
+        elements.push_back(w.create(vertex, wheelColor_));
     }
 
     for(auto & e: elements)
@@ -234,7 +238,7 @@ void Car::run(float32 torque)
     elements_[1]->getBody()->ApplyTorque(torque, false);
 }
 
-void Car::updateObject(double interval)
+void Car::updateObject(double /* interval */)
 {
     timeAlive_ += 1.0/60;
 }
