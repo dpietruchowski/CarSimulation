@@ -60,6 +60,11 @@ bool Object::isMoving() const
     return recentSpeed_ > 5.0f;
 }
 
+float32 Object::getRecentSpeed() const
+{
+    return recentSpeed_;
+}
+
 void Object::draw(QPainter &painter) const
 {
     for(const auto& g : elements_)

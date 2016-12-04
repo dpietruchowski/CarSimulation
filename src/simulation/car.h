@@ -13,7 +13,6 @@ typedef std::unique_ptr<Car> CarPtr;
 
 class Car: public Object
 {
-
 public:
     Car(b2Vec2 position);
     Car(const Car &other);
@@ -37,6 +36,7 @@ public:
     void run(float32 torque);
     double score() const { return score_; }
     double timeAlive() const { return timeAlive_; }
+    bool isMoved() const { return getPosition().x > startPosition_.x + 5; }
     size_t bodySize() const { return body_.size(); }
     void calcScore();
     std::string toString() const;

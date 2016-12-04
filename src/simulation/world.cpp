@@ -11,7 +11,8 @@ const float32 World::CLICKED_DISTANCE = 10;
 World::World(b2Vec2 gravity, b2Vec2 size, QWidget *parent) :
     QWidget(parent), world_(gravity), ground_(size), size_(size),
     genetic_(30, SelectionType::RANK_ROULETTESELECTION),
-    interval_(1000.0/60), buffer_(30)
+    interval_(1000.0/60), buffer_(30), worldTimerId_(0), createTimerId_(0),
+    drawTimerId_(0)
 {
     forward_ = new QPushButton("Forward", this);
     forward_->move(350,400);
@@ -43,7 +44,7 @@ void World::start()
     createTimerId_ = 0;
     if(!createTimerId_)
     {
-        createTimerId_ = startTimer(interval_ * 1000);
+        createTimerId_ = startTimer(interval_ * 30);
     }
     if(!drawTimerId_)
     {
@@ -53,7 +54,6 @@ void World::start()
 
 void World::myUpdate()
 {
-    createObject();
     float32 minDistance = size_.Length();
     Objects_::iterator nearestIt;
     int i = 0;
@@ -63,10 +63,11 @@ void World::myUpdate()
         o->update(interval_);
 
         float32 x = o->getPosition().x;
+        o->calcScore();
         if ( (!o->isMoving())
              || (x > size_.x)
              || (x < 0)
-             || (o->timeAlive() > (size_.x / 20)) )
+             || (o->score() <= 0 && o->isMoved()) )
         {
             killObject(it);
             continue;
@@ -90,12 +91,27 @@ void World::myUpdate()
     }
 }
 
+void World::showUpdate()
+{
+    int i = 0;
+    cout << "////////////" << endl;
+    for (Objects_::iterator it = objects_.begin(); it != objects_.end();)
+    {
+        cout << "object[" << i <<
+                "]: position: " << (*it)->getPosition().x <<
+                ", speed: " << (*it)->getRecentSpeed() << endl;
+        ++i;
+        ++it;
+    }
+}
+
 
 void World::timerEvent(QTimerEvent *event)
 {
     if(event->timerId() == drawTimerId_)
     {
         update();
+        //showUpdate();
     }
     if(event->timerId() == worldTimerId_)
     {
@@ -104,7 +120,7 @@ void World::timerEvent(QTimerEvent *event)
     }
     if(event->timerId() == createTimerId_)
     {
-      //  createObject();
+        createObject();
     }
 }
 
@@ -181,7 +197,7 @@ void World::createObject()
     if(genetic_.full() && !buffer_.full())
         buffer_.push(std::move(genetic_.create()));
 
-    if(!buffer_.empty() && (objects_.size() < 100) )
+    if(!buffer_.empty() && (objects_.size() < 50) )
     {
         CarPtr o = buffer_.pop();
         bool created = o->create(world_);

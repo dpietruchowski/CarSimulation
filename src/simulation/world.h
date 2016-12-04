@@ -27,6 +27,7 @@ public:
     void paintEvent(QPaintEvent *event);
     void start();
     void myUpdate();
+    void showUpdate();
     void timerEvent(QTimerEvent *event);
     void mousePressEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
@@ -50,10 +51,6 @@ private:
     b2Vec2 clickedPosition_;
     QPointF oldPosition_;
     b2World world_;
-    int worldTimerId_;
-    int createTimerId_;
-    int drawTimerId_;
-    QTransform transform_;
     Objects_ objects_;
     Ground ground_;
     b2Vec2 size_;
@@ -62,6 +59,10 @@ private:
     // car time alive is counted by that
     double interval_;
     Buffer buffer_;
+    int worldTimerId_;
+    int createTimerId_;
+    int drawTimerId_;
+    QTransform transform_;
 };
 
 #endif // WORLD_H

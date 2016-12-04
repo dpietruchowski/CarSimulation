@@ -26,6 +26,7 @@ public:
     float32 getSpeedY() const;
     float32 getSpeed() const;
     bool isMoving() const;
+    float32 getRecentSpeed() const;
 
 private:
     /// Create elements. After this elements is ready
