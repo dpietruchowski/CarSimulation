@@ -24,7 +24,8 @@ private:
     void drawElement(QPainter& painter,
                      const b2Vec2& position,
                      const float32 angle,
-                     const b2Shape* shape) const;
+                     const b2Shape* shape,
+                     const b2Vec2& parentPosition) const;
 };
 
 #endif // POLYGON_H

@@ -19,6 +19,12 @@ GeneticAlgorithm::GeneticAlgorithm(size_t size,
 
 void GeneticAlgorithm::insert(CarPtr individual)
 {
+    for(const auto &c: population_)
+    {
+        if(*individual == *c)
+            return;
+    }
+
     if(population_.size() == size_)
         population_.erase(population_.end());
     else stats.push_back(0);
@@ -47,12 +53,12 @@ CarPtr GeneticAlgorithm::create()
     delete crossover;
     delete mutation;
 
-    cout << "////////" << endl;
+    /*cout << "////////" << endl;
     int i = 0;
     for (const auto & s: stats) {
         cout << "[" << population_[i]->score() << "]" << "[" << i << "]: " << s << endl;
         ++i;
-    }
+    }*/
 
     return std::move(child);
 }

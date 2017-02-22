@@ -29,7 +29,8 @@ public:
 public:
     /// Creates a fixture definition for gene
     /// It does not create a body, fixture definitions and fixtures
-    Element(const b2Vec2& position, const b2BodyType& bodyType,
+    Element(const b2Vec2& position,
+            const b2BodyType& bodyType,
             const Qt::GlobalColor& color);
     Element(const Element &other);
     virtual ~Element();
@@ -39,7 +40,7 @@ public:
     void create(b2World& world);
     void destroy(b2World& world);
     /// Get body position, set color, thickness and call drawElement method
-    void draw(QPainter& painter) const;
+    void draw(QPainter& painter, const b2Vec2 &parentPosition) const;
     /// Add fixture definition
     void addFixture(const b2FixtureDef& fixtureDef);
     /// Create fixture definition with shape and add it
@@ -48,8 +49,8 @@ public:
     void addFixture(b2Shape* shape, const Parameters& parameters);
     void collide(bool c);
 
-    b2Body* getBody();
-    const b2Shape *getShape();
+    b2Body* getBody() const;
+    const b2Shape *getShape() const;
 
 protected:
     void swap(Element &other);
@@ -57,7 +58,8 @@ private:
     virtual void drawElement(QPainter& painter,
                              const b2Vec2& position,
                              const float32 angle,
-                             const b2Shape* shape) const = 0;
+                             const b2Shape* shape,
+                             const b2Vec2& parentPosition) const = 0;
 private:
     b2Body* body_;
     b2BodyDef bodyDef_;

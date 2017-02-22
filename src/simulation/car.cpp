@@ -190,8 +190,7 @@ void Car::initialize(std::vector<ElementPtr>& elements)
     for(auto& w: wheels_)
     {
         vertex = body_[w.getVertexNumber()].getVertex();
-        vertex = vertex + startPosition_;
-        elements.push_back(w.create(vertex, wheelColor_));
+        elements.push_back(w.create(vertex + startPosition_, wheelColor_));
     }
 
     for(auto & e: elements)
@@ -216,26 +215,28 @@ void Car::createJoints(std::vector<ElementPtr> &elements,
     mass+= elements[1]->getBody()->GetMass();
     mass+= elements[2]->getBody()->GetMass();
 
-    jointDef.maxMotorTorque = 4*mass * 80/4;
-    jointDef.motorSpeed = elements[1]->getBody()->GetMass() * 200;
+    jointDef.maxMotorTorque = mass * 1000000;
+    jointDef.motorSpeed = 50;
     jointDef.enableMotor = true;
 
     world.CreateJoint(&jointDef);
     // /////////////
     //Create second joint -- for test
+    b2RevoluteJointDef jointDef2;
     vertex = body_[wheels_[1].getVertexNumber()].getVertex();
     vertex = vertex + startPosition_;
-    jointDef.Initialize(elements[2]->getBody(), elements[0]->getBody(), vertex);
-    jointDef.motorSpeed = elements[2]->getBody()->GetMass() * 2000;
-    world.CreateJoint(&jointDef);
+    jointDef2.Initialize(elements[2]->getBody(), elements[0]->getBody(), vertex);
+    world.CreateJoint(&jointDef2);
     elements_[1]->getBody()->SetAngularVelocity(-20);
     elements_[2]->getBody()->SetAngularVelocity(-20);
+
+    setPos(getPosition().x, getPosition().y);
     // /////////////
 }
 
 void Car::run(float32 torque)
 {
-    elements_[1]->getBody()->ApplyTorque(torque, false);
+    //elements_[1]->getBody()->ApplyTorque(torque, false);
 }
 
 void Car::updateObject(double /* interval */)

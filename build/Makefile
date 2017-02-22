@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../src -I. -isystem /usr/local/include/Box2D -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../src -I. -isystem /usr/local/include/Box2D -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I. -I../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -49,6 +49,7 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../src/main.cpp \
+		../src/gui/mainwindow.cpp \
 		../src/utilfunctions.cpp \
 		../src/simulation/car.cpp \
 		../src/simulation/ground.cpp \
@@ -75,8 +76,10 @@ SOURCES       = ../src/main.cpp \
 		../src/genetic/operation/bodymutation.cpp \
 		../src/genetic/operation/twopointcrossover.cpp \
 		../src/genetic/operation/onepointcrossover.cpp \
-		../src/genetic/operation/wheelcrossover.cpp moc_world.cpp
+		../src/genetic/operation/wheelcrossover.cpp moc_mainwindow.cpp \
+		moc_world.cpp
 OBJECTS       = main.o \
+		mainwindow.o \
 		utilfunctions.o \
 		car.o \
 		ground.o \
@@ -104,6 +107,7 @@ OBJECTS       = main.o \
 		twopointcrossover.o \
 		onepointcrossover.o \
 		wheelcrossover.o \
+		moc_mainwindow.o \
 		moc_world.o
 DIST          = ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/common/unix.conf \
@@ -254,7 +258,8 @@ DIST          = ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pr
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/exceptions.prf \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/yacc.prf \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/lex.prf \
-		../src/CarSimulation.pro ../src/utilfunctions.h \
+		../src/CarSimulation.pro ../src/gui/mainwindow.h \
+		../src/utilfunctions.h \
 		../src/simulation/car.h \
 		../src/simulation/ground.h \
 		../src/simulation/object.h \
@@ -284,6 +289,7 @@ DIST          = ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pr
 		../src/genetic/operation/onepointcrossover.h \
 		../src/genetic/operation/wheelcrossover.h \
 		../src/genetic/operation/operation.h ../src/main.cpp \
+		../src/gui/mainwindow.cpp \
 		../src/utilfunctions.cpp \
 		../src/simulation/car.cpp \
 		../src/simulation/ground.cpp \
@@ -319,7 +325,7 @@ TARGET        = CarSimulation
 first: all
 ####### Build rules
 
-$(TARGET):  $(OBJECTS)  
+$(TARGET): ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../src/CarSimulation.pro ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++/qmake.conf ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
@@ -645,8 +651,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/utilfunctions.h ../src/simulation/car.h ../src/simulation/ground.h ../src/simulation/object.h ../src/simulation/world.h ../src/simulation/element/box.h ../src/simulation/element/element.h ../src/simulation/element/polygon.h ../src/simulation/element/wheel.h ../src/genetic/geneticalgorithm.h ../src/genetic/selection/rouletteselection.h ../src/genetic/selection/selection_h.h ../src/genetic/selection/selection.h ../src/genetic/selection/selectiontypes.h ../src/genetic/selection/tournamentselection.h ../src/genetic/gene/bodygene.h ../src/genetic/gene/gene.h ../src/genetic/gene/wheelgene.h ../src/genetic/operation/geneticoperation.h ../src/genetic/operation/mutation.h ../src/genetic/operation/crossover.h ../src/simulation/buffer.h ../src/generator.h ../src/genetic/operation/geneticoperationgenerator.h ../src/genetic/operation/wheelmutation.h ../src/genetic/operation/bodymutation.h ../src/genetic/operation/twopointcrossover.h ../src/genetic/operation/onepointcrossover.h ../src/genetic/operation/wheelcrossover.h ../src/genetic/operation/operation.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/main.cpp ../src/utilfunctions.cpp ../src/simulation/car.cpp ../src/simulation/ground.cpp ../src/simulation/object.cpp ../src/simulation/world.cpp ../src/simulation/element/box.cpp ../src/simulation/element/element.cpp ../src/simulation/element/polygon.cpp ../src/simulation/element/wheel.cpp ../src/genetic/geneticalgorithm.cpp ../src/genetic/selection/rouletteselection.cpp ../src/genetic/selection/selection.cpp ../src/genetic/selection/selectiontypes.cpp ../src/genetic/selection/tournamentselection.cpp ../src/genetic/gene/bodygene.cpp ../src/genetic/gene/gene.cpp ../src/genetic/gene/wheelgene.cpp ../src/genetic/operation/geneticoperation.cpp ../src/genetic/operation/mutation.cpp ../src/genetic/operation/crossover.cpp ../src/simulation/buffer.cpp ../src/genetic/operation/geneticoperationgenerator.cpp ../src/genetic/operation/wheelmutation.cpp ../src/genetic/operation/bodymutation.cpp ../src/genetic/operation/twopointcrossover.cpp ../src/genetic/operation/onepointcrossover.cpp ../src/genetic/operation/wheelcrossover.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/gui/mainwindow.h ../src/utilfunctions.h ../src/simulation/car.h ../src/simulation/ground.h ../src/simulation/object.h ../src/simulation/world.h ../src/simulation/element/box.h ../src/simulation/element/element.h ../src/simulation/element/polygon.h ../src/simulation/element/wheel.h ../src/genetic/geneticalgorithm.h ../src/genetic/selection/rouletteselection.h ../src/genetic/selection/selection_h.h ../src/genetic/selection/selection.h ../src/genetic/selection/selectiontypes.h ../src/genetic/selection/tournamentselection.h ../src/genetic/gene/bodygene.h ../src/genetic/gene/gene.h ../src/genetic/gene/wheelgene.h ../src/genetic/operation/geneticoperation.h ../src/genetic/operation/mutation.h ../src/genetic/operation/crossover.h ../src/simulation/buffer.h ../src/generator.h ../src/genetic/operation/geneticoperationgenerator.h ../src/genetic/operation/wheelmutation.h ../src/genetic/operation/bodymutation.h ../src/genetic/operation/twopointcrossover.h ../src/genetic/operation/onepointcrossover.h ../src/genetic/operation/wheelcrossover.h ../src/genetic/operation/operation.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/main.cpp ../src/gui/mainwindow.cpp ../src/utilfunctions.cpp ../src/simulation/car.cpp ../src/simulation/ground.cpp ../src/simulation/object.cpp ../src/simulation/world.cpp ../src/simulation/element/box.cpp ../src/simulation/element/element.cpp ../src/simulation/element/polygon.cpp ../src/simulation/element/wheel.cpp ../src/genetic/geneticalgorithm.cpp ../src/genetic/selection/rouletteselection.cpp ../src/genetic/selection/selection.cpp ../src/genetic/selection/selectiontypes.cpp ../src/genetic/selection/tournamentselection.cpp ../src/genetic/gene/bodygene.cpp ../src/genetic/gene/gene.cpp ../src/genetic/gene/wheelgene.cpp ../src/genetic/operation/geneticoperation.cpp ../src/genetic/operation/mutation.cpp ../src/genetic/operation/crossover.cpp ../src/simulation/buffer.cpp ../src/genetic/operation/geneticoperationgenerator.cpp ../src/genetic/operation/wheelmutation.cpp ../src/genetic/operation/bodymutation.cpp ../src/genetic/operation/twopointcrossover.cpp ../src/genetic/operation/onepointcrossover.cpp ../src/genetic/operation/wheelcrossover.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/gui/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -672,9 +679,113 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_world.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_world.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_world.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_world.cpp
+moc_mainwindow.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMainWindow \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qglobal.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qconfig.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfeatures.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtypetraits.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qisenum.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsysinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlogging.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qflags.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmutex.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qnumeric.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qversiontagging.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qnamespace.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobject.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstring.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qchar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbytearray.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qrefcount.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qarraydata.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qalgorithms.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qiterator.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qpair.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringlist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qregexp.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreevent.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmetatype.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobject_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmargins.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qrect.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsize.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qpoint.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpalette.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qcolor.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qrgb.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qrgba64.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qbrush.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvector.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qmatrix.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpolygon.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qregion.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdatastream.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qiodevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qline.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtransform.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainterpath.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qimage.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpixelformat.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpixmap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qshareddata.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qhash.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfont.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qcursor.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qkeysequence.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qevent.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdebug.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtextstream.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qurl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qurlquery.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfile.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfiledevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvector2d.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
+		../src/gui/mainwindow.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/bin/moc
+	/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/damian/workspace/CarSim/src -I/usr/local/include/Box2D -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/gui/mainwindow.h -o moc_mainwindow.cpp
+
 moc_world.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QtGui \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QtGuiDepends \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QtCore \
@@ -1127,6 +1238,7 @@ moc_world.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QtGui \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/qtopenglversion.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QTimerEvent \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPaintEvent \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPushButton \
 		../src/simulation/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
@@ -1156,15 +1268,20 @@ moc_world.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QtGui \
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all:
+compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
+	-$(DEL_FILE) ui_mainwindow.h
+ui_mainwindow.h: ../src/gui/mainwindow.ui \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/bin/uic
+	/home/damian/programy/Qt/Qt5.7.0/5.7/gcc_64/bin/uic ../src/gui/mainwindow.ui -o ui_mainwindow.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean 
+compiler_clean: compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -1622,6 +1739,7 @@ main.o: ../src/main.cpp ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidget
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/qtopenglversion.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QTimerEvent \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPaintEvent \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPushButton \
 		../src/simulation/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
@@ -1646,6 +1764,172 @@ main.o: ../src/main.cpp ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidget
 		../src/genetic/operation/mutation.h \
 		../src/genetic/operation/wheelmutation.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
+
+mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMainWindow \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qglobal.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qconfig.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfeatures.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtypetraits.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qisenum.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsysinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlogging.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qflags.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmutex.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qnumeric.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qversiontagging.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qnamespace.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobject.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstring.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qchar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbytearray.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qrefcount.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qarraydata.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qalgorithms.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qiterator.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qpair.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringlist.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qregexp.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreevent.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmetatype.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qobject_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmargins.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qrect.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsize.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qpoint.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpalette.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qcolor.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qrgb.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qrgba64.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qbrush.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvector.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qmatrix.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpolygon.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qregion.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdatastream.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qiodevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qline.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtransform.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainterpath.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qimage.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpixelformat.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpixmap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qshareddata.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qhash.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfont.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qcursor.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qkeysequence.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qevent.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdebug.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qtextstream.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qurl.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qurlquery.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfile.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfiledevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvector2d.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
+		ui_mainwindow.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QAction \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qaction.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QApplication \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qapplication.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qeventloop.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qguiapplication.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qinputmethod.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QButtonGroup \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsView \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsview.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qscrollarea.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qframe.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGridLayout \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayout.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHeaderView \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvalidator.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qregularexpression.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qslider.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyle.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLCDNumber \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlcdnumber.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLabel \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlabel.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QListView \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlistview.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMenuBar \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenu.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QProgressBar \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qprogressbar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPushButton \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QStatusBar \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstatusbar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../src/gui/mainwindow.cpp
 
 utilfunctions.o: ../src/utilfunctions.cpp ../src/utilfunctions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utilfunctions.o ../src/utilfunctions.cpp
@@ -2428,6 +2712,7 @@ world.o: ../src/simulation/world.cpp ../src/simulation/world.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/qtopenglversion.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QTimerEvent \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPaintEvent \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPushButton \
 		../src/simulation/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../src/simulation/element/element.h \
@@ -2662,7 +2947,8 @@ element.o: ../src/simulation/element/element.cpp ../src/simulation/element/eleme
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
+		../src/utilfunctions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o element.o ../src/simulation/element/element.cpp
 
 polygon.o: ../src/simulation/element/polygon.cpp ../src/simulation/element/polygon.h \
@@ -4356,6 +4642,9 @@ wheelcrossover.o: ../src/genetic/operation/wheelcrossover.cpp ../src/genetic/ope
 		../src/genetic/gene/gene.h \
 		../src/genetic/gene/wheelgene.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wheelcrossover.o ../src/genetic/operation/wheelcrossover.cpp
+
+moc_mainwindow.o: moc_mainwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
 moc_world.o: moc_world.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_world.o moc_world.cpp

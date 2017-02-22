@@ -33,6 +33,12 @@ public:
     b2Vec2 getVertex(Corner corner) const;
 
 private:
+    /// Draw polygon
+    void drawElement(QPainter& painter,
+                     const b2Vec2& position,
+                     const float32 angle,
+                     const b2Shape* shape,
+                     const b2Vec2& parentPosition) const;
     void swap(Box &other);
     ///
         /// \brief calcPoint Calc point, which creates section with startPoint

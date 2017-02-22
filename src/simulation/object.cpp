@@ -1,4 +1,8 @@
 #include "object.h"
+#include <qcompilerdetection.h>
+#include <iostream>
+
+using namespace std;
 
 Object::Object(): recentSpeed_(10)
 {
@@ -9,6 +13,12 @@ void Object::update(double interval)
 {
     recentSpeed_ = 0.1 * getSpeed() + 0.9 * recentSpeed_;
     updateObject(interval);
+}
+
+QRectF Object::boundingRect() const
+{
+    b2Vec2 position = getPosition();
+    return QRectF(position.x-500, position.y-500, 10000, 10000);
 }
 
 bool Object::create(b2World &world)
@@ -31,7 +41,7 @@ void Object::destroy(b2World &world)
 {
     for(const auto& g : elements_)
     {
-        g->destroy(world);
+        world.DestroyBody(g->getBody());
     }
 }
 
@@ -57,7 +67,7 @@ float32 Object::getSpeed() const
 
 bool Object::isMoving() const
 {
-    return recentSpeed_ > 5.0f;
+    return recentSpeed_ > 2.0f;
 }
 
 float32 Object::getRecentSpeed() const
@@ -65,10 +75,29 @@ float32 Object::getRecentSpeed() const
     return recentSpeed_;
 }
 
-void Object::draw(QPainter &painter) const
+void Object::advance(int phase)
+{
+    if(!phase) return;
+
+    setPos(getPosition().x, getPosition().y);
+}
+
+void Object::paint(QPainter *painter,
+                   const QStyleOptionGraphicsItem *,
+                   QWidget *)
 {
     for(const auto& g : elements_)
     {
-        g->draw(painter);
+        g->draw(*painter, getPosition());
+    }
+}
+
+void Object::showPos()
+{
+    cout << "/////" << endl;
+    for(const auto& g : elements_)
+    {
+        cout << "x: " << g->getBody()->GetPosition().x
+             << " y: " << g->getBody()->GetPosition().y << endl;
     }
 }

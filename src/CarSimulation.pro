@@ -17,7 +17,8 @@ LIBS += -L"/usr/local/lib"
 LIBS += -lBox2D
 
 # Input
-HEADERS += utilfunctions.h \
+HEADERS += gui/mainwindow.h \
+            utilfunctions.h \
             simulation/car.h \
             simulation/ground.h \
             simulation/object.h \
@@ -47,7 +48,9 @@ HEADERS += utilfunctions.h \
             genetic/operation/onepointcrossover.h \
             genetic/operation/wheelcrossover.h \
             genetic/operation/operation.h
+
 SOURCES += main.cpp \
+            gui/mainwindow.cpp \
             utilfunctions.cpp \
             simulation/car.cpp \
             simulation/ground.cpp \
@@ -75,3 +78,5 @@ SOURCES += main.cpp \
             genetic/operation/twopointcrossover.cpp \
             genetic/operation/onepointcrossover.cpp \
             genetic/operation/wheelcrossover.cpp
+
+FORMS    += gui/mainwindow.ui

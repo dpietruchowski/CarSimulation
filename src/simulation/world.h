@@ -3,10 +3,12 @@
 
 #include <QtGui>
 #include <QtOpenGL>
+#include <QThread>
 #include <QWidget>
 #include <QTimerEvent>
 #include <QPaintEvent>
 #include <QPushButton>
+#include <QGraphicsScene>
 #include <Box2D/Box2D.h>
 #include <vector>
 
@@ -16,7 +18,7 @@
 #include "buffer.h"
 #include "genetic/geneticalgorithm.h"
 
-class World : public QWidget
+class World : public QGraphicsScene
 {
     Q_OBJECT
 public:
@@ -26,12 +28,10 @@ public:
 
     void paintEvent(QPaintEvent *event);
     void start();
+    void stop();
     void myUpdate();
     void showUpdate();
     void timerEvent(QTimerEvent *event);
-    void mousePressEvent(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
 
 signals:
 
@@ -40,16 +40,12 @@ public slots:
 
 private:
     typedef std::vector<CarPtr> Objects_;
-    void updateClickedPosition();
     void killObject(Objects_::iterator &it);
     void createObject();
 
 
 private:
     QPushButton *forward_;
-    bool mousePressed_;
-    b2Vec2 clickedPosition_;
-    QPointF oldPosition_;
     b2World world_;
     Objects_ objects_;
     Ground ground_;
@@ -62,7 +58,6 @@ private:
     int worldTimerId_;
     int createTimerId_;
     int drawTimerId_;
-    QTransform transform_;
 };
 
 #endif // WORLD_H

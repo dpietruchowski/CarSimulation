@@ -6,9 +6,9 @@
 
 using namespace std;
 
-Element::Element(const b2Vec2& position, const b2BodyType& bodyType,
+Element::Element(const b2Vec2& position,
+                 const b2BodyType& bodyType,
                  const Qt::GlobalColor& color)
-    //parameters_({0,0,0})
 {
     //body
     bodyDef_.type = bodyType;
@@ -42,14 +42,15 @@ Element::~Element()
     }
 }
 
-void Element::draw(QPainter &painter) const
+void Element::draw(QPainter &painter, const b2Vec2& parentPosition) const
 {
     painter.setPen(QPen(color_,0.2));
 
     for(b2Fixture* f = body_->GetFixtureList(); f; f = f->GetNext())
     {
         this->drawElement(painter, body_->GetPosition(),
-                          body_->GetAngle(), f->GetShape());
+                          body_->GetAngle(), f->GetShape(),
+                          parentPosition);
     }
 }
 
@@ -66,7 +67,8 @@ void Element::create(b2World &world)
 
 void Element::destroy(b2World &world)
 {
-    world.DestroyBody(body_);
+    body_->SetTransform(body_->GetPosition()+b2Vec2(10,0),body_->GetAngle());
+    //world.DestroyBody(body_);
 }
 
 void Element::addFixture(const b2FixtureDef& fixtureDef)
@@ -103,12 +105,12 @@ void Element::addFixture(b2Shape *shape)
     addFixture(fixtureDef);
 }
 
-b2Body* Element::getBody()
+b2Body* Element::getBody() const
 {
     return body_;
 }
 
-const b2Shape *Element::getShape()
+const b2Shape *Element::getShape() const
 {
     return fixtureDefs_[0].shape;
 }
