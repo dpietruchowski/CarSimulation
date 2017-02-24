@@ -1,7 +1,7 @@
 #include "car.h"
-#include "element/element.h"
-#include "element/wheel.h"
-#include "element/polygon.h"
+#include "simulation/element/element.h"
+#include "simulation/element/wheel.h"
+#include "simulation/element/polygon.h"
 #include "utilfunctions.h"
 
 #include <iostream>
@@ -12,8 +12,8 @@ using Color = Qt::GlobalColor;
 
 Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
 {
-    bodyColor_ = static_cast<Color>(std::rand() % Color::transparent);
-    wheelColor_ = static_cast<Color>(std::rand() % Color::transparent);
+    bodyColor_ = static_cast<Color>(Color::darkBlue);
+    wheelColor_ = static_cast<Color>(Color::darkRed);
     initLength_ = randLength();
 
     startPosition_ = position;
@@ -60,17 +60,23 @@ Car::Car(b2Vec2 position): score_(0), timeAlive_(0)
 }
 
 Car::Car(const Car &other):
-    score_(0), timeAlive_(0), startPosition_(other.startPosition_),
+    Object(), score_(0), timeAlive_(0), startPosition_(other.startPosition_),
     initLength_(other.initLength_), wheelColor_(other.wheelColor_),
     bodyColor_(other.bodyColor_)
 {
-    for(const auto & b: other.body_)
+    copyGenes(other);
+}
+
+Car::Car(const Car &other, bool resetScore):
+    Object(other), score_(0), timeAlive_(0), startPosition_(other.startPosition_),
+    initLength_(other.initLength_), wheelColor_(other.wheelColor_),
+    bodyColor_(other.bodyColor_)
+{
+    copyGenes(other);
+    if(!resetScore)
     {
-        body_.push_back(b);
-    }
-    for(const auto & wheel: other.wheels_)
-    {
-        wheels_.push_back(wheel);
+        score_ = other.score_;
+        timeAlive_ = other.timeAlive_;
     }
 }
 
@@ -160,11 +166,53 @@ Car::Car(const Car &first, const Car &second):
     Car(first)
 {
     int i = 0;
+    wheels_.clear();
     for(const auto &wheel: second.wheels_)
     {
         WheelGene gene(wheel, body_.size());
-        std::swap(wheels_[i], gene);
+        wheels_.push_back(gene);
         ++i;
+    }
+}
+
+QRectF Car::boundingRect() const
+{
+    return QRectF(-20, -20, 45, 45);
+}
+
+bool Car::isCrashed() const
+{
+    for(Wheels::const_iterator it = wheels_.begin();
+        it != wheels_.end(); ++it)
+    {
+        Wheels::const_iterator it2 = it;
+        ++it2;
+        for(; it2 != wheels_.end(); ++it2)
+        {
+            if((*it).getVertexNumber() == (*it2).getVertexNumber())
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void Car::initialize()
+{
+    Object::initialize();
+}
+
+void Car::copyGenes(const Car &other)
+{
+    for(const auto & b: other.body_)
+    {
+        body_.push_back(b);
+    }
+    for(const auto & wheel: other.wheels_)
+    {
+        wheels_.push_back(wheel);
     }
 }
 
@@ -215,8 +263,8 @@ void Car::createJoints(std::vector<ElementPtr> &elements,
     mass+= elements[1]->getBody()->GetMass();
     mass+= elements[2]->getBody()->GetMass();
 
-    jointDef.maxMotorTorque = mass * 1000000;
-    jointDef.motorSpeed = 50;
+    jointDef.maxMotorTorque = 4*mass * 80/4;
+    jointDef.motorSpeed = elements[1]->getBody()->GetMass() * 200;
     jointDef.enableMotor = true;
 
     world.CreateJoint(&jointDef);
@@ -239,9 +287,9 @@ void Car::run(float32 torque)
     //elements_[1]->getBody()->ApplyTorque(torque, false);
 }
 
-void Car::updateObject(double /* interval */)
+void Car::updateObject(double interval)
 {
-    timeAlive_ += 1.0/60;
+    timeAlive_ += interval;
 }
 
 float32 Car::randLength() const

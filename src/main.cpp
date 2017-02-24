@@ -1,10 +1,10 @@
 #include <QApplication>
-#include "simulation/world.h"
+#include "simulation/simulation.h"
 #include "gui/mainwindow.h"
 
 int main(int argc, char *argv[])
 {
-    srand(time(0));
+//    srand(time(0));
     QApplication app(argc, argv);
     MainWindow w;
     w.show();

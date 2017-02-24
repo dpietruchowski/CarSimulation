@@ -4,10 +4,9 @@
 
 using namespace std;
 
-GeneticAlgorithm::GeneticAlgorithm(size_t size,
-                                   SelectionType selectionType):
-    size_(size), selectionType_(selectionType),
-    tournamentSize_(size/3)
+GeneticAlgorithm::GeneticAlgorithm(GeneticParameters params):
+    size_(params.populationSize), selectionType_(params.selectionType),
+    tournamentSize_(params.populationSize/3)
 {
     crossoverGenerator_.registerObject(0.5, OnePointCrossover::create);
     crossoverGenerator_.registerObject(0.3, TwoPointCrossover::create);

@@ -1,7 +1,7 @@
 #ifndef WHEELGENE_H
 #define WHEELGENE_H
 
-#include "simulation/object.h"
+#include "simulation/object/object.h"
 
 class WheelGene
 {

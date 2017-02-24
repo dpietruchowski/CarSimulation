@@ -1,7 +1,7 @@
 #ifndef GENETICOPERATION_H
 #define GENETICOPERATION_H
 
-#include "simulation/car.h"
+#include "simulation/object/car.h"
 
 class GeneticOperation
 {

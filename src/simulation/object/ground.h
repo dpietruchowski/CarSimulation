@@ -2,12 +2,13 @@
 #define GROUND_H
 
 #include "object.h"
-#include "element/element.h"
+#include "simulation/element/element.h"
 
 class Ground: public Object
 {
 public:
     Ground(b2Vec2 size);
+    QRectF boundingRect() const;
 
 private:
     /// Create 100 box with random angle and width

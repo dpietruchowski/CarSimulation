@@ -19,10 +19,9 @@ LIBS += -lBox2D
 # Input
 HEADERS += gui/mainwindow.h \
             utilfunctions.h \
-            simulation/car.h \
-            simulation/ground.h \
-            simulation/object.h \
-            simulation/world.h \
+            simulation/object/car.h \
+            simulation/object/ground.h \
+            simulation/object/object.h \
             simulation/element/box.h \
             simulation/element/element.h \
             simulation/element/polygon.h \
@@ -47,15 +46,17 @@ HEADERS += gui/mainwindow.h \
             genetic/operation/twopointcrossover.h \
             genetic/operation/onepointcrossover.h \
             genetic/operation/wheelcrossover.h \
-            genetic/operation/operation.h
+            genetic/operation/operation.h \
+            simulation/simulation.h \
+    simulation/world.h \
+    gui/dialog.h
 
 SOURCES += main.cpp \
             gui/mainwindow.cpp \
             utilfunctions.cpp \
-            simulation/car.cpp \
-            simulation/ground.cpp \
-            simulation/object.cpp \
-            simulation/world.cpp \
+            simulation/object/car.cpp \
+            simulation/object/ground.cpp \
+            simulation/object/object.cpp \
             simulation/element/box.cpp \
             simulation/element/element.cpp \
             simulation/element/polygon.cpp \
@@ -77,6 +78,10 @@ SOURCES += main.cpp \
             genetic/operation/bodymutation.cpp \
             genetic/operation/twopointcrossover.cpp \
             genetic/operation/onepointcrossover.cpp \
-            genetic/operation/wheelcrossover.cpp
+            genetic/operation/wheelcrossover.cpp \
+            simulation/simulation.cpp \
+    simulation/world.cpp \
+    gui/dialog.cpp
 
-FORMS    += gui/mainwindow.ui
+FORMS    += gui/mainwindow.ui \
+    gui/dialog.ui

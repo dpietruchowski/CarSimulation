@@ -2,7 +2,7 @@
 #define CAR_H
 
 #include "object.h"
-#include "element/element.h"
+#include "simulation/element/element.h"
 #include "genetic/gene/bodygene.h"
 #include "genetic/gene/wheelgene.h"
 
@@ -10,12 +10,17 @@
 
 class Car;
 typedef std::unique_ptr<Car> CarPtr;
+typedef std::shared_ptr<Car> CarSPtr;
+typedef std::vector<CarPtr> Objects;
+
+Q_DECLARE_METATYPE(CarSPtr);
 
 class Car: public Object
 {
 public:
     Car(b2Vec2 position);
     Car(const Car &other);
+    Car(const Car &other, bool resetScore);
     Car(const Car &other, const WheelGene &gene, size_t geneIndex);
     Car(const Car &other, const BodyGene &gene);
     Car(const Car &first, const Car &second,
@@ -36,20 +41,24 @@ public:
     void run(float32 torque);
     double score() const { return score_; }
     double timeAlive() const { return timeAlive_; }
-    bool isMoved() const { return getPosition().x > startPosition_.x + 2; }
+    bool isMoved() const
+        { return getPosition().x > startPosition_.x + 4; }
     size_t bodySize() const { return body_.size(); }
     void calcScore();
     std::string toString() const;
     bool isVertexSettable(const b2Vec2 &vertex) const;
-
+    bool canBeCreated() const;
+    QRectF boundingRect() const;
+    bool isCrashed() const;
+    void initialize();
 private:
+    void copyGenes(const Car &other);
     void initialize(std::vector<ElementPtr>& elements);
     void createJoints(std::vector<ElementPtr>& elements,
                       b2World& world);
     void updateObject(double interval);
     float32 rand(float32 min, float32 max);
     float32 randLength() const;
-    bool canBeCreated() const;
 private:
     typedef std::vector<BodyGene> Body;
     typedef std::vector<WheelGene> Wheels;

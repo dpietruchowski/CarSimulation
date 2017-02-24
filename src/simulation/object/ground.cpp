@@ -1,5 +1,5 @@
 #include "ground.h"
-#include "element/box.h"
+#include "simulation/element/box.h"
 #include <math.h>
 #include <iostream>
 #include <memory>
@@ -9,6 +9,11 @@ using namespace std;
 Ground::Ground(b2Vec2 size): size_(size)
 {
 
+}
+
+QRectF Ground::boundingRect() const
+{
+    return QRectF(-20, -20, size_.x+20, size_.y+20);
 }
 
 void Ground::initialize(std::vector<ElementPtr>& elements)

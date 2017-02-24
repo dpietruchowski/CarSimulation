@@ -3,7 +3,8 @@
 
 #include <list>
 
-#include "car.h"
+#include "object/car.h"
+#include "gui/dialog.h"
 
 class Buffer
 {
@@ -12,8 +13,13 @@ public:
 
     bool push(CarPtr car);
     CarPtr pop();
+    CarPtr& front();
+    CarPtr& back();
     bool full() const;
+    size_t size() const;
     bool empty() const;
+    size_t maxSize() const;
+    void print(Dialog &console, int number) const;
 
 private:
     typedef std::list<CarPtr> Container;

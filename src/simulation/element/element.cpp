@@ -67,8 +67,7 @@ void Element::create(b2World &world)
 
 void Element::destroy(b2World &world)
 {
-    body_->SetTransform(body_->GetPosition()+b2Vec2(10,0),body_->GetAngle());
-    //world.DestroyBody(body_);
+    world.DestroyBody(body_);
 }
 
 void Element::addFixture(const b2FixtureDef& fixtureDef)

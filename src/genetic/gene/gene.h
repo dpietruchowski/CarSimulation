@@ -2,7 +2,7 @@
 #define GENE_H
 
 #include "simulation/element/element.h"
-#include "simulation/object.h"
+#include "simulation/object/object.h"
 
 class Gene
 {

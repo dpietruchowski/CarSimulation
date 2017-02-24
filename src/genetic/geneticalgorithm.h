@@ -2,14 +2,21 @@
 #define GENETICALGORITHM_H
 
 #include <map>
-#include "simulation/car.h"
+#include "simulation/object/car.h"
 #include "selection/selection.h"
 #include "operation/operation.h"
+
+//TODO add probability params
+struct GeneticParameters
+{
+    size_t populationSize;
+    SelectionType selectionType;
+};
 
 class GeneticAlgorithm
 {
 public:
-    GeneticAlgorithm(size_t size, SelectionType selectionType);
+    GeneticAlgorithm(GeneticParameters params);
     
     void insert(CarPtr individual);
     CarPtr create();
