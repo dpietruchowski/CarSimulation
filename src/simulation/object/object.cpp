@@ -24,6 +24,11 @@ void Object::initialize()
 
 void Object::update(double interval)
 {
+    for(const auto& g : elements_)
+    {
+        g->update();
+    }
+
     recentSpeed_ = 0.1 * getSpeed() + 0.9 * recentSpeed_;
     updateObject(interval);
 }
@@ -38,6 +43,7 @@ bool Object::create(b2World &world)
     for(const auto& g : elements_)
     {
         g->create(world);
+        g->update();
     }
     createJoints(elements_, world);
 

@@ -20,14 +20,11 @@ World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
     QObject::connect(&createObjectTimer_, SIGNAL(timeout()),
                      &simulation_, SLOT(onCreateObjectTimeout()));
 
-    QObject::connect(&simulation_, SIGNAL(removeItem(Car*)),
-                     this, SLOT(removeItem(Car*)));
+    qRegisterMetaType<CarSPtr>();
+    QObject::connect(&simulation_, SIGNAL(removeItem(CarSPtr)),
+                     this, SLOT(removeItem(CarSPtr)));
     QObject::connect(&simulation_, SIGNAL(addItem(Car*)),
                      this, SLOT(addItem(Car*)));
-    QObject::connect(this, SIGNAL(removeObject()),
-                     &simulation_, SLOT(removeObject()));
-    QObject::connect(this, SIGNAL(addObject()),
-                     &simulation_, SLOT(addObject()));
     simulation_.initialize(*this);
     simulation_.moveToThread(&thread_);
     thread_.start();
@@ -56,18 +53,17 @@ void World::pause()
     createObjectTimer_.stop();
 }
 
-void World::removeItem(Car* o)
-{
-//   qDebug() << "Removing item[" << o->id() << "] from scene";
-    QGraphicsScene::removeItem(o);
-    emit removeObject();
-}
 
 void World::addItem(Car* o)
 {
     qDebug() << "SCENE: Adding item[" << o->id() << "]";
     QGraphicsScene::addItem(o);
-    emit addObject();
+}
+
+void World::removeItem(CarSPtr o)
+{
+    //qDebug() << "Removing item[" << o->id() << "] from scene";
+    QGraphicsScene::removeItem(o.get());
 }
 
 void World::stop()

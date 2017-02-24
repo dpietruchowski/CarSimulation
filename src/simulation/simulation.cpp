@@ -27,24 +27,6 @@ void Simulation::initialize(QGraphicsScene &scene)
         buffer_.push(CarPtr(new Car(b2Vec2(10,200))));
 }
 
-void Simulation::addObject()
-{
-    //buffer_.print(console_,1);
-    CarPtr o = buffer_.pop();
-    qDebug() << "OBJECT: Adding item[" << o->id() << "]";
-    objects_.push_back(std::move(o));
-}
-
-void Simulation::removeObject()
-{
-   // removed_.print(console_,0);
-    removed_.size();
-    CarPtr o = removed_.pop();
-    o->destroy(world_);
-    //qDebug() << "Removing item[" << o->id() << "] from world";
-    genetic_.insert(std::move(o));
-}
-
 void Simulation::update()
 {
     int i = 0;
@@ -101,13 +83,15 @@ void Simulation::killObject(Objects::iterator &it)
 {
     (*it)->calcScore();
     cout << (*it)->score() << endl;
-    qDebug() << "Push item[" << (*it)->id() << "] to removed";
+//    qDebug() << "Push item[" << (*it)->id() << "] to removed";
 //    qDebug() << "Position: " << (*it)->getPosition().x << ", "
 //             << (*it)->getPosition().y;
-    removed_.push(std::move(*it));
-    objects_.erase(it);
+    (*it)->destroy(world_);
+    genetic_.insert((*it).get());
 
-    emit removeItem(removed_.back().get());
+    CarSPtr c(std::move((*it)));
+    emit removeItem(c);
+    objects_.erase(it);
 }
 
 void Simulation::createObject()
@@ -122,7 +106,7 @@ void Simulation::createObject()
 
     if(!buffer_.empty() && (objects_.size() < buffer_.maxSize()) )
     {
-        CarPtr &o = buffer_.front();
+        CarPtr o = buffer_.pop();
         qDebug() << "WORLD: Adding item[" << o->id() << "]";
         bool created = o->create(world_);
         while(!created)
@@ -131,6 +115,9 @@ void Simulation::createObject()
             created = o->create(world_);
         }
 
-        emit addItem(o.get());
+        Car *newO = o.get();
+        objects_.push_back(std::move(o));
+
+        emit addItem(newO);
     }
 }

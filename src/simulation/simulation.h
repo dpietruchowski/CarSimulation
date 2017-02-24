@@ -25,14 +25,12 @@ public:
     void initialize(QGraphicsScene &scene);
 
 signals:
-    void removeItem(Car*);
     void addItem(Car*);
+    void removeItem(CarSPtr);
 
 private slots:
     void onUpdateTimeout();
     void onCreateObjectTimeout();
-    void addObject();
-    void removeObject();
 
 private:
     void update();

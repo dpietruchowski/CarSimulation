@@ -17,7 +17,8 @@ Element::Element(const b2Vec2& position,
 }
 
 Element::Element(const Element &other): body_(nullptr), bodyDef_(other.bodyDef_),
-    color_(other.color_)
+    color_(other.color_), drawPosition_(other.drawPosition_),
+    drawAngle_(other.drawAngle_)
 {
     for(const auto &f: other.fixtureDefs_)
     {
@@ -46,10 +47,9 @@ void Element::draw(QPainter &painter, const b2Vec2& parentPosition) const
 {
     painter.setPen(QPen(color_,0.2));
 
-    for(b2Fixture* f = body_->GetFixtureList(); f; f = f->GetNext())
+    for(const auto &f : fixtureDefs_)
     {
-        this->drawElement(painter, body_->GetPosition(),
-                          body_->GetAngle(), f->GetShape(),
+        this->drawElement(painter, drawPosition_, drawAngle_, f.shape,
                           parentPosition);
     }
 }
@@ -94,6 +94,12 @@ void Element::collide(bool c)
     else
         for(auto &f: fixtureDefs_)
             f.filter.groupIndex = -4;
+}
+
+void Element::update()
+{
+    drawAngle_ = body_->GetAngle();
+    drawPosition_ = body_->GetPosition();
 }
 
 void Element::addFixture(b2Shape *shape)

@@ -15,18 +15,14 @@ public:
     ~World();
 
     void start();
+    void pause();
     void stop();
     void setUpdateInterval(int interval);
     void setCreateObjectInterval(int interval);
 
-signals:
-    void addObject();
-    void removeObject();
-
 private slots:
-    void pause();
-    void removeItem(Car*);
     void addItem(Car*);
+    void removeItem(CarSPtr);
 
 private:
     QThread thread_;

@@ -18,7 +18,7 @@ class GeneticAlgorithm
 public:
     GeneticAlgorithm(GeneticParameters params);
     
-    void insert(CarPtr individual);
+    void insert(Car* individual);
     CarPtr create();
     bool full() const;
     bool empty() const;

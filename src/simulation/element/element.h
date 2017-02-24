@@ -48,6 +48,7 @@ public:
     /// Create fixture defintion with shape and parameters and add it.
     void addFixture(b2Shape* shape, const Parameters& parameters);
     void collide(bool c);
+    void update();
 
     b2Body* getBody() const;
     const b2Shape *getShape() const;
@@ -66,6 +67,8 @@ private:
     typedef std::vector<b2FixtureDef> FixtureDefs;
     FixtureDefs fixtureDefs_;
     Qt::GlobalColor color_;
+    b2Vec2 drawPosition_;
+    float32 drawAngle_;
 };
 
 #endif // ELEMENT_H

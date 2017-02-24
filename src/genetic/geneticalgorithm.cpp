@@ -16,7 +16,7 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticParameters params):
     mutationGenerator_.registerObject(0.5, BodyMutation::create);
 }
 
-void GeneticAlgorithm::insert(CarPtr individual)
+void GeneticAlgorithm::insert(Car* individual)
 {
     for(const auto &c: population_)
     {
@@ -27,7 +27,7 @@ void GeneticAlgorithm::insert(CarPtr individual)
     if(population_.size() == size_)
         population_.erase(population_.end());
     else stats.push_back(0);
-    population_.push_back(move(individual));
+    population_.push_back(CarPtr(new Car(*individual, false)));
     std::sort(population_.begin(), population_.end(),
               [](const CarPtr &lhs, const CarPtr &rhs)
                 { return *lhs > *rhs; });
