@@ -17,12 +17,18 @@ public:
     void start();
     void pause();
     void stop();
+    void forward(bool clicked);
     void setUpdateInterval(int interval);
     void setCreateObjectInterval(int interval);
 
+signals:
+    void initialize();
+
 private slots:
-    void addItem(Car*);
+    void incTimeout();
+    void addItem(QGraphicsItem*);
     void removeItem(CarSPtr);
+    void setTime(double);
 
 private:
     QThread thread_;
@@ -30,6 +36,7 @@ private:
     QTimer updateTimer_;
     QTimer createObjectTimer_;
     Simulation simulation_;
+    QGraphicsTextItem timeDrawer_;
 };
 
 #endif // WORLD_H

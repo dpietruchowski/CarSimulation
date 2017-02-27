@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QGraphicsScene>
+#include <QGraphicsTextItem>
 #include <Box2D/Box2D.h>
 #include <vector>
 
@@ -18,17 +19,20 @@ class Simulation : public QObject
     Q_OBJECT
 public:
     static const float32 CLICKED_DISTANCE;
-    explicit Simulation(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
+    explicit Simulation(b2Vec2 initPosition, b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
                         const GeneticParameters& params);
     ~Simulation() = default;
 
-    void initialize(QGraphicsScene &scene);
+    void setInterval(double interval);
+    double time() const { return time_; }
 
 signals:
-    void addItem(Car*);
+    void addItem(QGraphicsItem*);
     void removeItem(CarSPtr);
+    void setTime(double time);
 
 private slots:
+    void initialize();
     void onUpdateTimeout();
     void onCreateObjectTimeout();
 
@@ -39,14 +43,15 @@ private:
     void createObject();
 
 private:
+    b2Vec2 initPosition_;
     b2World world_;
     Objects objects_;
     Ground ground_;
     b2Vec2 size_;
     GeneticAlgorithm genetic_;
     Buffer buffer_;
-    Buffer removed_;
-    Dialog console_;
+    double interval_;
+    double time_;
 };
 
 #endif // SIMULATION_H

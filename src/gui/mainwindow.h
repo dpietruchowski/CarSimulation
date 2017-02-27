@@ -21,6 +21,8 @@ private slots:
 
     void on_startButton_clicked();
 
+    void on_forwardButton_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     World world;

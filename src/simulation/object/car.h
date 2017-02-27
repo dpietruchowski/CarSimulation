@@ -41,8 +41,8 @@ public:
     void run(float32 torque);
     double score() const { return score_; }
     double timeAlive() const { return timeAlive_; }
-    bool isMoved() const
-        { return getPosition().x > startPosition_.x + 4; }
+    bool isMoved(double interval) const
+        { return getPosition().x > startPosition_.x + interval*240; }
     size_t bodySize() const { return body_.size(); }
     void calcScore();
     std::string toString() const;

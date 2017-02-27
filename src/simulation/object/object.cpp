@@ -78,9 +78,9 @@ float32 Object::getSpeed() const
     return elements_[0]->getBody()->GetLinearVelocity().Length();
 }
 
-bool Object::isMoving() const
+bool Object::isMoving(double interval) const
 {
-    return recentSpeed_ > 2;
+    return recentSpeed_ > interval * 120;
 }
 
 float32 Object::getRecentSpeed() const

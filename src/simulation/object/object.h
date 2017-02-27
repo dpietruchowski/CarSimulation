@@ -34,7 +34,7 @@ public:
     float32 getSpeedX() const;
     float32 getSpeedY() const;
     float32 getSpeed() const;
-    bool isMoving() const;
+    bool isMoving(double interval) const;
     float32 getRecentSpeed() const;
     oid id() const;
     virtual bool canBeCreated() const { return true; }

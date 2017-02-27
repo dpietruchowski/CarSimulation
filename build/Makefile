@@ -805,12 +805,13 @@ moc_mainwindow.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QM
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qthread.h \
 		../src/simulation/simulation.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../src/simulation/object/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../src/simulation/element/element.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../src/simulation/object/car.h \
@@ -919,13 +920,7 @@ moc_simulation.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QObje
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfont.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
-		../src/simulation/object/object.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
@@ -934,6 +929,13 @@ moc_simulation.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QObje
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../src/simulation/object/object.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
 		../src/simulation/element/element.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -1060,13 +1062,7 @@ moc_world.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphi
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qthread.h \
 		../src/simulation/simulation.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
-		../src/simulation/object/object.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
@@ -1075,6 +1071,13 @@ moc_world.cpp: ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphi
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../src/simulation/object/object.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
 		../src/simulation/element/element.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -1349,12 +1352,13 @@ main.o: ../src/main.cpp ../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidget
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsScene \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../src/simulation/object/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../src/simulation/element/element.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../src/simulation/object/car.h \
@@ -1505,12 +1509,13 @@ mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qthread.h \
 		../src/simulation/simulation.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../src/simulation/object/object.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../src/simulation/element/element.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../src/simulation/object/car.h \
@@ -1537,63 +1542,12 @@ mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
 		../src/genetic/operation/mutation.h \
 		../src/genetic/operation/wheelmutation.h \
 		ui_mainwindow.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QAction \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qaction.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QApplication \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qapplication.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qeventloop.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qguiapplication.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qinputmethod.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QButtonGroup \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qbuttongroup.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsView \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsview.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qscrollarea.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qframe.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGridLayout \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayout.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHeaderView \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvalidator.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qregularexpression.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qslider.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyle.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLCDNumber \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlcdnumber.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLabel \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlabel.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QListView \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlistview.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMenuBar \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenubar.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenu.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QProgressBar \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qprogressbar.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPushButton \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractbutton.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QSpacerItem \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QStatusBar \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstatusbar.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QVBoxLayout
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../src/gui/mainwindow.cpp
 
 utilfunctions.o: ../src/utilfunctions.cpp ../src/utilfunctions.h
@@ -3947,13 +3901,7 @@ simulation.o: ../src/simulation/simulation.cpp ../src/simulation/simulation.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfont.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
-		../src/simulation/object/object.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
@@ -3962,6 +3910,13 @@ simulation.o: ../src/simulation/simulation.cpp ../src/simulation/simulation.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../src/simulation/object/object.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
 		../src/simulation/element/element.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -4091,13 +4046,7 @@ world.o: ../src/simulation/world.cpp ../src/simulation/world.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qthread.h \
 		../src/simulation/simulation.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
-		../src/simulation/object/object.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
@@ -4106,6 +4055,13 @@ world.o: ../src/simulation/world.cpp ../src/simulation/world.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../src/simulation/object/object.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontinfo.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
 		../src/simulation/element/element.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -4245,52 +4201,7 @@ dialog.o: ../src/gui/dialog.cpp ../src/gui/dialog.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qfiledevice.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvector2d.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_dialog.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QAction \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qaction.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QApplication \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qapplication.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qeventloop.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qguiapplication.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qinputmethod.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QButtonGroup \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qbuttongroup.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qboxlayout.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayout.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgridlayout.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHeaderView \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qframe.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvalidator.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qregularexpression.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qslider.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyle.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QTextBrowser \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtextbrowser.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextdocument.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextcursor.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextformat.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h
+		ui_dialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o ../src/gui/dialog.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
