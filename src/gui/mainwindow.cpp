@@ -25,27 +25,26 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_stopButton_clicked()
-{
-    world.stop();
-}
-
-void MainWindow::on_startButton_clicked()
-{
-    qDebug() << "BUtton ThreadID: " << QThread::currentThreadId();
-    world.start();
-}
-
 void MainWindow::on_forwardButton_toggled(bool checked)
 {
     world.forward(checked);
     if(checked)
     {
-//        ui->worldView->setScene(nullptr);
         ui->forwardButton->setText(QString("Normal"));
     } else
     {
-//        ui->worldView->setScene(&world);
-        ui->forwardButton->setText(QString("Forward"));
+        ui->forwardButton->setText(QString("Faster"));
+    }
+}
+void MainWindow::on_startButton_toggled(bool checked)
+{
+    if(checked)
+    {
+        world.start();
+        ui->startButton->setText(QString("Pause"));
+    } else
+    {
+        world.stop();
+        ui->startButton->setText(QString("Resume"));
     }
 }

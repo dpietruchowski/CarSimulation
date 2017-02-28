@@ -17,11 +17,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_stopButton_clicked();
-
-    void on_startButton_clicked();
-
     void on_forwardButton_toggled(bool checked);
+    void on_startButton_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
