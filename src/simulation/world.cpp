@@ -21,8 +21,13 @@ World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
     setUpdateInterval(interval*1);
     setCreateObjectInterval(interval * 10);
 
+    QObject::connect(&simulation_.genetic(), SIGNAL(addObject(CarSPtr)),
+                     this, SLOT(addObject(CarSPtr)));
+    QObject::connect(&simulation_.genetic(), SIGNAL(removeObject(CarSPtr)),
+                     this, SLOT(removeObject(CarSPtr)));
+
     QObject::connect(&drawTimer_, SIGNAL(timeout()),
-                     this, SLOT(advance()));
+                     &scene_, SLOT(advance()));
     QObject::connect(&updateTimer_, SIGNAL(timeout()),
                      &simulation_, SLOT(onUpdateTimeout()),
                      Qt::BlockingQueuedConnection);
@@ -32,30 +37,19 @@ World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
 
     qRegisterMetaType<CarSPtr>();
     QObject::connect(&simulation_, SIGNAL(removeItem(CarSPtr)),
-                     this, SLOT(removeItem(CarSPtr)));
+                     &scene_, SLOT(removeItem(CarSPtr)));
     QObject::connect(&simulation_, SIGNAL(addItem(QGraphicsItem*)),
-                     this, SLOT(addItem(QGraphicsItem*)));
+                     &scene_, SLOT(addItem(QGraphicsItem*)));
     qDebug() << "Constructor Thread ID: " << QThread::currentThreadId();
 
     QObject::connect(this, SIGNAL(initialize()),
                      &simulation_, SLOT(initialize()));
     QObject::connect(&simulation_, SIGNAL(setTime(double)),
-                     this, SLOT(setTime(double)));
+                     &scene_, SLOT(setTime(double)));
     simulation_.moveToThread(&thread_);
     emit initialize();
     thread_.start();
 
-    timeDrawer_.setPos(-10,-10);
-    QFont myFont;
-    myFont.setPointSizeF(1.0);
-    myFont.setPixelSize(5);
-    myFont.setFamily("Courier");
-    QTransform transform;
-    transform.scale(1, -1);
-    timeDrawer_.setTransform(transform);
-    timeDrawer_.setFont(myFont);
-    timeDrawer_.setPlainText(QString::number(0));
-    addItem(&timeDrawer_);
 }
 
 World::~World()
@@ -78,24 +72,6 @@ void World::pause()
     drawTimer_.stop();
     updateTimer_.stop();
     createObjectTimer_.stop();
-}
-
-
-void World::addItem(QGraphicsItem* o)
-{
-//    qDebug() << "SCENE: Adding item[" << o->id() << "]";
-    QGraphicsScene::addItem(o);
-}
-
-void World::removeItem(CarSPtr o)
-{
-//    qDebug() << "SCENE: Removing item[" << o->id() << "]";
-    QGraphicsScene::removeItem(o.get());
-}
-
-void World::setTime(double time)
-{
-    timeDrawer_.setPlainText(QString::number(time));
 }
 
 void World::stop()
@@ -132,4 +108,29 @@ void World::setUpdateInterval(int interval)
 void World::setCreateObjectInterval(int interval)
 {
     createObjectTimer_.setInterval(interval);
+}
+
+void World::addObject(CarSPtr ind)
+{
+    auto inserted = individuals_.insert(make_pair(ind->score(), ind));
+    if(!inserted.second)
+        throw "Cannot insert individual";
+    int dist = distance(individuals_.begin(), inserted.first);
+    emit addObject(dist, inserted.first->second);
+}
+
+void World::removeObject(CarSPtr ind)
+{
+    auto erased = individuals_.find(ind->score());
+    int dist = distance(individuals_.begin(), erased);
+    auto erasedNumber = individuals_.erase(erased);
+    if(erasedNumber != individuals_.end())
+        throw "Erased more or less elements";
+    emit removeObject(dist, erased->second);
+}
+
+void World::setTime(double time)
+{
+    emit updateTime();
+    time_ = time;
 }

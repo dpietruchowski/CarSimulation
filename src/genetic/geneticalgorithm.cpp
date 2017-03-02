@@ -8,9 +8,9 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticParameters params):
     size_(params.populationSize), selectionType_(params.selectionType),
     tournamentSize_(params.populationSize/3)
 {
-    crossoverGenerator_.registerObject(0.5, OnePointCrossover::create);
-    crossoverGenerator_.registerObject(0.3, TwoPointCrossover::create);
-    crossoverGenerator_.registerObject(0.2, WheelCrossover::create);
+    crossoverGenerator_.registerObject(0.3, OnePointCrossover::create);
+    crossoverGenerator_.registerObject(0.1, TwoPointCrossover::create);
+    crossoverGenerator_.registerObject(0.6, WheelCrossover::create);
 
     mutationGenerator_.registerObject(0.5, WheelMutation::create);
     mutationGenerator_.registerObject(0.5, BodyMutation::create);
@@ -18,29 +18,34 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticParameters params):
 
 void GeneticAlgorithm::insert(Car* individual)
 {
-    for(const auto &c: population_)
-    {
-        if(*individual == *c)
-            return;
+    auto added = population_.insert(make_pair(individual->score(),
+                                    CarSPtr(new Car(*individual, false))));
+    if(!added.second) {
+        return;
     }
+    emit addObject(added.first->second);
 
-    if(population_.size() == size_)
-        population_.erase(population_.end());
-    else stats.push_back(0);
-    population_.push_back(CarPtr(new Car(*individual, false)));
-    std::sort(population_.begin(), population_.end(),
-              [](const CarPtr &lhs, const CarPtr &rhs)
-                { return *lhs > *rhs; });
+    if(population_.size() == size_+1) {
+        emit removeObject(population_.rbegin()->second);
+        auto removed = population_.erase(population_.rbegin()->first);
+        if(removed != 1)
+            throw "Not removed or removed more objects";
+    }
+    //else stats.push_back(0);
 }
 
 CarPtr GeneticAlgorithm::create()
 {
     std::vector<Car *> parents;
-    int chosen = select();
-    stats[chosen]++;
+    double chosen = select();
+    //stats[chosen]++;
+    if (population_.find(chosen) == population_.end())
+        throw "Individual not found";
     parents.push_back(population_[chosen].get());
     chosen = select();
-    stats[chosen]++;
+    //stats[chosen]++;
+    if (population_.find(chosen) == population_.end())
+        throw "Individual not found";
     parents.push_back(population_[chosen].get());
 
     GeneticOperation *crossover = crossoverGenerator_.createRandomPtr();
@@ -72,7 +77,7 @@ bool GeneticAlgorithm::empty() const
     return population_.empty();
 }
 
-unsigned int GeneticAlgorithm::select()
+double GeneticAlgorithm::select()
 {
     Selection *selection = nullptr;
     switch(selectionType_)
@@ -93,12 +98,12 @@ unsigned int GeneticAlgorithm::select()
     int i = 0;
     for(const auto& ind: population_)
     {
-        selection->add(i, ind->score());
+        selection->add(i, ind.second->score());
         ++i;
     }
     selection->calcScores();
-    unsigned int rank = selection->select();
+    double score = selection->selectScore();
 
     delete selection;
-    return rank;
+    return score;
 }

@@ -49,7 +49,8 @@ HEADERS += gui/mainwindow.h \
             genetic/operation/operation.h \
             simulation/simulation.h \
     simulation/world.h \
-    gui/dialog.h
+    gui/dialog.h \
+    simulation/worldscene.h
 
 SOURCES += main.cpp \
             gui/mainwindow.cpp \
@@ -81,7 +82,8 @@ SOURCES += main.cpp \
             genetic/operation/wheelcrossover.cpp \
             simulation/simulation.cpp \
     simulation/world.cpp \
-    gui/dialog.cpp
+    gui/dialog.cpp \
+    simulation/worldscene.cpp
 
 FORMS    += gui/mainwindow.ui \
     gui/dialog.ui

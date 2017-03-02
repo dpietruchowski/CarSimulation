@@ -29,7 +29,12 @@ void Selection::calcScores()
     calcScores(scores_, worstScore_);
 }
 
-unsigned int Selection::select() const
+double Selection::selectScore() const
+{
+    return scores_[select(scores_)].score;
+}
+
+unsigned int Selection::selectRank() const
 {
     return scores_[select(scores_)].rank;
 }

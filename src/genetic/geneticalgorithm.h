@@ -2,6 +2,7 @@
 #define GENETICALGORITHM_H
 
 #include <map>
+#include <QObject>
 #include "simulation/object/car.h"
 #include "selection/selection.h"
 #include "operation/operation.h"
@@ -13,8 +14,9 @@ struct GeneticParameters
     SelectionType selectionType;
 };
 
-class GeneticAlgorithm
+class GeneticAlgorithm: public QObject
 {
+    Q_OBJECT
 public:
     GeneticAlgorithm(GeneticParameters params);
     
@@ -23,18 +25,22 @@ public:
     bool full() const;
     bool empty() const;
 
+signals:
+    void addObject(CarSPtr);
+    void removeObject(CarSPtr);
+
 private:
-    unsigned int select();
+    double select();
     
 private:
-    typedef std::vector<CarPtr> Population_;
+    typedef std::map<double, CarSPtr, std::greater<double>> Population_;
     Population_ population_;
     GeneticOperationGenerator crossoverGenerator_;
     GeneticOperationGenerator mutationGenerator_;
     size_t size_;
     SelectionType selectionType_;
     unsigned int tournamentSize_;
-    std::vector<int> stats;
+    //std::vector<int> stats;
 };
 
 #endif // GENETICALGORITHM_H

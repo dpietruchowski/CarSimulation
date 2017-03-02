@@ -13,7 +13,8 @@ public:
     void add(unsigned int rank, double score);
     void calcScores();
     Scores getScores() { return scores_; }
-    unsigned int select() const;
+    unsigned int selectRank() const;
+    double selectScore() const;
 protected:
 //    SelectionRandomGenerator generator_;
 

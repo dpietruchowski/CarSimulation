@@ -149,6 +149,6 @@ std::__cxx11::string Element::Parameters::toString() const
     return sParameters;
 }
 
-const int Element::Parameters::MAX_DENSITY = 100;
+const int Element::Parameters::MAX_DENSITY = 10;
 const double Element::Parameters::MAX_FRICTION = 1;
 const double Element::Parameters::MAX_RESTITUTION = 1;

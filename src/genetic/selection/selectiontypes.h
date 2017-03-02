@@ -56,13 +56,16 @@ inline std::string selectionTypeToString(SelectionType type)
 struct Score
 {
     unsigned int rank;
+    double score;
     double value;
     double normalized;
     Score(const Score&) = default;
-    Score(unsigned int, double, double);
+    Score(unsigned int, double, double, double);
     std::string toString() const
     {
         std::string sScore = std::to_string(rank);
+        sScore += " ";
+        sScore += to_string_with_precision(score, 3);
         sScore += " ";
         sScore += to_string_with_precision(value, 3);
         sScore += " ";

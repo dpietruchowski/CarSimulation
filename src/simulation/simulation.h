@@ -25,6 +25,8 @@ public:
 
     void setInterval(double interval);
     double time() const { return time_; }
+    GeneticAlgorithm& genetic()
+        { return genetic_; }
 
 signals:
     void addItem(QGraphicsItem*);
