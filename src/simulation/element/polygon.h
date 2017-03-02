@@ -18,6 +18,10 @@ public:
     Polygon(const b2Vec2& position,
             const b2BodyType& bodyType,
             const Qt::GlobalColor& color);
+    Polygon() = delete;
+    Polygon(const Polygon& other) = default;
+    Element *clone() const
+        { return new Polygon(*this); }
 
 private:
     /// Draw polygon

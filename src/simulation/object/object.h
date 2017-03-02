@@ -31,6 +31,7 @@ public:
     void destroy(b2World& world);
 
     const b2Vec2& getPosition() const;
+    void setPosition(const b2Vec2 &position);
     float32 getSpeedX() const;
     float32 getSpeedY() const;
     float32 getSpeed() const;

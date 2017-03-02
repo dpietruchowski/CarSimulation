@@ -23,9 +23,12 @@ private slots:
     void on_forwardButton_toggled(bool checked);
     void on_startButton_toggled(bool checked);
 
+    void on_carListWidget_currentTextChanged(const QString &currentText);
+
 private:
     Ui::MainWindow *ui;
     World world;
+    QGraphicsScene carScene;
 };
 
 #endif // MAINWINDOW_H

@@ -26,7 +26,7 @@ public:
         { return scene_; }
     double time() const
         { return time_; }
-    const Individuals& individuals() const
+    Individuals& individuals()
         { return individuals_; }
     const Simulation &simulation() const
         { return simulation_; }

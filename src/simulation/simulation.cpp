@@ -101,7 +101,7 @@ void Simulation::onCreateObjectTimeout()
 void Simulation::killObject(Objects::iterator &it)
 {
     (*it)->calcScore();
-    cout << (*it)->score() << endl;
+//    cout << (*it)->score() << endl;
 //    qDebug() << "WORLD: Removing item[" << (*it)->id() << "]";
 //    qDebug() << "Position: " << (*it)->getPosition().x << ", "
 //             << (*it)->getPosition().y;

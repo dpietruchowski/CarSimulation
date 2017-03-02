@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QGraphicsView>
 #include <QDebug>
+#include <iostream>
+
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,6 +27,16 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&world, SIGNAL(removeObject(int, CarSPtr)),
                      this, SLOT(removeObject(int, CarSPtr)));
 
+    ui->carView->setScene(&carScene);
+    ui->carView->centerOn(0,0);
+    ui->carView->setRenderHint(QPainter::Antialiasing);
+    transform = ui->carView->transform();
+    transform.scale(5.0f, -5.0f);
+    transform.translate(10.0f, -40.0f);
+    ui->carView->setTransform(transform);
+    carScene.addLine(0, -20, 0, 20);
+    carScene.addLine(-20, 0, 20, 0);
+
 }
 
 MainWindow::~MainWindow()
@@ -33,7 +46,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::addObject(int row, CarSPtr car)
 {
-    ui->carListWidget->insertItem(row, QString::number(car->score()));
+    ui->carListWidget->insertItem(row, QString::number(car->id()));
 }
 
 void MainWindow::removeObject(int row, CarSPtr car)
@@ -69,4 +82,27 @@ void MainWindow::on_startButton_toggled(bool checked)
         world.stop();
         ui->startButton->setText(QString("Resume"));
     }
+}
+
+void MainWindow::on_carListWidget_currentTextChanged(const QString &currentText)
+{
+    QList<QGraphicsItem *> sceneItems = carScene.items();
+    for(const auto &item: sceneItems) {
+        carScene.removeItem(item);
+    }
+ //   carScene.addLine(0, -20, 0, 20);
+  //  carScene.addLine(-20, 0, 20, 0);
+    auto ind = std::find_if(world.individuals().begin(),
+                            world.individuals().end(),
+                            [&currentText](const std::pair<double, CarSPtr> &p)->bool
+                            {
+                                auto id = currentText.toInt();
+                                cout << id << " ";
+                                cout << p.second->id() << endl;
+                                return p.second->id() == id;
+                            });
+
+    if(ind == world.individuals().end())
+        throw "Didnt find this car";
+    carScene.addItem(ind->second.get());
 }

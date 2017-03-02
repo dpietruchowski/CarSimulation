@@ -23,6 +23,7 @@ void GeneticAlgorithm::insert(Car* individual)
     if(!added.second) {
         return;
     }
+//    added.first->second->initialize();
     emit addObject(added.first->second);
 
     if(population_.size() == size_+1) {

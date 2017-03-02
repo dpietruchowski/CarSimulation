@@ -222,7 +222,7 @@ void Car::initialize(std::vector<ElementPtr>& elements)
     vertex.x = initLength_;
     vertex.y = 0;
     // Create car's body
-    elements.push_back(ElementPtr(new Polygon(startPosition_,
+    elements.push_back(ElementPtr(new Polygon(b2Vec2(0, 0),
                                               b2_dynamicBody,
                                               bodyColor_)));
 
@@ -238,7 +238,7 @@ void Car::initialize(std::vector<ElementPtr>& elements)
     for(auto& w: wheels_)
     {
         vertex = body_[w.getVertexNumber()].getVertex();
-        elements.push_back(w.create(vertex + startPosition_, wheelColor_));
+        elements.push_back(w.create(vertex, wheelColor_));
     }
 
     for(auto & e: elements)
@@ -255,7 +255,7 @@ void Car::createJoints(std::vector<ElementPtr> &elements,
 
     //Create first joint -- for test
     vertex = body_[wheels_[0].getVertexNumber()].getVertex();
-    vertex = vertex + startPosition_;
+    vertex = vertex;
     jointDef.collideConnected = false;
     jointDef.Initialize(elements[1]->getBody(), elements[0]->getBody(), vertex);
 
@@ -272,12 +272,13 @@ void Car::createJoints(std::vector<ElementPtr> &elements,
     //Create second joint -- for test
     b2RevoluteJointDef jointDef2;
     vertex = body_[wheels_[1].getVertexNumber()].getVertex();
-    vertex = vertex + startPosition_;
+    vertex = vertex;
     jointDef2.Initialize(elements[2]->getBody(), elements[0]->getBody(), vertex);
     world.CreateJoint(&jointDef2);
     elements_[1]->getBody()->SetAngularVelocity(-20);
     elements_[2]->getBody()->SetAngularVelocity(-20);
 
+    setPosition(startPosition_);
     setPos(getPosition().x, getPosition().y);
     // /////////////
 }

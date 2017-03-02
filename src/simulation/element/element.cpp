@@ -8,7 +8,8 @@ using namespace std;
 
 Element::Element(const b2Vec2& position,
                  const b2BodyType& bodyType,
-                 const Qt::GlobalColor& color)
+                 const Qt::GlobalColor& color):
+    drawPosition_(position), drawAngle_(0)
 {
     //body
     bodyDef_.type = bodyType;
@@ -17,8 +18,8 @@ Element::Element(const b2Vec2& position,
 }
 
 Element::Element(const Element &other): body_(nullptr), bodyDef_(other.bodyDef_),
-    color_(other.color_), drawPosition_(other.drawPosition_),
-    drawAngle_(other.drawAngle_)
+    color_(other.color_), drawPosition_(other.bodyDef_.position),
+    drawAngle_(0)
 {
     for(const auto &f: other.fixtureDefs_)
     {
@@ -120,6 +121,11 @@ const b2Shape *Element::getShape() const
     return fixtureDefs_[0].shape;
 }
 
+const b2Vec2 &Element::getDrawPoisiton() const
+{
+    return drawPosition_;
+}
+
 void Element::swap(Element &other)
 {
     std::swap(body_, other.body_);
@@ -130,7 +136,8 @@ void Element::swap(Element &other)
 
 Element::Parameters Element::Parameters::createRandom()
 {
-    float32 density = std::rand() % Element::Parameters::MAX_DENSITY;
+    int maxDensity = Element::Parameters::MAX_DENSITY * 100;
+    float32 density = static_cast<float32>(1 + std::rand() % maxDensity) / maxDensity;
     int maxFriction = Element::Parameters::MAX_FRICTION * 100;
     float32 friction = static_cast<float32>(1 + std::rand() % maxFriction) / maxFriction;
     int maxRestitution = Element::Parameters::MAX_RESTITUTION * 100;
@@ -149,6 +156,6 @@ std::__cxx11::string Element::Parameters::toString() const
     return sParameters;
 }
 
-const int Element::Parameters::MAX_DENSITY = 10;
+const int Element::Parameters::MAX_DENSITY = 100;
 const double Element::Parameters::MAX_FRICTION = 1;
 const double Element::Parameters::MAX_RESTITUTION = 1;

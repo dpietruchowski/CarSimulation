@@ -34,6 +34,7 @@ public:
             const Qt::GlobalColor& color);
     Element(const Element &other);
     virtual ~Element();
+    virtual Element *clone() const = 0;
 
     /// Create body and fixture and attach to the world
     /// First you need to add fixtures definitions
@@ -52,6 +53,7 @@ public:
 
     b2Body* getBody() const;
     const b2Shape *getShape() const;
+    const b2Vec2 &getDrawPoisiton() const;
 
 protected:
     void swap(Element &other);

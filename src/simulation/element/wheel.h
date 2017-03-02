@@ -13,6 +13,10 @@ public:
     Wheel(const b2Vec2& position, float32 r,
           const Qt::GlobalColor& color,
           const Element::Parameters& parameters);
+    Wheel() = delete;
+    Wheel(const Wheel &other) = default;
+    Element *clone() const
+        { return new Wheel(*this); }
 private:
     /// Draw wheel
     void drawElement(QPainter& painter,

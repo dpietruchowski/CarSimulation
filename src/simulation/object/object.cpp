@@ -15,6 +15,10 @@ Object::Object(): recentSpeed_(10)
 Object::Object(const Object &other): QGraphicsItem(),
     recentSpeed_(10), id_(other.id_)
 {
+    for(const auto& g : other.elements_)
+    {
+        elements_.push_back(ElementPtr(g->clone()));
+    }
 }
 
 void Object::initialize()
@@ -61,6 +65,15 @@ void Object::destroy(b2World &world)
 const b2Vec2 &Object::getPosition() const
 {
     return elements_[0]->getBody()->GetPosition();
+}
+
+void Object::setPosition(const b2Vec2 &position)
+{
+    for(const auto& g : elements_)
+    {
+        b2Body *body = g->getBody();
+        body->SetTransform(g->getDrawPoisiton() + position, 0);
+    }
 }
 
 float32 Object::getSpeedX() const

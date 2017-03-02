@@ -28,6 +28,8 @@ public:
     //TODO implement swap operator= and swap constructor
     Box(const Box& box) = default;
     Box& operator=(const Box& other);
+    Element *clone() const
+        { return new Box(*this); }
 
     b2Vec2 getPosition() const;
     b2Vec2 getVertex(Corner corner) const;
