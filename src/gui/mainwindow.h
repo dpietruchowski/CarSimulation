@@ -19,7 +19,7 @@ public:
 private slots:
     void addObject(int, CarSPtr);
     void removeObject(int, CarSPtr);
-    void updateTime();
+    void update();
     void on_forwardButton_toggled(bool checked);
     void on_startButton_toggled(bool checked);
 

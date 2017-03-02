@@ -50,7 +50,10 @@ void Simulation::update()
 
         // For easy debbuging
         if ( (!o->isMoving(interval_)) )
-        { killObject(it); continue; }
+        {
+            cout <<  "Id: " << o->id() << " Speed: " << o->getRecentSpeed() << endl;
+            cout << "    Position: " << o->getPosition().x << " " << o->getPosition().y << endl;
+            killObject(it); continue; }
         if ( (x > size_.x) )
         { killObject(it); continue; }
         if ( (x < 0) )

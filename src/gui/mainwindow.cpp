@@ -26,16 +26,16 @@ MainWindow::MainWindow(QWidget *parent) :
                      this, SLOT(addObject(int, CarSPtr)));
     QObject::connect(&world, SIGNAL(removeObject(int, CarSPtr)),
                      this, SLOT(removeObject(int, CarSPtr)));
+    QObject::connect(&world, SIGNAL(update()),
+                     this, SLOT(update()));
 
     ui->carView->setScene(&carScene);
-    ui->carView->centerOn(0,0);
     ui->carView->setRenderHint(QPainter::Antialiasing);
     transform = ui->carView->transform();
-    transform.scale(5.0f, -5.0f);
+    transform.scale(10.0f, -10.0f);
     transform.translate(10.0f, -40.0f);
     ui->carView->setTransform(transform);
-    carScene.addLine(0, -20, 0, 20);
-    carScene.addLine(-20, 0, 20, 0);
+    ui->carView->centerOn(0,0);
 
 }
 
@@ -55,9 +55,12 @@ void MainWindow::removeObject(int row, CarSPtr car)
     list->removeItemWidget(list->takeItem(row));
 }
 
-void MainWindow::updateTime()
+void MainWindow::update()
 {
-
+    ui->timeView->display(world.time());
+    ui->nCarsAliveValue->setText(QString::number(world.scene().nCarsAlive()));
+    ui->nCarsCreatedValue->setText(QString::number(world.scene().nCarsCreated()));
+    ui->nCarsKilledValue->setText(QString::number(world.scene().nCarsKilled()));
 }
 
 void MainWindow::on_forwardButton_toggled(bool checked)
@@ -90,8 +93,7 @@ void MainWindow::on_carListWidget_currentTextChanged(const QString &currentText)
     for(const auto &item: sceneItems) {
         carScene.removeItem(item);
     }
- //   carScene.addLine(0, -20, 0, 20);
-  //  carScene.addLine(-20, 0, 20, 0);
+    ui->carView->centerOn(0,0);
     auto ind = std::find_if(world.individuals().begin(),
                             world.individuals().end(),
                             [&currentText](const std::pair<double, CarSPtr> &p)->bool

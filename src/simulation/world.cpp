@@ -14,7 +14,7 @@ void World::incTimeout() {
 
 World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
              GeneticParameters params):
-    simulation_({10, 100}, gravity, size, bufferSize, params)
+    simulation_({10, 100}, gravity, size, bufferSize, params), time_(0)
 {
     int interval = 1000/60; //60 fps
     drawTimer_.setInterval(interval*1);
@@ -46,6 +46,8 @@ World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
                      &simulation_, SLOT(initialize()));
     QObject::connect(&simulation_, SIGNAL(setTime(double)),
                      &scene_, SLOT(setTime(double)));
+    QObject::connect(&simulation_, SIGNAL(setTime(double)),
+                     this, SLOT(setTime(double)));
     simulation_.moveToThread(&thread_);
     emit initialize();
     thread_.start();
@@ -131,6 +133,6 @@ void World::removeObject(CarSPtr ind)
 
 void World::setTime(double time)
 {
-    emit updateTime();
     time_ = time;
+    emit update();
 }

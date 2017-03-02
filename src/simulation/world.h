@@ -35,7 +35,7 @@ signals:
     void initialize();
     void addObject(int, CarSPtr);
     void removeObject(int, CarSPtr);
-    void updateTime();
+    void update();
 
 private slots:
     void incTimeout();
