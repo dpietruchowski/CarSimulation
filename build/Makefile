@@ -1674,7 +1674,9 @@ mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qscrollarea.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qframe.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QDebug
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QDebug \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QTime \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../src/gui/mainwindow.cpp
 
 utilfunctions.o: ../src/utilfunctions.cpp ../src/utilfunctions.h

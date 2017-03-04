@@ -21,11 +21,15 @@ public:
     void forward(bool clicked);
     void setUpdateInterval(int interval);
     void setCreateObjectInterval(int interval);
+    double avarageScore() const;
+    double bestScore() const;
 
     WorldScene& scene()
         { return scene_; }
     double time() const
         { return time_; }
+    double maxTime() const
+        { return maxTime_; }
     Individuals& individuals()
         { return individuals_; }
     const Simulation &simulation() const
@@ -52,6 +56,7 @@ private:
     Simulation simulation_;
     Individuals individuals_;
     double time_;
+    double maxTime_;
 };
 
 #endif // WORLD_H

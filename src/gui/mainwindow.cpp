@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QGraphicsView>
 #include <QDebug>
+#include <QTime>
 #include <iostream>
 
 using namespace std;
@@ -46,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->carTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->carTableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->carTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    ui->worldProgressBar->setMaximum(world.maxTime() * 1000);
 }
 
 MainWindow::~MainWindow()
@@ -73,10 +76,20 @@ void MainWindow::removeObject(int row, CarSPtr car)
 
 void MainWindow::update()
 {
-    ui->timeView->display(world.time());
+    QTime time(0,0,0);
+    QTime worldTime = time.addMSecs(world.time()*1000);
+    ui->timeMSView->display(worldTime.msec());
+    ui->timeSView->display(worldTime.second());
+    ui->timeMView->display(worldTime.minute());
+    ui->timeHView->display(worldTime.hour());
+
+    ui->worldProgressBar->setValue(world.time() * 1000);
+
     ui->nCarsAliveValue->setText(QString::number(world.scene().nCarsAlive()));
     ui->nCarsCreatedValue->setText(QString::number(world.scene().nCarsCreated()));
     ui->nCarsKilledValue->setText(QString::number(world.scene().nCarsKilled()));
+    ui->bestScoreValue->setText(QString::number(world.bestScore()));
+    ui->avScoreValue->setText(QString::number(world.avarageScore()));
 }
 
 void MainWindow::on_forwardButton_toggled(bool checked)
@@ -127,7 +140,6 @@ void MainWindow::on_startButton_toggled(bool checked)
 
 void MainWindow::on_carTableWidget_cellPressed(int row, int /* column */)
 {
-    cout << "cell activated" << endl;
     const QString &currentText = ui->carTableWidget->item(row, 0)->text();
 
     QList<QGraphicsItem *> sceneItems = carScene.items();
@@ -140,8 +152,6 @@ void MainWindow::on_carTableWidget_cellPressed(int row, int /* column */)
                             [&currentText](const std::pair<double, CarSPtr> &p)->bool
                             {
                                 auto id = currentText.toInt();
-                                cout << id << " ";
-                                cout << p.second->id() << endl;
                                 return p.second->id() == id;
                             });
 

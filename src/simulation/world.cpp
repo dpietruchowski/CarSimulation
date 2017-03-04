@@ -14,7 +14,8 @@ void World::incTimeout() {
 
 World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
              GeneticParameters params):
-    simulation_({10, 100}, gravity, size, bufferSize, params), time_(0)
+    simulation_({10, 100}, gravity, size, bufferSize, params), time_(0),
+    maxTime_(120)
 {
     int interval = 1000/60; //60 fps
     drawTimer_.setInterval(interval*1);
@@ -112,6 +113,22 @@ void World::setCreateObjectInterval(int interval)
     createObjectTimer_.setInterval(interval);
 }
 
+double World::avarageScore() const
+{
+    double sum = 0;
+    for(const auto &ind: individuals_)
+    {
+        sum += ind.first;
+    }
+
+    return sum / individuals_.size();
+}
+
+double World::bestScore() const
+{
+    return individuals_.begin()->first;
+}
+
 void World::addObject(CarSPtr ind)
 {
     auto inserted = individuals_.insert(make_pair(ind->score(), ind));
@@ -134,5 +151,9 @@ void World::removeObject(CarSPtr ind)
 void World::setTime(double time)
 {
     time_ = time;
+    if(time_ > maxTime_)
+    {
+        stop();
+    }
     emit update();
 }
