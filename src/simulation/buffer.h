@@ -4,7 +4,6 @@
 #include <list>
 
 #include "object/car.h"
-#include "gui/dialog.h"
 
 class Buffer
 {
@@ -19,7 +18,6 @@ public:
     size_t size() const;
     bool empty() const;
     size_t maxSize() const;
-    void print(Dialog &console, int number) const;
 
 private:
     typedef std::list<CarPtr> Container;

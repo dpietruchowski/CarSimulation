@@ -12,7 +12,6 @@
 #include "object/ground.h"
 #include "buffer.h"
 #include "genetic/geneticalgorithm.h"
-#include "gui/dialog.h"
 
 class Simulation : public QObject
 {

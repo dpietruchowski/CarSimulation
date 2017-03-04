@@ -48,23 +48,3 @@ size_t Buffer::maxSize() const
 {
     return size_;
 }
-
-void Buffer::print(Dialog &console, int number) const
-{
-    int i = 0;
-    console.clear(number);
-    if(number == 0)
-        for(const auto &b : buffer_)
-        {
-            stringstream ss;
-            ss << "[" << i++ << "] " << b->id();
-            console << ss;
-        }
-    else
-        for(const auto &b : buffer_)
-        {
-            stringstream ss;
-            ss << "[" << i++ << "] " << b->id();
-            console <= ss;
-        }
-}
