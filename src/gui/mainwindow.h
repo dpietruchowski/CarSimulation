@@ -22,8 +22,9 @@ private slots:
     void update();
     void on_forwardButton_toggled(bool checked);
     void on_startButton_toggled(bool checked);
-
-    void on_carListWidget_currentTextChanged(const QString &currentText);
+//    void on_carListWidget_currentTextChanged(const QString &currentText);
+    void on_carTableWidget_cellPressed(int row, int column);
+    void on_carTableWidget_cellEntered(int row, int column);
 
 private:
     Ui::MainWindow *ui;

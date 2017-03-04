@@ -37,6 +37,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->carView->setTransform(transform);
     ui->carView->centerOn(0,0);
 
+    QStringList labels;
+    labels << "Id" << "Score";
+    ui->carTableWidget->setHorizontalHeaderLabels(labels);
+    QHeaderView *verticalHeader = ui->carTableWidget->verticalHeader();
+    verticalHeader->setSectionResizeMode(QHeaderView::Fixed);
+    verticalHeader->setDefaultSectionSize(15);
+    ui->carTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->carTableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->carTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 MainWindow::~MainWindow()
@@ -46,13 +55,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::addObject(int row, CarSPtr car)
 {
-    ui->carListWidget->insertItem(row, QString::number(car->id()));
+    //ui->carListWidget->insertItem(row, QString::number(car->id()));
+    ui->carTableWidget->insertRow(row);
+    ui->carTableWidget->setItem(row, 0, new QTableWidgetItem(
+                                                QString::number(car->id())));
+    ui->carTableWidget->setItem(row, 1, new QTableWidgetItem(
+                                                QString::number(car->score())));
 }
 
 void MainWindow::removeObject(int row, CarSPtr car)
 {
-    auto list = ui->carListWidget;
-    list->removeItemWidget(list->takeItem(row));
+    //auto list = ui->carListWidget;
+    //list->removeItemWidget(list->takeItem(row));
+    auto table = ui->carTableWidget;
+    table->removeRow(row);
 }
 
 void MainWindow::update()
@@ -87,7 +103,7 @@ void MainWindow::on_startButton_toggled(bool checked)
     }
 }
 
-void MainWindow::on_carListWidget_currentTextChanged(const QString &currentText)
+/* void MainWindow::on_carListWidget_currentTextChanged(const QString &currentText)
 {
     QList<QGraphicsItem *> sceneItems = carScene.items();
     for(const auto &item: sceneItems) {
@@ -107,4 +123,34 @@ void MainWindow::on_carListWidget_currentTextChanged(const QString &currentText)
     if(ind == world.individuals().end())
         throw "Didnt find this car";
     carScene.addItem(ind->second.get());
+} */
+
+void MainWindow::on_carTableWidget_cellPressed(int row, int /* column */)
+{
+    cout << "cell activated" << endl;
+    const QString &currentText = ui->carTableWidget->item(row, 0)->text();
+
+    QList<QGraphicsItem *> sceneItems = carScene.items();
+    for(const auto &item: sceneItems) {
+        carScene.removeItem(item);
+    }
+    ui->carView->centerOn(0,0);
+    auto ind = std::find_if(world.individuals().begin(),
+                            world.individuals().end(),
+                            [&currentText](const std::pair<double, CarSPtr> &p)->bool
+                            {
+                                auto id = currentText.toInt();
+                                cout << id << " ";
+                                cout << p.second->id() << endl;
+                                return p.second->id() == id;
+                            });
+
+    if(ind == world.individuals().end())
+        throw "Didnt find this car";
+    carScene.addItem(ind->second.get());
+}
+
+void MainWindow::on_carTableWidget_cellEntered(int row, int column)
+{
+    on_carTableWidget_cellPressed(row, column);
 }

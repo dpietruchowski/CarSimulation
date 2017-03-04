@@ -291,7 +291,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QListWidget" name="carListWidget">
+       <widget class="QTableWidget" name="carTableWidget">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -310,6 +310,11 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="columnCount">
+         <number>2</number>
+        </property>
+        <column/>
+        <column/>
        </widget>
       </item>
      </layout>
