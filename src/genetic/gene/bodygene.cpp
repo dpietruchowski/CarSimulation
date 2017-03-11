@@ -1,9 +1,13 @@
 #include "bodygene.h"
 #include "simulation/element/polygon.h"
 
-#include <math.h>
 #include <array>
 #include "utilfunctions.h"
+
+BodyGene::BodyGene(const Element::Parameters &parameters, const b2Vec2 &vertex):
+    Gene(parameters), vertex_(vertex)
+{
+}
 
 b2Shape* BodyGene::create(const b2Vec2& vertex)
 {
@@ -14,12 +18,13 @@ b2Shape* BodyGene::create(const b2Vec2& vertex)
     return ShapeCreation()(&vertices[0], 3);
 }
 
-std::__cxx11::string BodyGene::toString() const
+const b2Vec2 &BodyGene::getVertex() const
 {
-    std::string sGene;
-    sGene += std::to_string(vertex_.x) + " ";
-    sGene += std::to_string(vertex_.y) + " ";
-    sGene += parameters_.toString();
+    return vertex_;
+}
 
-    return sGene;
+void BodyGene::geneToString(std::string &gene) const
+{
+    gene += std::to_string(vertex_.x) + " ";
+    gene += std::to_string(vertex_.y) + " ";
 }

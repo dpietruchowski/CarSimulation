@@ -84,3 +84,7 @@ SOURCES += main.cpp \
     simulation/worldscene.cpp
 
 FORMS    += gui/mainwindow.ui \
+
+message($$OUT_PWD)#
+message($$_PRO_FILE_PWD_)
+message($$_PRO_FILE_PWD_)

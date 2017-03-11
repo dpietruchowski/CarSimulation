@@ -1669,11 +1669,67 @@ mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
 		../src/genetic/operation/wheelmutation.h \
 		../src/simulation/worldscene.h \
 		ui_mainwindow.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QAction \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qaction.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QApplication \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qapplication.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qeventloop.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qguiapplication.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qinputmethod.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QButtonGroup \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QFormLayout \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qformlayout.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLayout \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayout.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsView \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsview.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qscrollarea.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qframe.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGridLayout \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHeaderView \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qvalidator.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qregularexpression.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qslider.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyle.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLCDNumber \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlcdnumber.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLabel \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlabel.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMenuBar \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenu.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QProgressBar \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qprogressbar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPushButton \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QStatusBar \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstatusbar.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QTableWidget \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtableview.h \
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QVBoxLayout \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QDebug \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/QTime \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtCore/qdatetime.h
@@ -2697,9 +2753,6 @@ bodygene.o: ../src/genetic/gene/bodygene.cpp ../src/genetic/gene/bodygene.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
-		../src/simulation/object/object.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../src/simulation/element/polygon.h \
 		../src/utilfunctions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bodygene.o ../src/genetic/gene/bodygene.cpp
@@ -2806,10 +2859,7 @@ gene.o: ../src/genetic/gene/gene.cpp ../src/genetic/gene/gene.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/QPainter \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpainter.h \
 		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h \
-		../src/simulation/object/object.h \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/QGraphicsItem \
-		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h
+		../../../programy/Qt/Qt5.7.0/5.7/gcc_64/include/QtGui/qpen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gene.o ../src/genetic/gene/gene.cpp
 
 wheelgene.o: ../src/genetic/gene/wheelgene.cpp ../src/genetic/gene/wheelgene.h \

@@ -10,29 +10,28 @@
  * and commond for all parts.
  */
 
-class BodyGene
+class BodyGene: public Gene
 {
 public:
     static const int MAX_LENGTH = 8;
     static const int MIN_LENGTH = 2;
 public:
-    BodyGene(const Element::Parameters& parameters, const b2Vec2 &vertex):
-        parameters_(parameters), vertex_(vertex) {}
+    BodyGene(const Element::Parameters &parameters, const b2Vec2 &vertex);
     BodyGene(const BodyGene &other) = default;
+    ~BodyGene() = default;
+    BodyGene &operator=(const BodyGene &rhs) = default;
 
     /// Create polygon shape as triangle with vertices:
     /// First vertex is center of car's body and this is position of car
     /// Second vertex is shared with previous part of body
     /// Third vertex is calculated and shared with next part of body
     b2Shape* create(const b2Vec2& vertex);
-
-    const Element::Parameters& getParameters() const { return parameters_; }
-    const b2Vec2& getVertex() const { return vertex_; }
-
-    std::string toString() const;
+    const b2Vec2 &getVertex() const;
 
 private:
-    Element::Parameters parameters_;
+    void geneToString(std::string &gene) const override;
+
+private:
     b2Vec2 vertex_;
 };
 
