@@ -23,14 +23,19 @@ Polygon::Polygon(const b2Vec2& position,
                  const Qt::GlobalColor& color):
      Element(position, bodyType, color)
 {
-//    addFixture(ShapeCreation::getPolygonShape(b2Vec2(10,10)));
+    //    addFixture(ShapeCreation::getPolygonShape(b2Vec2(10,10)));
+}
+
+Element *Polygon::clone() const
+{
+   return new Polygon(*this);
 }
 
 void Polygon::drawElement(QPainter &painter,
-                          const b2Vec2 &position,
+                          const b2Vec2 &/* position */,
                           const float32 angle,
-                          const b2Shape* shape,
-                          const b2Vec2& parentPosition) const
+                          const b2Shape *shape,
+                          const b2Vec2 &/* parentPosition */) const
 {
     const b2PolygonShape* polygon = dynamic_cast<const b2PolygonShape*>(shape);
     int count = static_cast<int>(polygon->GetVertexCount());

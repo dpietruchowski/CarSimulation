@@ -3,9 +3,16 @@
 
 #include "crossover.h"
 
+///
+/// \brief The TwoPointCrossover class.
+///
 class TwoPointCrossover : public Crossover
 {
 public:
+    ///
+    /// \brief Creates new TwoPointCrossover object.
+    /// \return Newly created object
+    ///
     static GeneticOperation *create();
     TwoPointCrossover();
 private:

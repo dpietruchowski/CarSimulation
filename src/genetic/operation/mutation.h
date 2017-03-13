@@ -3,6 +3,9 @@
 
 #include "geneticoperation.h"
 
+///
+/// \brief The Mutation class, which represents mutation operation
+///
 class Mutation : public GeneticOperation
 {
 public:

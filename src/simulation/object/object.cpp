@@ -21,6 +21,11 @@ Object::Object(const Object &other): QGraphicsItem(),
     }
 }
 
+bool Object::operator==(const Object &rhs)
+{
+    return id_ == rhs.id_;
+}
+
 void Object::initialize()
 {
     initialize(elements_);
@@ -104,6 +109,11 @@ float32 Object::getRecentSpeed() const
 oid Object::id() const
 {
     return id_;
+}
+
+bool Object::canBeCreated() const
+{
+    return true;
 }
 
 void Object::advance(int phase)

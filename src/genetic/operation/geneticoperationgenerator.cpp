@@ -1,10 +1,5 @@
 #include "geneticoperationgenerator.h"
 
-GeneticOperationGenerator::GeneticOperationGenerator()
-{
-
-}
-
 GeneticOperation *GeneticOperationGenerator::createRandomPtr()
 {
     CreationCounter<CreateObjectFunction> counter = generator_.createRandom();

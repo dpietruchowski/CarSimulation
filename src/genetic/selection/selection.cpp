@@ -29,6 +29,11 @@ void Selection::calcScores()
     calcScores(scores_, worstScore_);
 }
 
+Scores Selection::getScores() const
+{
+    return scores_;
+}
+
 double Selection::selectScore() const
 {
     return scores_[select(scores_)].score;

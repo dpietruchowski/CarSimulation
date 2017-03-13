@@ -14,11 +14,16 @@ Wheel::Wheel(const b2Vec2& position, float32 r, const Qt::GlobalColor& color,
     addFixture(ShapeCreation()(r), parameters);
 }
 
-void Wheel::drawElement(QPainter& painter,
-                        const b2Vec2& position,
+Element *Wheel::clone() const
+{
+   return new Wheel(*this);
+}
+
+void Wheel::drawElement(QPainter &painter,
+                        const b2Vec2 &position,
                         const float32 angle,
-                        const b2Shape* shape,
-                        const b2Vec2& parentPosition) const
+                        const b2Shape *shape,
+                        const b2Vec2 &parentPosition) const
 {
     float32 r = shape->m_radius;
     b2Vec2 pos = position - parentPosition;

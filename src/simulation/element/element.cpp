@@ -91,10 +91,10 @@ void Element::collide(bool c)
 {
     if(c == true)
         for(auto &f: fixtureDefs_)
-            f.filter.groupIndex = 0;
+            f.filter.groupIndex = COLIDE_GROUP;
     else
         for(auto &f: fixtureDefs_)
-            f.filter.groupIndex = -4;
+            f.filter.groupIndex = DONT_COLIDE_GROUP;
 }
 
 void Element::update()
@@ -132,6 +132,12 @@ void Element::swap(Element &other)
     std::swap(bodyDef_, other.bodyDef_);
     std::swap(color_, other.color_);
     fixtureDefs_.swap(other.fixtureDefs_);
+}
+
+Element::Parameters::Parameters(float32 d, float32 f, float32 r):
+    density(d), friction(f), restitution(r)
+{
+
 }
 
 Element::Parameters Element::Parameters::createRandom()

@@ -37,6 +37,11 @@ Box &Box::operator=(const Box &other)
     return *this;
 }
 
+Element *Box::clone() const
+{
+    return new Box(*this);
+}
+
 b2Vec2 Box::getPosition() const
 {
     return position_;
@@ -111,8 +116,8 @@ b2Vec2* Box::initializeFirst(float32 angle,
 void Box::drawElement(QPainter &painter,
                       const b2Vec2 &position,
                       const float32 angle,
-                      const b2Shape* shape,
-                      const b2Vec2& parentPosition) const
+                      const b2Shape *shape,
+                      const b2Vec2 &/* parentPosition */) const
 {
     const b2PolygonShape* polygon = dynamic_cast<const b2PolygonShape*>(shape);
     int count = static_cast<int>(polygon->GetVertexCount());

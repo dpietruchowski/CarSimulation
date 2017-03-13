@@ -29,7 +29,7 @@ struct VertexCalculation
     b2Vec2 operator()(const b2Vec2& vertex,
                       float32 angle, float32 length) const;
 private:
-    //
+    ///
     /// \brief calcVertex Calc vertex, which with centerVertex creates side of
     /// the traingle. This side is inclined at angle to
     /// side between center vertex and vertex2.

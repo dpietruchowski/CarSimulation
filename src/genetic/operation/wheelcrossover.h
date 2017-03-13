@@ -3,11 +3,18 @@
 
 #include "crossover.h"
 
+///
+/// \brief The WheelCrossover class.
+///
 class WheelCrossover : public Crossover
 {
 public:
+    ///
+    /// \brief Creates new WheelCrossover object.
+    /// \return Newly created object
+    ///
     static GeneticOperation *create();
-    WheelCrossover();
+    WheelCrossover() = default;
 private:
     CarPtr reproduce(const Car *parent1,
                      const Car *parent2) const;

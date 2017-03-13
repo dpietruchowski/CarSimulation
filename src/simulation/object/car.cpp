@@ -283,9 +283,14 @@ void Car::createJoints(std::vector<ElementPtr> &elements,
     // /////////////
 }
 
-void Car::run(float32 torque)
+bool Car::isMoved(double interval) const
 {
-    //elements_[1]->getBody()->ApplyTorque(torque, false);
+    return getPosition().x > startPosition_.x + interval*240;
+}
+
+size_t Car::bodySize() const
+{
+    return body_.size();
 }
 
 void Car::updateObject(double interval)
@@ -364,4 +369,34 @@ bool Car::isVertexSettable(const b2Vec2 &vertex) const
             return false;
     }
     return true;
+}
+
+bool Car::operator>=(const Car &rhs)
+{
+    return !operator< (rhs);
+}
+
+bool Car::operator<=(const Car &rhs)
+{
+    return !operator> (rhs);
+}
+
+bool Car::operator>(const Car &rhs)
+{
+    return score_ > rhs.score_;
+}
+
+bool Car::operator<(const Car &rhs)
+{
+    return score_ < rhs.score_;
+}
+
+bool Car::operator!=(const Car &rhs)
+{
+    return !operator==(rhs);
+}
+
+bool Car::operator==(const Car &rhs)
+{
+    return score_ == rhs.score_;
 }

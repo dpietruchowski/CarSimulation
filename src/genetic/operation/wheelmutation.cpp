@@ -5,11 +5,6 @@ GeneticOperation *WheelMutation::create()
     return new WheelMutation();
 }
 
-WheelMutation::WheelMutation()
-{
-
-}
-
 CarPtr WheelMutation::reproduce(const Car *parent) const
 {
     Element::Parameters param = Element::Parameters::createRandom();

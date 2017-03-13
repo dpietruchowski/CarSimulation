@@ -6,11 +6,6 @@ GeneticOperation *BodyMutation::create()
     return new BodyMutation();
 }
 
-BodyMutation::BodyMutation()
-{
-
-}
-
 CarPtr BodyMutation::reproduce(const Car *parent) const
 {
     b2Vec2 vertex(0,0);

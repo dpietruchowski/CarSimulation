@@ -15,12 +15,12 @@ WheelGene::WheelGene(const WheelGene &other, size_t maxVertexNumber):
                 vertexNumber_ : maxVertexNumber - 1;
 }
 
-bool WheelGene::operator==(const WheelGene &other)
+bool WheelGene::operator==(const WheelGene &other) const
 {
     return vertexNumber_ == other.vertexNumber_;
 }
 
-bool WheelGene::operator!=(const WheelGene &other)
+bool WheelGene::operator!=(const WheelGene &other) const
 {
     return !(*this == other);
 }

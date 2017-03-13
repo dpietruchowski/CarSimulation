@@ -45,3 +45,13 @@ void RouletteSelection::calcScores(Scores& scores, double worstScore)
     for(auto& score : scores)
         score.normalized = (score.value * 100) / sumOfScores;
 }
+
+RankRouletteSelection::RankRouletteSelection():
+    RouletteSelection(new RankScore())
+{
+}
+
+FitnessRouletteSelection::FitnessRouletteSelection():
+    RouletteSelection(new FitnessScore())
+{
+}

@@ -58,13 +58,6 @@ CarPtr GeneticAlgorithm::create()
     delete crossover;
     delete mutation;
 
-    /*cout << "////////" << endl;
-    int i = 0;
-    for (const auto & s: stats) {
-        cout << "[" << population_[i]->score() << "]" << "[" << i << "]: " << s << endl;
-        ++i;
-    }*/
-
     return std::move(child);
 }
 
