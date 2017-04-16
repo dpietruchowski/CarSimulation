@@ -4,16 +4,21 @@
 
 using namespace std;
 
-GeneticAlgorithm::GeneticAlgorithm(GeneticParameters params):
+GeneticAlgorithm::GeneticAlgorithm(const GeneticParameters& params):
     size_(params.populationSize), selectionType_(params.selectionType),
     tournamentSize_(params.populationSize/3)
 {
-    crossoverGenerator_.registerObject(0.3, OnePointCrossover::create);
-    crossoverGenerator_.registerObject(0.1, TwoPointCrossover::create);
-    crossoverGenerator_.registerObject(0.6, WheelCrossover::create);
+    crossoverGenerator_.registerObject(params.probabilities.crossover.onePoint,
+                                       OnePointCrossover::create);
+    crossoverGenerator_.registerObject(params.probabilities.crossover.twoPoint,
+                                       TwoPointCrossover::create);
+    crossoverGenerator_.registerObject(params.probabilities.crossover.wheel,
+                                       WheelCrossover::create);
 
-    mutationGenerator_.registerObject(0.5, WheelMutation::create);
-    mutationGenerator_.registerObject(0.5, BodyMutation::create);
+    mutationGenerator_.registerObject(params.probabilities.mutation.wheel,
+                                      WheelMutation::create);
+    mutationGenerator_.registerObject(params.probabilities.mutation.body,
+                                      BodyMutation::create);
 }
 
 void GeneticAlgorithm::insert(Car* individual)

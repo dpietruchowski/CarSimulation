@@ -14,7 +14,22 @@
 struct GeneticParameters
 {
     size_t populationSize;       ///< Size of the population
-    SelectionType selectionType; ///< Type of the selection
+    SelectionType selectionType; ///< Type of the selection  
+    struct GeneticProbabilities
+    {
+        struct Mutation
+        {
+            double body;
+            double wheel;
+        } mutation;
+
+        struct Crossover
+        {
+            double onePoint;
+            double twoPoint;
+            double wheel;
+        } crossover;
+    } probabilities;
 };
 
 ///
@@ -29,7 +44,7 @@ public:
     /// \brief A GeneticAlgorithm constructor with genetic parameters.
     /// \param params The genetic parameters
     ///
-    GeneticAlgorithm(GeneticParameters params);
+    GeneticAlgorithm(const GeneticParameters& params);
     
     ///
     /// \brief Inserts individual to population. If population is full than

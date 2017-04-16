@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "simulation/world.h"
+#include "newworlddialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,7 +27,11 @@ private slots:
     void on_carTableWidget_cellPressed(int row, int column);
     void on_carTableWidget_cellEntered(int row, int column);
 
+    void on_pushButton_5_clicked();
+    void newWorld();
+
 private:
+    NewWorldDialog *nwDialog;
     Ui::MainWindow *ui;
     World world;
     QGraphicsScene carScene;

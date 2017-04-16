@@ -5,7 +5,6 @@
 
 #endif // UTILFUNCTIONS
 
-
 struct ShapeCreation
 {
     ~ShapeCreation() = default;

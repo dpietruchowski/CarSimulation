@@ -12,7 +12,7 @@ class World: public QObject
 public:
     typedef std::map<double, CarSPtr, std::greater<double>> Individuals;
     World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
-          GeneticParameters params);
+          const GeneticParameters& params, double maxTime);
     ~World();
 
     void start();

@@ -152,7 +152,7 @@ Element::Parameters Element::Parameters::createRandom()
     return Parameters(density, friction, restitution);
 }
 
-std::__cxx11::string Element::Parameters::toString() const
+std::string Element::Parameters::toString() const
 {
     std::string sParameters;
     sParameters += std::to_string(density) + " ";

@@ -49,7 +49,9 @@ HEADERS += gui/mainwindow.h \
             genetic/operation/operation.h \
             simulation/simulation.h \
     simulation/world.h \
-    simulation/worldscene.h
+    simulation/worldscene.h \
+    gui/newworlddialog.h \
+    gui/probabilityvalidator.h
 
 SOURCES += main.cpp \
             gui/mainwindow.cpp \
@@ -81,9 +83,12 @@ SOURCES += main.cpp \
             genetic/operation/wheelcrossover.cpp \
             simulation/simulation.cpp \
     simulation/world.cpp \
-    simulation/worldscene.cpp
+    simulation/worldscene.cpp \
+    gui/newworlddialog.cpp \
+    gui/probabilityvalidator.cpp
 
 FORMS    += gui/mainwindow.ui \
+    gui/newworlddialog.ui
 
 message($$OUT_PWD)#
 message($$_PRO_FILE_PWD_)

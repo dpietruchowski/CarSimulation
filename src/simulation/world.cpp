@@ -13,9 +13,9 @@ void World::incTimeout() {
 }
 
 World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
-             GeneticParameters params):
+             const GeneticParameters& params, double maxTime):
     simulation_({10, 100}, gravity, size, bufferSize, params), time_(0),
-    maxTime_(120)
+    maxTime_(maxTime)
 {
     int interval = 1000/60; //60 fps
     drawTimer_.setInterval(interval*1);

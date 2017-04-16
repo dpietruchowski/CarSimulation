@@ -10,9 +10,12 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow), world(b2Vec2(0.0f, -80.0f), b2Vec2(1000.0f, 50.0f),
-                                  60, {30, SelectionType::RANK_ROULETTESELECTION})
+                                  60, {30, SelectionType::RANK_ROULETTESELECTION},
+                                  600)
 {
     ui->setupUi(this);
+    nwDialog = new NewWorldDialog(this);
+    QObject::connect(nwDialog, SIGNAL(accepted()), this, SLOT(newWorld()));
     ui->worldView->setScene(&world.scene());
     ui->worldView->setSceneRect(-20,-55,1050,110);
     ui->worldView->centerOn(0,0);
@@ -163,4 +166,16 @@ void MainWindow::on_carTableWidget_cellPressed(int row, int /* column */)
 void MainWindow::on_carTableWidget_cellEntered(int row, int column)
 {
     on_carTableWidget_cellPressed(row, column);
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    nwDialog->setDefault();
+    nwDialog->show();
+}
+
+void MainWindow::newWorld()
+{
+    std::cout << "New World" << std::endl;
+    nwDialog->showValues();
 }
