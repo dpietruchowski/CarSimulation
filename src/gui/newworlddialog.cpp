@@ -41,7 +41,7 @@ void NewWorldDialog::showValues()
     showValues(this);
 }
 
-const GeneticParameters& NewWorldDialog::geneticParameters() const
+GeneticParameters NewWorldDialog::geneticParameters() const
 {
     const QString& populationSize = ui->popSizeEdit->text();
     const QString& bodyMutation = ui->bodyMutedit->text();

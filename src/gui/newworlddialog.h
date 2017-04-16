@@ -18,7 +18,7 @@ public:
     explicit NewWorldDialog(QWidget *parent = 0);
     void setDefault();
     void showValues();
-    const GeneticParameters& geneticParameters() const;
+    GeneticParameters geneticParameters() const;
     size_t bufferSize() const;
     double maxWorldTime() const;
     b2Vec2 worldSize() const;

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 #include "simulation/world.h"
 #include "newworlddialog.h"
 
@@ -28,12 +29,23 @@ private slots:
     void on_carTableWidget_cellEntered(int row, int column);
 
     void on_pushButton_5_clicked();
+
     void newWorld();
+    void removeWorld(int worldIndex);
+    void setWorld(int worldIndex);
+
+    void on_nextWorldButton_clicked();
+
+    void on_previoustWorldButton_clicked();
+
+    void clearBeforeSet();
+    void clearUi();
 
 private:
     NewWorldDialog *nwDialog;
     Ui::MainWindow *ui;
-    World world;
+    int currentWorldIndex;
+    std::vector<std::unique_ptr<World>> worlds;
     QGraphicsScene carScene;
 };
 

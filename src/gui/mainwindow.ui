@@ -186,7 +186,13 @@
      <widget class="QGraphicsView" name="worldView">
       <property name="minimumSize">
        <size>
-        <width>630</width>
+        <width>634</width>
+        <height>500</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>634</width>
         <height>500</height>
        </size>
       </property>
@@ -280,8 +286,14 @@
         </item>
         <item>
          <widget class="QLabel" name="worldLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>none</string>
           </property>
          </widget>
         </item>
@@ -2105,7 +2117,7 @@
      <x>0</x>
      <y>0</y>
      <width>901</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

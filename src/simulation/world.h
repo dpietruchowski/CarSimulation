@@ -13,6 +13,8 @@ public:
     typedef std::map<double, CarSPtr, std::greater<double>> Individuals;
     World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
           const GeneticParameters& params, double maxTime);
+    World(const World& other) = delete;
+    World(World&& other) = delete;
     ~World();
 
     void start();

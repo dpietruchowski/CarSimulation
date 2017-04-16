@@ -59,14 +59,14 @@
     <item row="0" column="1">
      <widget class="QLineEdit" name="gravityYEdit">
       <property name="text">
-       <string>0</string>
+       <string>-80</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
      <widget class="QLineEdit" name="gravityXEdit">
       <property name="text">
-       <string>-80</string>
+       <string>0</string>
       </property>
      </widget>
     </item>
@@ -212,7 +212,7 @@
        <item row="1" column="1">
         <widget class="QLineEdit" name="wheelMutedit">
          <property name="text">
-          <string>0,0</string>
+          <string>1,0</string>
          </property>
         </widget>
        </item>
@@ -249,7 +249,7 @@
        <item row="0" column="1">
         <widget class="QLineEdit" name="onePointEdit">
          <property name="text">
-          <string>0,0</string>
+          <string>1,0</string>
          </property>
         </widget>
        </item>
