@@ -141,7 +141,12 @@ void MainWindow::on_carTableWidget_cellPressed(int row, int /* column */)
     for(const auto &item: sceneItems) {
         carScene.removeItem(item);
     }
-    ui->carView->centerOn(0,0);
+
+    qDebug() << "cell pressed";
+    for(const auto& car: worlds[currentWorldIndex]->individuals())
+    {
+        qDebug() << car.second->id();
+    }
     auto ind = std::find_if(worlds[currentWorldIndex]->individuals().begin(),
                             worlds[currentWorldIndex]->individuals().end(),
                             [&currentText](const std::pair<double, CarSPtr> &p)->bool
@@ -153,6 +158,7 @@ void MainWindow::on_carTableWidget_cellPressed(int row, int /* column */)
     if(ind == worlds[currentWorldIndex]->individuals().end())
         throw "Didnt find this car";
     carScene.addItem(ind->second.get());
+    ui->carView->centerOn(0,0);
 }
 
 void MainWindow::on_carTableWidget_cellEntered(int row, int column)
@@ -188,33 +194,27 @@ void MainWindow::newWorld()
     if(worlds.size() > 1)
         ui->previoustWorldButton->setEnabled(true);
     ui->nextWorldButton->setEnabled(false);
-    currentWorldIndex = worlds.size() - 1;
-    setWorld(currentWorldIndex);
+    setWorld(worlds.size() - 1);
 }
 
-void MainWindow::removeWorld(int worldIndex)
+void MainWindow::removeWorld()
 {
-    if(currentWorldIndex == worldIndex) {
-        // if it is only one world set none world
-        if(worlds.size() == 1) {
-            clearUi();
-        } else if(currentWorldIndex == worlds.size() - 1) {
-            // if it is last world
-            on_previoustWorldButton_clicked();
-        } else {
-            on_nextWorldButton_clicked();
-        }
-    } else if(worldIndex < currentWorldIndex) {
-        --currentWorldIndex;
-    }
+    clearUi();
+    worlds.erase(worlds.begin() + currentWorldIndex);
 
-    worlds.erase(worlds.begin() + worldIndex);
+    int worldIndex = currentWorldIndex;
+    if(worldIndex >= worlds.size())
+        worldIndex = worlds.size() - 1;
+
     if(worlds.size() <= 0) {
         ui->startButton->setEnabled(false);
         ui->forwardButton->setEnabled(false);
         ui->carTableWidget->setEnabled(false);
         ui->nextWorldButton->setEnabled(false);
         ui->previoustWorldButton->setEnabled(false);
+    } else
+    {
+        setWorld(worldIndex);
     }
 }
 
@@ -223,11 +223,23 @@ void MainWindow::setWorld(int worldIndex)
     clearBeforeSet();
     ///////////////////////////////////////////
     currentWorldIndex = worldIndex;
+
+    worlds[currentWorldIndex]->stop();
     ui->worldLabel->setText(QString::number(worldIndex));
 
     ui->worldView->setScene(&worlds[currentWorldIndex]->scene());
     ui->worldView->setSceneRect(-20,-55,1050,110);
     ui->worldView->centerOn(0,0);
+
+    int i = 0;
+    for(const auto& car: worlds[currentWorldIndex]->individuals()) {
+        int row = i++;
+        ui->carTableWidget->insertRow(row);
+        ui->carTableWidget->setItem(row, 0, new QTableWidgetItem(
+                                                    QString::number(car.second->id())));
+        ui->carTableWidget->setItem(row, 1, new QTableWidgetItem(
+                                                    QString::number(car.second->score())));
+    }
 
     ui->worldProgressBar->setMaximum(worlds[currentWorldIndex]->maxTime() * 1000);
 
@@ -237,11 +249,13 @@ void MainWindow::setWorld(int worldIndex)
                      this, SLOT(removeObject(int, CarSPtr)));
     QObject::connect(worlds[currentWorldIndex].get(), SIGNAL(update()),
                      this, SLOT(update()));
+
+    worlds[currentWorldIndex]->start();
 }
 
 void MainWindow::on_nextWorldButton_clicked()
 {
-    setWorld(++currentWorldIndex);
+    setWorld(currentWorldIndex + 1);
     ui->previoustWorldButton->setEnabled(true);
     if(currentWorldIndex == worlds.size() - 1)
         ui->nextWorldButton->setEnabled(false);
@@ -250,7 +264,7 @@ void MainWindow::on_nextWorldButton_clicked()
 
 void MainWindow::on_previoustWorldButton_clicked()
 {
-    setWorld(--currentWorldIndex);
+    setWorld(currentWorldIndex -1);
     ui->nextWorldButton->setEnabled(true);
     if(currentWorldIndex == 0)
         ui->previoustWorldButton->setEnabled(false);

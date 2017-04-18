@@ -31,7 +31,7 @@ private slots:
     void on_pushButton_5_clicked();
 
     void newWorld();
-    void removeWorld(int worldIndex);
+    void removeWorld();
     void setWorld(int worldIndex);
 
     void on_nextWorldButton_clicked();

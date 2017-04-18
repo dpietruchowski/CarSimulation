@@ -30,6 +30,7 @@ int RouletteSelection::select(const Scores& scores) const
         i++;
     }
     //should never get here
+    assert(0);
     return i;
 }
 

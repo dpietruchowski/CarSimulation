@@ -36,10 +36,14 @@ Scores Selection::getScores() const
 
 double Selection::selectScore() const
 {
-    return scores_[select(scores_)].score;
+    int selected = select(scores_);
+    assert(selected < scores_.size());
+    return scores_[selected].score;
 }
 
 unsigned int Selection::selectRank() const
 {
-    return scores_[select(scores_)].rank;
+    int selected = select(scores_);
+    assert(selected < scores_.size());
+    return scores_[selected].rank;
 }
