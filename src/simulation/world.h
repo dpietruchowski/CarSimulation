@@ -20,11 +20,14 @@ public:
     void start();
     void pause();
     void stop();
+    void stopDrawing();
+    void startDrawing();
     void forward(bool clicked);
     void setUpdateInterval(int interval);
     void setCreateObjectInterval(int interval);
     double avarageScore() const;
     double bestScore() const;
+    bool isRunning() const;
 
     WorldScene& scene()
         { return scene_; }
@@ -59,6 +62,7 @@ private:
     Individuals individuals_;
     double time_;
     double maxTime_;
+    bool isRunning_;
 };
 
 #endif // WORLD_H

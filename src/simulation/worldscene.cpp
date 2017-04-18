@@ -1,6 +1,6 @@
 #include "worldscene.h"
 
-WorldScene::WorldScene(): nCarsAlive_(0)
+WorldScene::WorldScene(): nCarsAlive_(0), nCarsCreated_(0), nCarsKilled_(0)
 {
 }
 

@@ -95,7 +95,7 @@ void MainWindow::on_startButton_toggled(bool checked)
     } else
     {
         worlds[currentWorldIndex]->stop();
-        ui->startButton->setText(QString("Resume"));
+        ui->startButton->setText(QString("Start"));
     }
 }
 
@@ -210,7 +210,10 @@ void MainWindow::setWorld(int worldIndex)
     ///////////////////////////////////////////
     currentWorldIndex = worldIndex;
 
-    worlds[currentWorldIndex]->stop();
+    bool isThreadRunning = worlds[currentWorldIndex]->isRunning();
+    if(isThreadRunning) {
+        worlds[currentWorldIndex]->stop();
+    }
     ui->worldLabel->setText(QString::number(worldIndex));
 
     ui->worldView->setScene(&worlds[currentWorldIndex]->scene());
@@ -236,7 +239,15 @@ void MainWindow::setWorld(int worldIndex)
     QObject::connect(worlds[currentWorldIndex].get(), SIGNAL(update()),
                      this, SLOT(update()));
 
-    worlds[currentWorldIndex]->start();
+    if(isThreadRunning) {
+        if(!ui->startButton->isChecked())
+            ui->startButton->toggle();
+        else
+            worlds[currentWorldIndex]->start();
+    } else {
+        if(ui->startButton->isChecked())
+            ui->startButton->toggle();
+    }
 }
 
 void MainWindow::on_nextWorldButton_clicked()

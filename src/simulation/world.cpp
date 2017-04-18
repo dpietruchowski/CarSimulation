@@ -15,7 +15,7 @@ void World::incTimeout() {
 World::World(b2Vec2 gravity, b2Vec2 size, size_t bufferSize,
              const GeneticParameters& params, double maxTime):
     simulation_({10, 100}, gravity, size, bufferSize, params), time_(0),
-    maxTime_(maxTime)
+    maxTime_(maxTime), isRunning_(false)
 {
     int interval = 1000/60; //60 fps
     drawTimer_.setInterval(interval*1);
@@ -63,8 +63,9 @@ World::~World()
 
 void World::start()
 {
-    qDebug() << "Start ThreadID: " << QThread::currentThreadId();
-    drawTimer_.start();
+//    qDebug() << "Start ThreadID: " << QThread::currentThreadId();
+    isRunning_ = true;
+    startDrawing();
     updateTimer_.start();
     createObjectTimer_.start();
 }
@@ -72,16 +73,28 @@ void World::start()
 void World::pause()
 {
 //    qDebug() << "Pause ThreadID: " << QThread::currentThreadId();
-    drawTimer_.stop();
+    isRunning_ = false;
+    stopDrawing();
     updateTimer_.stop();
     createObjectTimer_.stop();
 }
 
 void World::stop()
 {
-    drawTimer_.stop();
+    isRunning_ = false;
+    stopDrawing();
     updateTimer_.stop();
     createObjectTimer_.stop();
+}
+
+void World::stopDrawing()
+{
+    drawTimer_.stop();
+}
+
+void World::startDrawing()
+{
+    drawTimer_.start();
 }
 
 void World::forward(bool clicked)
@@ -127,6 +140,11 @@ double World::avarageScore() const
 double World::bestScore() const
 {
     return individuals_.begin()->first;
+}
+
+bool World::isRunning() const
+{
+    return isRunning_;
 }
 
 void World::addObject(CarSPtr ind)
