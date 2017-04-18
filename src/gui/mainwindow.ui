@@ -231,16 +231,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="forwardButton">
-          <property name="text">
-           <string>Forward</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>

@@ -22,7 +22,6 @@ private slots:
     void addObject(int, CarSPtr);
     void removeObject(int, CarSPtr);
     void update();
-    void on_forwardButton_toggled(bool checked);
     void on_startButton_toggled(bool checked);
 //    void on_carListWidget_currentTextChanged(const QString &currentText);
     void on_carTableWidget_cellPressed(int row, int column);

@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->carView->centerOn(0,0);
 
     ui->startButton->setEnabled(false);
-    ui->forwardButton->setEnabled(false);
     ui->carTableWidget->setEnabled(false);
     ui->nextWorldButton->setEnabled(false);
     ui->previoustWorldButton->setEnabled(false);
@@ -87,17 +86,6 @@ void MainWindow::update()
     ui->avScoreValue->setText(QString::number(worlds[currentWorldIndex]->avarageScore()));
 }
 
-void MainWindow::on_forwardButton_toggled(bool checked)
-{
-    worlds[currentWorldIndex]->forward(checked);
-    if(checked)
-    {
-        ui->forwardButton->setText(QString("Normal"));
-    } else
-    {
-        ui->forwardButton->setText(QString("Faster"));
-    }
-}
 void MainWindow::on_startButton_toggled(bool checked)
 {
     if(checked)
@@ -188,7 +176,6 @@ void MainWindow::newWorld()
 
     if(worlds.size() > 0) {
         ui->startButton->setEnabled(true);
-        ui->forwardButton->setEnabled(true);
         ui->carTableWidget->setEnabled(true);
     }
     if(worlds.size() > 1)
@@ -208,7 +195,6 @@ void MainWindow::removeWorld()
 
     if(worlds.size() <= 0) {
         ui->startButton->setEnabled(false);
-        ui->forwardButton->setEnabled(false);
         ui->carTableWidget->setEnabled(false);
         ui->nextWorldButton->setEnabled(false);
         ui->previoustWorldButton->setEnabled(false);
@@ -302,7 +288,6 @@ void MainWindow::clearUi()
 {
     clearBeforeSet();
     ui->startButton->setEnabled(false);
-    ui->forwardButton->setEnabled(false);
     ui->carTableWidget->setEnabled(false);
     ui->nextWorldButton->setEnabled(false);
     ui->previoustWorldButton->setEnabled(false);
