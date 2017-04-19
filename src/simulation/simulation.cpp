@@ -9,8 +9,6 @@
 
 using namespace std;
 
-const float32 Simulation::CLICKED_DISTANCE = 10;
-
 namespace {
 unsigned int UpdateCounter = 0;
 unsigned int CreateCounter = 0;
@@ -35,6 +33,16 @@ void Simulation::initialize()
 void Simulation::setInterval(double interval)
 {
     interval_ = interval;
+}
+
+double Simulation::time() const
+{
+    return time_;
+}
+
+const GeneticAlgorithm &Simulation::genetic() const
+{
+    return genetic_;
 }
 
 void Simulation::update()

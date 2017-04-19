@@ -147,6 +147,21 @@ bool World::isRunning() const
     return isRunning_;
 }
 
+WorldScene &World::scene()
+{ return scene_; }
+
+double World::time() const
+{ return time_; }
+
+double World::maxTime() const
+{ return maxTime_; }
+
+World::Individuals &World::individuals()
+{ return individuals_; }
+
+const Simulation &World::simulation() const
+{ return simulation_; }
+
 void World::addObject(CarSPtr ind)
 {
     auto inserted = individuals_.insert(make_pair(ind->score(), ind));

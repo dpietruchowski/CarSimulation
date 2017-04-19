@@ -10,11 +10,18 @@ namespace Ui {
 class MainWindow;
 }
 
+///
+/// \brief The MainWindow class represents gui for application.
+///
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    ///
+    /// \brief A MainWindow constructor.
+    /// \param The parent for this widget.
+    ///
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
