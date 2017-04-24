@@ -130,11 +130,6 @@ void MainWindow::on_carTableWidget_cellPressed(int row, int /* column */)
         carScene.removeItem(item);
     }
 
-    qDebug() << "cell pressed";
-    for(const auto& car: worlds[currentWorldIndex]->individuals())
-    {
-        qDebug() << car.second->id();
-    }
     auto ind = std::find_if(worlds[currentWorldIndex]->individuals().begin(),
                             worlds[currentWorldIndex]->individuals().end(),
                             [&currentText](const std::pair<double, CarSPtr> &p)->bool
@@ -237,7 +232,8 @@ void MainWindow::setWorld(int worldIndex)
     QObject::connect(worlds[currentWorldIndex].get(), SIGNAL(removeObject(int, CarSPtr)),
                      this, SLOT(removeObject(int, CarSPtr)));
     QObject::connect(worlds[currentWorldIndex].get(), SIGNAL(update()),
-                     this, SLOT(update()));
+                     this, SLOT(update()));   
+    worlds[currentWorldIndex]->startDrawing();
 
     if(isThreadRunning) {
         if(!ui->startButton->isChecked())
@@ -270,6 +266,7 @@ void MainWindow::on_previoustWorldButton_clicked()
 void MainWindow::clearBeforeSet()
 {
     if(currentWorldIndex >= 0) {
+        worlds[currentWorldIndex]->stopDrawing();
         QObject::disconnect(worlds[currentWorldIndex].get(), SIGNAL(addObject(int, CarSPtr)),
                         this, SLOT(addObject(int, CarSPtr)));
         QObject::disconnect(worlds[currentWorldIndex].get(), SIGNAL(removeObject(int, CarSPtr)),
@@ -278,7 +275,12 @@ void MainWindow::clearBeforeSet()
                         this, SLOT(update()));
     }
 
-    carScene.clear();
+    QList<QGraphicsItem*> all = carScene.items();
+    for (int i = 0; i < all.size(); ++i)
+    {
+        QGraphicsItem *gi = all[i];
+        carScene.removeItem(gi);
+    }
     ui->carTableWidget->clear();
     ui->carTableWidget->setRowCount(0);
 
