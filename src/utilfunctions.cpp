@@ -5,7 +5,7 @@ b2Shape *ShapeCreation::operator()(const b2Vec2 *vertices, int32 size) const
 {
     b2PolygonShape polygon;
 
-    b2Vec2 vert[size];
+    b2Vec2 vert[arraySize_];
     for(int i = 0; i < size; i++)
     {
         const b2Vec2* a = vertices+i;

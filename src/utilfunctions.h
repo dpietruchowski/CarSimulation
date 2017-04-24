@@ -19,7 +19,7 @@ struct ShapeCreation
     /// \brief Creates polygon shape with vertices on heap.
     /// \remarks b2Shape object is allocated with new operator and should be freed.
     /// \param vertices Pointer to array, which contains vertices for polygon
-    /// \param size The size of array
+    /// \param size The size of array. Must be lower than 10
     /// \return Newly created polygon shape on heap
     ///
     b2Shape* operator()(const b2Vec2 *vertices, int32 size) const;
@@ -39,6 +39,9 @@ struct ShapeCreation
     /// \return Newly created polygon shape on heap
     ///
     b2Shape* operator()(float32 r) const;
+
+private:
+    const static unsigned int arraySize_ = 10;
 };
 
 ///
