@@ -1,0 +1,14 @@
+# Build output
+build/
+*.o
+*.a
+
+# Qt generated files
+moc_*.cpp
+ui_*.h
+*.pro.user
+*.pro.user.*
+qrc_*.cpp
+
+# Binaries
+CarSimulation
