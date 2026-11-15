@@ -1,77 +1,56 @@
 # CarSimulation
 
-A C++ application that evolves cars using a genetic algorithm, built with [Box2D](https://github.com/erincatto/Box2D) for physics simulation and Qt for the GUI.
+Cars that learn to drive over a randomly generated, hilly track by evolution. Each car is a random polygon with two wheels, simulated with [Box2D](https://github.com/erincatto/Box2D). The further a car gets, the more likely it is to pass its genes on. After a few generations the population is full of cars that are much better at it than the random ones it started with.
 
-Each car is an individual in a population. Cars with greater distance traveled score higher fitness and are more likely to reproduce. Over generations, the population evolves better-adapted vehicles.
+Written in C++ with Qt.
 
-## How it works
+## The car
 
-### Car representation
+![Car](docs/Car.png)
 
-A car consists of three physical elements:
+A car has three parts: a body and two wheels. The body is a polygon built from body genes. Each gene stores one vertex relative to the center, together with the physical parameters of that piece of the body: density, friction and restitution. The number of vertices is random, so cars differ not only in proportions but also in shape. Each wheel gene stores the radius, the physical parameters and the vertex the wheel is attached to.
 
-- **Body** — a polygon defined by up to 6 `BodyGene`s, each encoding a vertex position relative to the center
-- **2 Wheels** — circles defined by `WheelGene`s, each encoding radius and the body vertex they attach to
+## Evolution
 
-Both gene types inherit from `Gene` and carry physics parameters (density, friction, restitution).
+Every generation goes through selection, crossover and mutation, and the new cars are then tested in the simulation.
 
-![Car structure](docs/Car.png)
+![One point crossover](docs/Crossover.png)
 
-### Genetic algorithm
+Crossing two bodies works on angles. The vertices of each parent are sorted by their angle around the center, a random cut angle is drawn (red in the picture), and the child gets the vertices below the cut from one parent and the rest from the other. Two-point crossover does the same with two cut angles. Wheels have their own crossover, and both bodies and wheels have their own mutations.
 
-Each generation runs Selection → Crossover → Mutation → evaluate in simulation.
+Selection is roulette (by fitness or by rank) or tournament.
 
-**Selection** — two strategies available:
-- *Roulette selection* — probability proportional to fitness score
-- *Tournament selection* — best of a random subset
+## Simulation
 
-**Crossover** — two strategies for body genes:
-- *One-point crossover* — vertices sorted by angle; a random cut angle splits genes from parent 1 vs parent 2
-- *Two-point crossover* — two cut angles define three segments alternating between parents
+![Simulation](docs/Simulation.png)
 
-Wheel genes use `WheelCrossover`. Body genes use `BodyMutation` and `WheelMutation` for mutation.
+The world runs in its own thread and is drawn on a `QGraphicsScene`. New cars wait in a buffer. A car is removed when it stops moving, crashes or leaves the track, and the next one from the buffer takes its place.
 
-![Crossover](docs/Crossover.png)
-![Genetic algorithm flow](docs/genetic.png)
+When you create a new world you can set gravity, world size, buffer size, time limit, population size, the selection type and the probability of each genetic operator.
 
-### Architecture
-
-The `World` runs in a separate thread and drives the `Simulation`, which manages:
-
-- **`GeneticAlgorithm`** — population, selection, crossover/mutation generators
-- **`b2World`** — Box2D physics world
-- **`Buffer`** — queue of newly created cars waiting to enter the simulation
-- **`Objects`** — active cars currently being simulated
-- **`WorldScene`** — Qt `QGraphicsScene` used for rendering
-
-![Simulation architecture](docs/schemat.png)
-
-See [`docs/DPietruchowski_diagram.pdf`](docs/DPietruchowski_diagram.pdf) for full UML class diagrams and [`docs/CarSimulation.pdf`](docs/CarSimulation.pdf) for a detailed description of the genome and crossover operators.
-
-## Dependencies
-
-- **Qt 5** (tested with 5.7)
-- **Box2D** — [https://github.com/erincatto/Box2D](https://github.com/erincatto/Box2D)
+More details, with UML class diagrams, are in [docs/CarSimulation.pdf](docs/CarSimulation.pdf) (in Polish) and [docs/DPietruchowski_diagram.pdf](docs/DPietruchowski_diagram.pdf).
 
 ## Building
 
+You need Qt 4.8 or Qt 5 (with the OpenGL module) and Box2D 2.x.
+
 Install Box2D:
 
-```sh
+```bash
 cd $BOX2DPATH/Build/Box2D
 cmake -DBOX2D_INSTALL=ON -DBOX2D_BUILD_SHARED=ON ..
 make && make install
 ```
 
-Then build the project:
+Then build the app:
 
-```sh
-cd build
+```bash
+mkdir build && cd build
 qmake ../src/CarSimulation.pro
 make
 ```
 
-If the build fails, open `src/CarSimulation.pro` and verify that the include path for Qt OpenGL and the Box2D shared library are set correctly:
+If qmake can't find OpenGL or Box2D, add the paths in `src/CarSimulation.pro`:
 
 ```
 INCLUDEPATH += /usr/include/qt5/QtOpenGL
